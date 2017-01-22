@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+<head>
+    <title>Example Graph</title>
+
+    <style>
+        body {
+            color: #d3d3d3;
+            font: 12pt arial;
+            background-color: #fff;
+        }
+
+        #mynetwork {
+            margin: 0 auto;
+            width: 800px;
+            height: 800px;
+            border: 1px solid #444444;
+            background-color: #fff;
+        }
+    </style>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.18.0/vis.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.18.0/vis.min.css" rel="stylesheet" type="text/css"/>
+</head>
+
+<body>
+
+<div id="mynetwork"></div>
+<script type="text/javascript">
+    var color = 'gray';
+    var len = undefined;
+
+    var nodes = [
+        {id: 1, label: "1", group: 1, x: 100, y: 100},
+        {id: 2, label: "2", group: 1, x: 100, y: 200},
+        {id: 3, label: "3", group: 2, x: 200, y: 100},
+        {id: 4, label: "4", group: 2, x: 200, y: 200},
+        {id: 5, label: "5", group: 3, x: 300, y: 100},
+        {id: 6, label: "6", group: 3, x: 300, y: 200},
+        {id: 7, label: "7", group: 2, x: 0, y: 100},
+        {id: 8, label: "8", group: 2, x: 0, y: 200},
+
+        {id: 17, label: "1", group: 1, x: 000, y: 400},
+        {id: 11, label: "2", group: 1, x: 100, y: 400},
+        {id: 13, label: "3", group: 1, x: 200, y: 400},
+        {id: 15, label: "4", group: 1, x: 300, y: 400},
+        {id: 18, label: "5", group: 2, x: 000, y: 500},
+        {id: 12, label: "6", group: 2, x: 100, y: 500},
+        {id: 14, label: "7", group: 2, x: 200, y: 500},
+        {id: 16, label: "8", group: 2, x: 300, y: 500}
+    ];
+    var edges = [
+        {from: 1, to: 4},
+        {from: 1, to: 6},
+        {from: 2, to: 3},
+        {from: 2, to: 5},
+        {from: 3, to: 6},
+        {from: 4, to: 5},
+        {from: 1, to: 8},
+        {from: 2, to: 7},
+
+        {from: 11, to: 14},
+        {from: 11, to: 16},
+        {from: 12, to: 13},
+        {from: 12, to: 15},
+        {from: 13, to: 16},
+        {from: 14, to: 15},
+        {from: 11, to: 18},
+        {from: 12, to: 17}
+    ]
+
+    // create a network
+    var container = document.getElementById('mynetwork');
+    var data = {
+        nodes: nodes,
+        edges: edges
+    };
+    var options = {
+        width: '800px',
+        height: '800px',
+        nodes: {
+            shape: 'circle',
+            size: 30,
+            font: {
+                size: 32,
+                color: '#000000'
+            },
+            borderWidth: 2
+        },
+        edges: {
+            color: '#000000',
+            width: 2,
+            smooth: {
+                enabled: false
+            }
+        },
+        physics: {
+            enabled: false
+        },
+        interaction: {
+            dragNodes: false,// do not allow dragging nodes
+            zoomView: false, // do not allow zooming
+            dragView: false  // do not allow dragging
+        }
+
+    };
+    network = new vis.Network(container, data, options);
+    network.moveTo({
+        position: {x: 0, y: 0},
+        offset: {x: -width/2, y: -height/2},
+        scale: 1
+    })
+</script>
+</body>
+</html>
