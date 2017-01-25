@@ -67,7 +67,7 @@ Examine the upper bounds of the greedy heuristic and the greedy plus degree sequ
 To do so, let's create another example that satisfies conditions \((1)\) and \((2)\) from above. After doing some research into bipartite graphs, I learned that \emph{crown graphs} are excellent at showing how bad greedy heuristics can be, as shown and defined in \cite{kordecki}.
 
 \begin{definition}[Crown Graph]
-A crown graph \(C_n = (V, E)\) is an undirected graph with two sets of vertices where \(V = V_1 \cup V_2\) with an edge from \(v_{1,i}\) to \(v_{2,j}\) whenever \(i \neq j\). A crown graph can also be viewed as a complete bipartite graph where the edges of a perfect matching have been removed.
+A crown graph \(CR_n = (V, E)\) is an undirected graph with two sets of vertices where \(V = V_1 \cup V_2\) with an edge from \(v_i \in V_1\) to \(v_{j} \in V_2\) whenever \(i \neq j\). A crown graph can also be viewed as a complete bipartite graph where the edges of a perfect matching have been removed.
 \end{definition}
 
 \subsection*{Example 2}
@@ -94,13 +94,13 @@ In Figure 5, using either heuristic with this ordering, we get \(\chi(H) = 5\). 
 
 Let \(P = (V, E)\) be a simple, complete graph. \newline
 
-We can see that \(\chi(H) = \Delta(H) + 1\). This is very easy to see in a \emph{complete} graph, where all vertices are connected to every other vertex. This means all vertices have degree \(|V| - 1\). Thus, every time we color a node, a new color is needed. And since we have \(\Delta(P) = |V| - 1\) and \(|V|\) vertices, we will need \(\Delta(P) + 1\) colors. This is proved in \emph{Brooks' Theorem}, defined below from \cite{bondymurty}.
+We can see that \(\chi(H) = \Delta(H) + 1\). This is very easy to see in a \emph{complete} graph, where all vertices are connected to every other vertex. This means all vertices have degree \(|V| - 1\). Thus, every time we color a node, a new color is needed. And since we have \(\Delta(P) = |V| - 1\) and \(|V|\) vertices, we will need \(\Delta(P) + 1\) colors. This is stated in \emph{Brooks' Theorem}.
 
 \begin{theorem}[Brooks' Theorem]
 For any connected undirected graph \(G\) with maximum degree \(\Delta\), the chromatic number of \(G\) is at most \(\Delta\) unless \(G\) is a complete graph or an odd cycle, in which case the chromatic number is \(\Delta + 1\).
 \end{theorem}
 
-Overall, heuristic A and heuristic B can produce some very undesirable results. In graph \(H\), at the worst case, these heuristics produce \(\chi(H) = 5\) when \(\chi^{*}(H) = 2\) as it is bipartite. This is shown below.
+The proof of \emph{Brook's Theorem} can be found in \cite{lovasz}. Overall, heuristic A and heuristic B can produce some very undesirable results. In graph \(H\), at the worst case, these heuristics produce \(\chi(H) = 5\) when \(\chi^{*}(H) = 2\) as it is bipartite. This is shown below.
 
 \begin{figure}[H]
 \centering
@@ -119,6 +119,9 @@ Johnson, D. S. [1974], \emph{Worst-case behavior of graph coloring algorithms}, 
 
 \bibitem{kordecki}
 Kordecki, W. and A. Łyczkowska-Hanćkowiak [2016], \emph{Greedy online colouring with buffering}, arXiv preprint arXiv:1601.00252.
+
+\bibitem{lovasz}
+Lovász, L. [1975], \emph{Three short proofs in graph theory}, Journal of Combinatorial Theory, Series B, 19(3), 269-271.
 
 \bibitem{welsh}
 Welsh, D. J. and Powell, M. B. [1967], \emph{An upper bound for the chromatic number of a graph and its application to timetabling problems}, The Computer Journal, 10(1), 85-86.
