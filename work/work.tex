@@ -5,22 +5,59 @@
 \usepackage[left=1in,right=1in,top=0.9in,bottom=0.9in]{geometry}
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{titling}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\setlength{\droptitle}{-1.5cm}
 \setlength\parindent{0pt}
 
-\newtheorem*{definition}{Definition}
-\newtheorem*{theorem}{Theorem}
+\makeatletter
+\def\BState{\State\hskip-\ALG@thistlm}
+\makeatother
 
+
+\title{Homework Report}
+\date{Last modified: \today}
+\author{Shawn Seymour\\ University of Minnesota Morris}
+
+\newtheorem*{definition}{Definition}
+\newtheorem{prop}{Proposition}
+\newtheorem*{theorem}{Theorem}
 
 \begin{document}
 
-\section*{Heuristics}
-In this report, I will use two vertex coloring heuristics as defined in class:
-\begin{itemize}
-\item \textbf{Heuristic A}: Greedy algorithm
-\item \textbf{Heuristic B}: Greedy algorithm plus degree sequencing
-\end{itemize}
+\maketitle
 
-Heuristic B is also known as the Welsh-Powell algorithm, which is defined in \cite{welsh}.
+\section*{Heuristics}
+In this report, I will discuss multiple vertex coloring heuristics. I will define them as follows:
+
+\subsection*{Heuristic A}
+
+Heuristic A is the greedy algorithm. The input is a simple graph \(G = (V, E)\).
+
+\begin{algorithm}
+\caption{Greedy algorithm}
+\begin{algorithmic}[1]
+\State Label each vertex in $V$, i.e. $v_1, v_2, \dots, v_n$
+\For{each $v \in V$}
+\State Assign a color $p_i$ to $v_i$ using the smallest available $p_i$
+\EndFor
+\end{algorithmic}
+\end{algorithm}
+
+\subsection*{Heuristic B}
+
+Heuristic B is the greedy algorithm with degree sequencing. It orders the vertices according to the decreasing value of their degree. This is also known as the Welsh-Powell algorithm, which is defined in \cite{welsh}.
+
+\begin{algorithm}
+\caption{Welsh-Powell algorithm}
+\begin{algorithmic}[1]
+\State Label each vertex in $V$, i.e. $v_1, v_2, \dots, v_n$, such that $d_G(v_1) \geq d_G(v_2) \geq \dots \geq d_G(v_n)$
+\ForAll{$v \in V$}
+\State Assign a color $p_i$ to $v_i$ using the smallest available $p_i$
+\EndFor
+\end{algorithmic}
+\end{algorithm}
 
 \section*{Construct a graph}
 Construct a simple graph, \(G = (V, E)\), such that:
@@ -37,7 +74,7 @@ I constructed a simple graph, \(G = (V, E)\), such that \(\Delta(G) = 3\) and \(
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.6]{graph-1.png}
+\includegraphics[scale=0.6]{images/graph-1.png}
 \caption{Uncolored original graph \(G\)}
 \end{figure}
 
@@ -45,7 +82,7 @@ By applying \emph{heuristic B}, we get the following coloring. The numbers indic
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.6]{graph-2.png}
+\includegraphics[scale=0.6]{images/graph-2.png}
 \caption{Coloring from applying heuristic B}
 \end{figure}
 
@@ -57,7 +94,7 @@ We can see that this is a bipartite graph, defined above by \cite{bondymurty}. T
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.6]{graph-3.png}
+\includegraphics[scale=0.6]{images/graph-3.png}
 \caption{Optimal coloring of graph \(G\)}
 \end{figure}
 
@@ -76,7 +113,7 @@ I constructed a simple crown graph, \(H = (V, E)\). I've let \(|V| = 10\) for th
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.38]{graph-4.png}
+\includegraphics[scale=0.38]{images/graph-4.png}
 \caption{Uncolored original graph \(H\)}
 \end{figure}
 
@@ -84,7 +121,7 @@ We can see that \(\Delta(G) = 4\). We can also see \(d(v) = 4\) for all \(v \in 
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.38]{graph-5.png}
+\includegraphics[scale=0.38]{images/graph-5.png}
 \caption{Worst-case coloring of \(H\) using either greedy heuristic}
 \end{figure}
 
@@ -104,9 +141,11 @@ The proof of \emph{Brook's Theorem} can be found in \cite{lovasz}. Overall, heur
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.38]{graph-6.png}
+\includegraphics[scale=0.38]{images/graph-6.png}
 \caption{Optimal coloring of \(H\)}
 \end{figure}
+
+\newpage
 
 \begin{thebibliography}{9}
 \bibitem{bondymurty}

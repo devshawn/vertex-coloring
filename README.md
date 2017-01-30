@@ -1,6 +1,6 @@
-# vertex-coloring
-Materials, notes, and code for a directed study of vertex coloring and related graph theory.
+# Vertex Coloring
+Materials, notes, and code for a directed study on vertex coloring and related graph theory.
 
-| Homework Assignments & Write-Ups |
+| List of work |
 | --- |
-| [Week 1 Homework](homework/week-1/homework-1.pdf) |
+| [Report write up on homework](work/work.pdf) |
