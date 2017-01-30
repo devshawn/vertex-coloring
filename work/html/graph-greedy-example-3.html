@@ -34,38 +34,34 @@
 
     var nodes = [
         // Basic
-        // {id: 1, label: "", x: 275, y: 0},
-        // {id: 2, label: "", x: 425, y: 0},
-        // {id: 3, label: "", x: 150, y: 75},
-        // {id: 4, label: "", x: 550, y: 75},
-        // {id: 5, label: "", x: 100, y: 200},
-        // {id: 6, label: "", x: 600, y: 200},
-        // {id: 7, label: "", x: 150, y: 325},
-        // {id: 8, label: "", x: 550, y: 325},
-        // {id: 9, label: "", x: 275, y: 400},
-        // {id: 10, label: "", x: 420, y: 400}
+        // {id: 1, label: "", x: 200, y: 100},
+        // {id: 2, label: "", x: 400, y: 100},
+        // {id: 3, label: "", x: 200, y: 300},
+        // {id: 4, label: "", x: 400, y: 300},
+        // {id: 5, label: "", x: 300, y: 50},
+        // {id: 6, label: "", x: 100, y: 200},
+        // {id: 7, label: "", x: 300, y: 350},
+        // {id: 8, label: "", x: 500, y: 200}
 
         // Worst Case
-        // {id: 1, label: "1", group: 1, x: 275, y: 0},
-        // {id: 2, label: "3", group: 2, x: 425, y: 0},
-        // {id: 3, label: "5", group: 3, x: 150, y: 75},
-        // {id: 4, label: "7", group: 4, x: 550, y: 75},
-        // {id: 5, label: "9", group: 5, x: 100, y: 200},
-        // {id: 6, label: "10", group: 5, x: 600, y: 200},
-        // {id: 7, label: "8", group: 4, x: 150, y: 325},
-        // {id: 8, label: "6", group: 3, x: 550, y: 325},
-        // {id: 9, label: "4", group: 2, x: 275, y: 400},
-        // {id: 10, label: "2", group: 1, x: 420, y: 400}
+        // {id: 1, label: "5", group: 2, x: 200, y: 100},
+        // {id: 2, label: "6", group: 3, x: 400, y: 100},
+        // {id: 3, label: "7", group: 4, x: 200, y: 300},
+        // {id: 4, label: "8", group: 5, x: 400, y: 300},
+        // {id: 5, label: "1", group: 1, x: 300, y: 50},
+        // {id: 6, label: "2", group: 1, x: 100, y: 200},
+        // {id: 7, label: "4", group: 1, x: 300, y: 350},
+        // {id: 8, label: "3", group: 1, x: 500, y: 200}
 
         // Best Case
-        {id: 1, label: "1", group: 1, x: 200, y: 100},
-        {id: 2, label: "2", group: 1, x: 400, y: 100},
-        {id: 3, label: "3", group: 1, x: 200, y: 300},
-        {id: 4, label: "4", group: 1, x: 400, y: 300},
-        {id: 5, label: "5", group: 1, x: 300, y: 50},
-        {id: 6, label: "6", group: 1, x: 100, y: 200},
-        {id: 7, label: "7", group: 1, x: 300, y: 350},
-        {id: 8, label: "8", group: 1, x: 500, y: 200}
+        {id: 1, label: "5", group: 2, x: 200, y: 100},
+        {id: 2, label: "6", group: 3, x: 400, y: 100},
+        {id: 3, label: "7", group: 4, x: 200, y: 300},
+        {id: 4, label: "8", group: 5, x: 400, y: 300},
+        {id: 5, label: "1", group: 5, x: 300, y: 50},
+        {id: 6, label: "2", group: 3, x: 100, y: 200},
+        {id: 7, label: "4", group: 3, x: 300, y: 350},
+        {id: 8, label: "3", group: 5, x: 500, y: 200}
 
     ];
     var edges = [
@@ -80,7 +76,10 @@
       {from: 3, to: 8},
       {from: 3, to: 7},
       {from: 4, to: 6},
-      {from: 4, to: 7}
+      {from: 4, to: 7},
+      {from: 3, to: 4},
+      {from: 1, to: 2}
+
     ]
 
     // create a network

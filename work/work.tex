@@ -29,11 +29,11 @@
 \maketitle
 
 \section*{Heuristics}
-In this report, I will discuss multiple vertex coloring heuristics. I will define them as follows:
+In this report, I will discuss multiple vertex coloring heuristics. The input for all heuristics defined here is a simple graph \(G = (V, E)\). I will define them as follows:
 
 \subsection*{Heuristic A}
 
-Heuristic A is the greedy algorithm. The input is a simple graph \(G = (V, E)\).
+Heuristic A is the greedy algorithm. 
 
 \begin{algorithm}
 \caption{Greedy algorithm}
@@ -58,6 +58,23 @@ Heuristic B is the greedy algorithm with degree sequencing. It orders the vertic
 \EndFor
 \end{algorithmic}
 \end{algorithm}
+
+\subsection*{Heuristic C}
+
+Heuristic C colors a graph by finding maximal independent sets of \(G\). 
+
+\begin{algorithm}
+\caption{Coloring via maximal independent set algorithm}
+\begin{algorithmic}[1]
+\While{$G$ is non-empty}
+\State Find a maximal independent set of $G$, i.e. $S_i$
+\State Color all vertices in $S_i$ with color $p$, where $p$ is the smallest color available
+\State Let $G \leftarrow G[V \setminus S_i ] $
+\EndWhile
+\end{algorithmic}
+\end{algorithm}
+
+\newpage
 
 \section*{Findings}
 
@@ -103,6 +120,34 @@ We can see that this is a bipartite graph, defined above by \cite{bondymurty}. T
 \caption{Optimal coloring of graph \(G\)}
 \end{figure}
 
+\begin{prop}
+Heuristic C also does not always produce an optimal solution, i.e. it does not always produce a minimum coloring of a graph.
+\end{prop}
+
+\subsection*{Example 2}
+To show this, I will create another example that satisfies conditions \((1)\) and \((2)\) from above. I've constructed a graph \(K = (V,E)\) for this example.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.38]{images/mis-1.png}
+\caption{Uncolored original graph \(K\)}
+\end{figure}
+
+By applying heuristic C and finding maximal independent sets, we see that \(K\) is \emph{5-colorable}. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.38]{images/mis-2.png}
+\caption{Coloring of \(K\) after applying heuristic C}
+\end{figure}
+
+This is a non-optimal solution. We can see that the subgraph created by vertices \(\{5, 6, 7, 8\}\) is complete and thus we need at least 4 colors. This graph is \emph{4-colorable} however, meaning \(\chi^{*}(K) = 4\). Thus, we can see that heuristic C does not always give us an optimal solution.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.38]{images/mis-3.png}
+\caption{Optimal coloring of \(K\)}
+\end{figure}
 
 \begin{prop}
 Heuristic A and heuristic B have an upper bound of \(\Delta + 1\).
@@ -114,7 +159,7 @@ To show this, I will create another example that satisfies conditions \((1)\) an
 A crown graph \(CR_n = (V, E)\) is an undirected graph with two sets of vertices where \(V = V_1 \cup V_2\) with an edge from \(v_i \in V_1\) to \(v_{j} \in V_2\) whenever \(i \neq j\). A crown graph can also be viewed as a complete bipartite graph where the edges of a perfect matching have been removed.
 \end{definition}
 
-\subsection*{Example 2}
+\subsection*{Example 3}
 
 I constructed a simple crown graph, \(H = (V, E)\). I've let \(|V| = 10\) for this example.
 
@@ -137,8 +182,6 @@ In Figure 5, using either heuristic with this ordering, we get \(\chi(H) = 5\). 
 \textbf{In General}: Let's take a look at how this looks in general. Let \(P = (V, E)\) be a simple, complete graph. \newline
 
 We can see that \(\chi(H) = \Delta(H) + 1\). This is very easy to see in a \emph{complete} graph, where all vertices are connected to every other vertex. This means all vertices have degree \(|V| - 1\). Thus, every time we color a node, a new color is needed. And since we have \(\Delta(P) = |V| - 1\) and \(|V|\) vertices, we will need \(\Delta(P) + 1\) colors. This is stated in \emph{Brooks' Theorem}.
-
-\newpage
 
 \begin{theorem}[Brooks' Theorem]
 For any connected undirected graph \(G\) with maximum degree \(\Delta\), the chromatic number of \(G\) is at most \(\Delta\) unless \(G\) is a complete graph or an odd cycle, in which case the chromatic number is \(\Delta + 1\).
