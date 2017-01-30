@@ -1,1 +1,8 @@
 *.synctex.gz
+*.mp
+*.aux
+*.bbl
+*.blg
+*.tmp
+*.tui
+*.log
