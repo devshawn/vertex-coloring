@@ -6,6 +6,10 @@ public class ColoringResult {
     private ColoringHeuristic heuristicUsed;
     private int[] colors;
 
+    public ColoringResult() {
+
+    }
+
     public ColoringResult(int[] result, ColoringHeuristic heuristicUsed) {
 
         // Find how many colors we used

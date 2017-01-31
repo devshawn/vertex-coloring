@@ -12,16 +12,19 @@ public class Coloring {
 
     // Apply a given heuristic to the graph
     public ColoringResult applyHeuristic(ColoringHeuristic heuristic) {
+        ColoringResult result = new ColoringResult();
+
         switch(heuristic) {
             case GREEDY:
-                return applyGreedyHeuristic();
-            case MAXIMAL_INDEPENDENT_SET:
+                result = applyGreedyHeuristic();
                 break;
             case WELSH_POWELL:
                 break;
+            case MAXIMAL_INDEPENDENT_SET:
+                break;
         }
 
-        return null;
+        return result;
     }
 
     // Implemented heuristics
