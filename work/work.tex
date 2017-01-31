@@ -209,6 +209,14 @@ Heuristic A and Heuristic B produce a feasible, proper coloring of input graph \
 
 Let \(G = (V, E)\) be a simple graph. Assume that two vertices, say \(v_1, v_2 \in V\), are connected by an edge \(e_1 \in E\). Assume that \(v_1, v_2\) are colored the same color, say \(p_1\). We know that in both heuristics, we assign the smallest color \(p_i\) that is not being used by any of the neighboring vertices connected by an edge \(e_i\). WLOG, the heuristic would color \(v_1\) color \(p_1\). The next iteration, while vertex \(v_2\) is selected, the heuristic would see color \(p_1\) is assigned to a neighboring vertex \((v_1)\), and assign the next available color \(p_2\). Thus, we've reached a contradiction.
 
+\subsection*{Complexity of Vertex Coloring}
+\begin{prop}
+Vertex coloring is an NP-hard problem.
+\end{prop}
+
+Coloring a graph is computationally complex. It is NP-hard to compute the chromatic number of a given graph \cite{garey}. It is NP-complete to decide if a given graph has a \emph{k-coloring} for a given \(k\). This is because it is easy to verify if a coloring of the given graph is a \emph{k-coloring} in polynomial time. This can be done by iterating through the list of edges and checking that each attached vertex has a different color.\newline
+
+
 
 \begin{thebibliography}{9}
 \bibitem{bondymurty}
@@ -218,6 +226,9 @@ American Elsevier Publishing, New York, NY.
 
 \bibitem{johnson}
 Johnson, D. S. [1974], \emph{Worst-case behavior of graph coloring algorithms}, Proc. 5th Southeastern Conf. on Combinatorics, Graph Theory, and Computing, Utilitas Mathematicae, Winnipeg, pp. 513–527.
+
+\bibitem{garey}
+Garey, M. R., Johnson, D. S., \& Stockmeyer, L. [1976], \emph{Some simplified NP-complete graph problems}, Theoretical computer science, 1(3), 237-267.
 
 \bibitem{kordecki}
 Kordecki, W. and A. Łyczkowska-Hanćkowiak [2016], \emph{Greedy online colouring with buffering}, arXiv preprint arXiv:1601.00252.
