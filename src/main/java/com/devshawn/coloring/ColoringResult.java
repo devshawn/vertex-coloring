@@ -1,5 +1,7 @@
 package com.devshawn.coloring;
 
+import java.util.Arrays;
+
 public class ColoringResult {
     private int[] result;
     private int highestColor;
@@ -13,19 +15,19 @@ public class ColoringResult {
     public ColoringResult(int[] result, ColoringHeuristic heuristicUsed) {
 
         // Find how many colors we used
-        for(int i = 0; i < result.length; i++) {
-            int highestColor = -1;
+        int highestColor = -1;
 
+        for(int i = 0; i < result.length; i++) {
             if(result[i] > highestColor) {
                 highestColor = result[i];
             }
-
-            // Add 1 as colors start with 0
-            this.highestColor = highestColor + 1;
         }
 
+        // Add 1 as colors start with 0
+        this.highestColor = highestColor + 1;
+
         // Count our color usage
-        this.colors = new int[highestColor];
+        this.colors = new int[this.highestColor];
         for(int i = 0; i < result.length; i++) {
             colors[result[i]]++;
         }
