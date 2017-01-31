@@ -33,7 +33,7 @@ In this report, I will discuss multiple vertex coloring heuristics. The input fo
 
 \subsection*{Heuristic A}
 
-Heuristic A is the greedy algorithm. 
+Heuristic A is the greedy algorithm.
 
 \begin{algorithm}
 \caption{Greedy algorithm}
@@ -61,7 +61,7 @@ Heuristic B is the greedy algorithm with degree sequencing. It orders the vertic
 
 \subsection*{Heuristic C}
 
-Heuristic C colors a graph by finding maximal independent sets of \(G\). 
+Heuristic C colors a graph by finding maximal independent sets of \(G\).
 
 \begin{algorithm}
 \caption{Coloring via maximal independent set algorithm}
@@ -133,7 +133,7 @@ To show this, I will create another example that satisfies conditions \((1)\) an
 \caption{Uncolored original graph \(K\)}
 \end{figure}
 
-By applying heuristic C and finding maximal independent sets, we see that \(K\) is \emph{5-colorable}. 
+By applying heuristic C and finding maximal independent sets, we see that \(K\) is \emph{5-colorable}.
 
 \begin{figure}[H]
 \centering
@@ -195,12 +195,25 @@ The proof of \emph{Brook's Theorem} can be found in \cite{lovasz}. Overall, heur
 \caption{Optimal coloring of \(H\)}
 \end{figure}
 
+\newpage
+
+\begin{prop}
+Heuristic A and Heuristic B have a running time of $O(|V| + |E|)$.
+\end{prop}
+
+It is possible to implement heuristic A and heuristic B efficiently and achieve a linear running time \cite{kubale}. By using an adjacency list representation of a graph \(G = (V, E)\), the greedy algorithm will look once at each vertex and each edge twice. This is because for each vertex, all of its neighbors are checked. This leads to the algorithm crossing each edge twuce. As this is still linear, we know \(O(|V| + 2|E|) = O(|V| + |E|)\).
+
+\begin{prop}
+Heuristic A and Heuristic B produce a feasible, proper coloring of input graph \(G = (V, E)\).
+\end{prop}
+
+Let \(G = (V, E)\) be a simple graph. Assume that two vertices, say \(v_1, v_2 \in V\), are connected by an edge \(e_1 \in E\). Assume that \(v_1, v_2\) are colored the same color, say \(p_1\). We know that in both heuristics, we assign the smallest color \(p_i\) that is not being used by any of the neighboring vertices connected by an edge \(e_i\). WLOG, the heuristic would color \(v_1\) color \(p_1\). The next iteration, while vertex \(v_2\) is selected, the heuristic would see color \(p_1\) is assigned to a neighboring vertex \((v_1)\), and assign the next available color \(p_2\). Thus, we've reached a contradiction.
 
 
 \begin{thebibliography}{9}
 \bibitem{bondymurty}
 Bondy, J.A. and U.S.R. Murty [1976],
-\emph{Graph Theory with Applications},
+\emph{Graph theory with applications},
 American Elsevier Publishing, New York, NY.
 
 \bibitem{johnson}
@@ -208,6 +221,9 @@ Johnson, D. S. [1974], \emph{Worst-case behavior of graph coloring algorithms}, 
 
 \bibitem{kordecki}
 Kordecki, W. and A. Łyczkowska-Hanćkowiak [2016], \emph{Greedy online colouring with buffering}, arXiv preprint arXiv:1601.00252.
+
+\bibitem{kubale}
+Kubale, Marek [2004], \emph{Graph colorings}, Vol. 352, American Mathematical Soc.
 
 \bibitem{lovasz}
 Lovász, L. [1975], \emph{Three short proofs in graph theory}, Journal of Combinatorial Theory, Series B, 19(3), 269-271.

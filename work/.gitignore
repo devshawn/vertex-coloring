@@ -6,3 +6,5 @@
 *.tmp
 *.tui
 *.log
+*.fls
+*.fdb_latexmk
