@@ -1,8 +1,6 @@
 package com.devshawn.coloring;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Coloring {
 
@@ -22,6 +20,7 @@ public class Coloring {
                 result = applyWelshPowell();
                 break;
             case MAXIMAL_INDEPENDENT_SET:
+                result = applyMaximalIndependentSet();
                 break;
         }
 
@@ -129,6 +128,58 @@ public class Coloring {
 
 
         return new ColoringResult(result, ColoringHeuristic.WELSH_POWELL);
+    }
+
+    private ColoringResult applyMaximalIndependentSet() {
+
+        // Make result array of vertices, assign no color to them
+        int[] result = new int[graph.length];
+        for(int i = 0; i < graph.length; i++) result[i] = -1;
+
+        // Copy our graph so we can manipulate it
+        int[][] newGraph = new int[graph.length][graph.length];
+
+        for(int i = 0; i < graph.length; i++) {
+            for(int j = 0; j <graph.length; j++) {
+                newGraph[i][j] = graph[i][j];
+            }
+        }
+
+        Set<Integer> vertices = new HashSet<>();
+        for(int i = 0; i < graph.length; i++) {
+            vertices.add(i);
+        }
+
+        // Color using MIS heuristic
+        int color = 0;
+        while(!vertices.isEmpty()) {
+            Set<Integer> tempVertices = new HashSet<>(vertices);
+            Set<Integer> set = new HashSet<>();
+
+            // Find a maximal independent set
+            while(!tempVertices.isEmpty()) {
+                Integer i = tempVertices.iterator().next();
+                set.add(i);
+                vertices.remove(i);
+                tempVertices.remove(i);
+
+                for(int k = 0; k < graph.length; k++) {
+                    if(graph[i][k] == 1) {
+                        tempVertices.remove(k);
+
+                    }
+                }
+            }
+
+            // Color the MIS with the next color
+            for(int i : set) {
+                result[i] = color;
+            }
+
+            color++;
+        }
+
+        return new ColoringResult(result, ColoringHeuristic.MAXIMAL_INDEPENDENT_SET);
     }
 
     // Simple functions to get information about the graph
