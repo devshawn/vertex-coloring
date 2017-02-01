@@ -1,5 +1,7 @@
 package com.devshawn.coloring;
 
+import java.util.Arrays;
+
 public class Coloring {
 
     private int[][] graph;

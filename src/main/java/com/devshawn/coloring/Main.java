@@ -60,7 +60,6 @@ public class Main {
                 break;
             case 3:
                 System.exit(0);
-                break;
             default:
                 output.println("Please choose an option.");
                 output.flush();
@@ -84,11 +83,12 @@ public class Main {
 
         int[][] graph = GraphGenerator.simple(vertices, percentage);
 
-        output.println(GraphGenerator.isSymmetric(graph));
-        output.flush();
-
         Coloring coloring = new Coloring();
         coloring.setGraph(graph);
+
+        output.println("Edges generated: " + coloring.getEdgeCount());
+        output.flush();
+
         ColoringResult result = coloring.applyHeuristic(ColoringHeuristic.GREEDY);
         result.printSummary(output);
         sc.nextLine();

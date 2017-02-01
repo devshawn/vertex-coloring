@@ -47,9 +47,6 @@ public class ColoringResult {
 
     public String getSummary() {
         String string = "The graph was colored with the " + heuristicUsed.getName() + " heuristic.";
-        string += "\r\n\tColors used: " + highestColor;
-
-        string += "\r\n\t-----------------------------------";
 
         string += "\r\n\tColor usage:";
         for(int i = 0; i < colors.length; i++) {
@@ -62,6 +59,10 @@ public class ColoringResult {
         for(int i = 0; i < result.length; i++) {
             string += "\r\n\tVertex " + i + " => color " + result[i];
         }
+
+        string += "\r\n\t-----------------------------------";
+
+        string += "\r\n\tColors used: " + highestColor;
 
         return string;
     }

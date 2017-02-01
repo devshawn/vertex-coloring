@@ -18,13 +18,13 @@ public class ColoringResultSpec {
         ColoringResult result = new ColoringResult(results, ColoringHeuristic.GREEDY);
 
         String expectedResult = "The graph was colored with the greedy heuristic.";
-        expectedResult += "\r\n\tColors used: 1";
-        expectedResult += "\r\n\t-----------------------------------";
         expectedResult += "\r\n\tColor usage:";
         expectedResult += "\r\n\tColor 0 => 1";
         expectedResult += "\r\n\t-----------------------------------";
         expectedResult += "\r\n\tVertex to color mapping:";
         expectedResult += "\r\n\tVertex 0 => color 0";
+        expectedResult += "\r\n\t-----------------------------------";
+        expectedResult += "\r\n\tColors used: 1";
 
         assertEquals(expectedResult, result.getSummary());
     }
