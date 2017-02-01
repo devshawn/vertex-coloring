@@ -1,15 +1,23 @@
 package com.devshawn.coloring;
 
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
 
-    private static Scanner sc = new Scanner(System.in);
+    static Scanner sc;
+    static PrintWriter output;
+    static StringWriter outputString;
 
     // For testing without writing JUnit tests
 
     public static void main(String[] args) {
+
+        sc = new Scanner(System.in);
+        output = new PrintWriter(System.out);
 
         while(true) {
             printOptions();
@@ -18,11 +26,24 @@ public class Main {
 
     }
 
+    static void main(Scanner scanner, StringWriter myOutput) {
+        sc = scanner;
+        outputString = myOutput;
+        output = new PrintWriter(outputString);
+
+        while(true) {
+            printOptions();
+            pickOption();
+        }
+    }
+
     private static void printOptions() {
-        System.out.println("Welcome to the vertex coloring library! Please pick an option below by typing its number:");
-        System.out.println("\r\n\t1. Enter your own graph");
-        System.out.println("\r\n\t2. Generate a graph with a specified number of vertices and number of edges");
-        System.out.println("\r\n\t3. Generate a graph with a specified number of vertices and percentage of edges\r\n");
+        output.println("Welcome to the vertex coloring library! Please pick an option below by typing its number:");
+        output.println("\r\n\t1. Enter your own graph");
+        output.println("\r\n\t2. Generate a graph with a specified number of vertices and percentage of edges");
+        output.println("\r\n\t3. Exit program\r\n");
+        output.flush();
+
     }
 
     private static void pickOption() {
@@ -35,47 +56,54 @@ public class Main {
                 enterGraph();
                 break;
             case 2:
-                System.out.println("Oops! Not implemented yet!");
-                break;
-            case 3:
                 generatePercentageGraph();
                 break;
+            case 3:
+                System.exit(0);
+                break;
             default:
-                System.out.println("Please choose an option.");
+                output.println("Please choose an option.");
+                output.flush();
                 break;
         }
     }
 
     private static void generatePercentageGraph() {
-        System.out.println("Please enter the number of vertices you want:");
+        output.println("Please enter the number of vertices you want:");
+        output.flush();
 
         int vertices = sc.nextInt();
         sc.nextLine();
 
-        System.out.println("Please enter the percentage at which an edge should be placed (i.e. 30):");
+        output.println("Please enter the percentage at which an edge should be placed (i.e. 30):");
+        output.flush();
+
         double percentage = sc.nextDouble();
         percentage = percentage / (double) 100;
         sc.nextLine();
 
         int[][] graph = GraphGenerator.simple(vertices, percentage);
 
-        System.out.println(GraphGenerator.isSymmetric(graph));
+        output.println(GraphGenerator.isSymmetric(graph));
+        output.flush();
 
         Coloring coloring = new Coloring();
         coloring.setGraph(graph);
         ColoringResult result = coloring.applyHeuristic(ColoringHeuristic.GREEDY);
-        result.printSummary();
+        result.printSummary(output);
+        sc.nextLine();
     }
 
     private static void enterGraph() {
-        System.out.println("Please enter the number of vertices your graph has: ");
+        output.println("Please enter the number of vertices your graph has: ");
+        output.flush();
 
         int vertices = sc.nextInt();
         sc.nextLine();
 
-        System.out.println("Please enter the adjacency matrix of your graph. Example for |V| = 3: ");
-        System.out.println("011\n101\n110\n");
-
+        output.println("Please enter the adjacency matrix of your graph. Example for |V| = 3: ");
+        output.println("011\n101\n110\n");
+        output.flush();
 
         int[][] graph = new int[vertices][];
 
@@ -92,6 +120,6 @@ public class Main {
         Coloring coloring = new Coloring();
         coloring.setGraph(graph);
         ColoringResult result = coloring.applyHeuristic(ColoringHeuristic.GREEDY);
-        result.printSummary();
+        result.printSummary(output);
     }
 }

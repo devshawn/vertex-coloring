@@ -1,5 +1,6 @@
 package com.devshawn.coloring;
 
+import java.io.PrintWriter;
 import java.util.Arrays;
 
 public class ColoringResult {
@@ -65,7 +66,8 @@ public class ColoringResult {
         return string;
     }
 
-    public void printSummary() {
-        System.out.println(getSummary());
+    public void printSummary(PrintWriter output) {
+        output.println(getSummary());
+        output.flush();
     }
 }

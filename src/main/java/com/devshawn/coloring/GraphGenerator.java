@@ -7,7 +7,7 @@ public class GraphGenerator {
     // this is referred to as the Erdos-Renyi model
     public static int[][] simple(int vertices, double probability) {
         if(probability < 0 || probability > 1) {
-            throw new ColoringException("Probability for generating a graph must be between 0 and 1.");
+            throw new ColoringException(ColoringException.INVALID_PROBABILITY);
         }
 
         int[][] graph = new int[vertices][vertices];

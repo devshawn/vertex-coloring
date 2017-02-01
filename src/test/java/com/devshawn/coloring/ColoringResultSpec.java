@@ -2,7 +2,12 @@ package com.devshawn.coloring;
 
 import org.junit.Test;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 public class ColoringResultSpec {
@@ -26,13 +31,14 @@ public class ColoringResultSpec {
 
     @Test
     public void printSummary() {
-        // test for coverage on this function
         int[] results = {0};
         ColoringResult result = new ColoringResult(results, ColoringHeuristic.GREEDY);
-
-        result.printSummary();
-        assertTrue(true);
+        StringWriter writer = new StringWriter();
+        result.printSummary(new PrintWriter(writer));
+        assertThat(writer.toString(), containsString("Colors used: 1"));
     }
+
+
 
 
 }
