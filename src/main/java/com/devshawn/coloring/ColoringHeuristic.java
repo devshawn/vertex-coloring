@@ -1,11 +1,10 @@
 package com.devshawn.coloring;
 
-import java.awt.*;
-
 public enum ColoringHeuristic {
     GREEDY ("greedy"),
     WELSH_POWELL ("welsh-powell"),
-    MAXIMAL_INDEPENDENT_SET ("maximal independent set");
+    MAXIMAL_INDEPENDENT_SET ("maximal independent set"),
+    DSATUR ("DSATUR");
 
     private String name;
 

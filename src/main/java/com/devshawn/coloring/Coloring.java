@@ -22,6 +22,9 @@ public class Coloring {
             case MAXIMAL_INDEPENDENT_SET:
                 result = applyMaximalIndependentSet();
                 break;
+            case DSATUR:
+                result = applyDSATUR();
+                break;
         }
 
         return result;
@@ -180,6 +183,81 @@ public class Coloring {
         }
 
         return new ColoringResult(result, ColoringHeuristic.MAXIMAL_INDEPENDENT_SET);
+    }
+
+    private ColoringResult applyDSATUR() {
+
+        // Make result array of vertices, assign no color to them
+        int[] result = new int[graph.length];
+        for(int i = 0; i < graph.length; i++) result[i] = -1;
+
+        // Calculate degree of each vertex
+        int[] degrees = new int[graph.length];
+        Integer[] orderedVertices = new Integer[graph.length];
+
+        for(int i = 0; i < graph.length; i++) {
+            orderedVertices[i] = i;
+            for(int j = 0; j < graph.length; j++) {
+                if(graph[i][j] == 1) {
+                    degrees[i]++;
+                }
+            }
+        }
+
+        // Sort our vertices by decreasing degree
+        List<Integer> indexList = Arrays.asList(orderedVertices);
+        Collections.sort(indexList, (left, right) -> (degrees[indexList.indexOf(right)] - degrees[indexList.indexOf(left)]));
+        orderedVertices = indexList.toArray(new Integer[graph.length]);
+        System.out.println(Arrays.toString(orderedVertices));
+
+        Set<Integer> vertices = new HashSet<>();
+        for(int i = 0; i < graph.length; i++) {
+            vertices.add(orderedVertices[i]);
+        }
+
+        Set<Integer>[] saturated = new Set[graph.length];
+        for(int i = 0; i < graph.length; i++) { saturated[i] = new HashSet<>(); }
+
+        int selectedVertex = orderedVertices[0];
+        while(!vertices.isEmpty()) {
+            int minimumColor = getMinimumColorFromSaturated(saturated, selectedVertex);
+            result[selectedVertex] = minimumColor;
+            vertices.remove(selectedVertex);
+
+            for(int i = 0; i < graph.length; i++) {
+                if(graph[selectedVertex][i] == 1) {
+                    saturated[i].add(minimumColor);
+                }
+            }
+            selectedVertex = getMaximumVertexFromSaturated(saturated, vertices);
+        }
+
+        return new ColoringResult(result, ColoringHeuristic.DSATUR);
+    }
+
+    private int getMaximumVertexFromSaturated(Set<Integer>[] saturated, Set<Integer> vertices) {
+        int max = -1;
+        int maxSize = -1;
+        for(int i = 0; i < graph.length; i++) {
+            if(maxSize < saturated[i].size() && vertices.contains(i)) {
+                max = i;
+                maxSize = saturated[i].size();
+            }
+        }
+
+        return max;
+    }
+
+    private int getMinimumColorFromSaturated(Set<Integer>[] saturated, int vertex) {
+        int color = -1;
+        for(int i = 0; i < graph.length; i++) {
+            if(!saturated[vertex].contains(i)) {
+                color = i;
+                break;
+            }
+        }
+
+        return color;
     }
 
     // Simple functions to get information about the graph
