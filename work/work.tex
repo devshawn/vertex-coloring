@@ -20,16 +20,57 @@
 \date{Last modified: \today}
 \author{Shawn Seymour\\ University of Minnesota Morris}
 
-\newtheorem*{definition}{Definition}
 \newtheorem{prop}{Proposition}
 \newtheorem*{theorem}{Theorem}
+
+\theoremstyle{definition}
+\newtheorem*{definition}{Definition}
+
+
 
 \begin{document}
 
 \maketitle
 
+\section*{Vertex Coloring}
+The vertex coloring problem (VCP) is one of the most common and most researched problems in graph theory. Vertex coloring is an assignment of colors, or labels, to each vertex in a graph \(G = (V, E)\) such that no edge connects two vertices of the same color. The vertex coloring problem aims to find the chromatic number of a graph, denoted \(\chi(G)\), the minimum number of colors needed to properly color a graph as defined above. The \emph{k-Colorability} problem asks where a graph can be colored with \(k\) colors.
+
+\begin{prop}
+Vertex coloring is a NP-hard problem.
+\end{prop}
+
+Coloring a graph is computationally complex. It is NP-hard to compute the chromatic number of a given graph \cite{garey}. 
+
+\begin{prop}
+The k-Colorability problem, i.e. can a given graph be colored in k-colors, is a NP-complete problem.
+\end{prop}
+
+To prove this, we need to reduce a known NP-complete problem to our coloring problem in polynomial time. By reducing a known NP-complete problem to k-Colorability, we can conclude that k-Colorability is NP-complete as all NP-complete problems are redicible to all other NP-complete problems \cite{gareynp}. We will reduce the well-known 3-SAT problem first to the 3-Colorability problem, and then from there reduce to the k-Colorability problem.
+
+\subsection*{3-Satisfiability (3-SAT)}
+The 3-SAT problem is an NP-complete problem that is a reduction of the original NP-complete problem, satisfiability (SAT). The 3-SAT problem is defined and proven to be NP-complete in \cite{gareynp}. 3-SAT consists of a conjunction of a number of clauses. A clause is a disjunction of a given number of propositions or their negations. We will assume all of our satisfiability problems are in conjunctive normal form (CNF). 3-SAT asks whether the variables can be assigned \emph{true} or \emph{false} in such a way that the whole expression evaluates to \emph{true}.
+
+\begin{definition}
+SAT is a conjunction of $m$ clauses, i.e. $C_1 \wedge C_2 \wedge \dots \wedge C_m$. Each clause is a disjunction of at most $n$ literals, i.e. $L_1 \vee L_2 \vee \dots \vee L_n$. Each literal can be a variable or negative of a variable, i.e. $x_1, \neg x_1, x_2, \neg x_2, \dots , x_k, \neg x_k$ where $k$ is the number of distinct literals. Each literal has a value of $true$ or $false$. 3-SAT is where each clause has exactly 3 literals \((n = 3)\).
+\end{definition}
+
+\subsection*{Reducing 3-SAT to 3-Colorability}
+3-Colorability is NP-complete and was proven by \cite{moret}. To show this reduction, we need to:
+
+\begin{enumerate}
+\item Given an instance of 3-SAT, construct an instance of 3-Colorability
+\item Show that the graph is 3-colorable, then the given 3-SAT problem is satisfied
+\end{enumerate}
+
+To show how this reduction can be done, I'll create an example 3-SAT problem and reduce it to 3-Colorability. Let's take the following 3-SAT expression:
+
+\begin{align*}
+\left( x_1 \vee \neg x_2 \vee \neg x_3 \right) \wedge \left( \neg x_1 \vee x_2 \vee x_3 \right) \wedge \left( x_1 \vee x_2 \vee x_3 \right)
+\end{align*}
+
+
 \section*{Heuristics}
-In this report, I will discuss multiple vertex coloring heuristics. The input for all heuristics defined here is a simple graph \(G = (V, E)\). I will define them as follows:
+As shown above, solving the VCP is very computationally heavy. There are heuristics that give a good, but not necessarily optimal, coloring of a given graph in polynomial time. I will be analyzing and comparing a few of the popular heuristics for solving the VCP. The input for all heuristics defined here is a simple graph \(G = (V, E)\). I will define them as follows:
 
 \subsection*{Heuristic A}
 
@@ -209,13 +250,6 @@ Heuristic A and Heuristic B produce a feasible, proper coloring of input graph \
 
 Let \(G = (V, E)\) be a simple graph. Assume that two vertices, say \(v_1, v_2 \in V\), are connected by an edge \(e_1 \in E\). Assume that \(v_1, v_2\) are colored the same color, say \(p_1\). We know that in both heuristics, we assign the smallest color \(p_i\) that is not being used by any of the neighboring vertices connected by an edge \(e_i\). WLOG, the heuristic would color \(v_1\) color \(p_1\). The next iteration, while vertex \(v_2\) is selected, the heuristic would see color \(p_1\) is assigned to a neighboring vertex \((v_1)\), and assign the next available color \(p_2\). Thus, we've reached a contradiction.
 
-\subsection*{Complexity of Vertex Coloring}
-\begin{prop}
-Vertex coloring is an NP-hard problem.
-\end{prop}
-
-Coloring a graph is computationally complex. It is NP-hard to compute the chromatic number of a given graph \cite{garey}. It is NP-complete to decide if a given graph has a \emph{k-coloring} for a given \(k\). This is because it is easy to verify if a coloring of the given graph is a \emph{k-coloring} in polynomial time. This can be done by iterating through the list of edges and checking that each attached vertex has a different color.\newline
-
 
 
 \begin{thebibliography}{9}
@@ -228,7 +262,10 @@ American Elsevier Publishing, New York, NY.
 Johnson, D. S. [1974], \emph{Worst-case behavior of graph coloring algorithms}, Proc. 5th Southeastern Conf. on Combinatorics, Graph Theory, and Computing, Utilitas Mathematicae, Winnipeg, pp. 513–527.
 
 \bibitem{garey}
-Garey, M. R., Johnson, D. S., \& Stockmeyer, L. [1976], \emph{Some simplified NP-complete graph problems}, Theoretical computer science, 1(3), 237-267.
+Garey, M. R., Johnson, D. S., and Stockmeyer, L. [1976], \emph{Some simplified NP-complete graph problems}, Theoretical computer science, 1(3), 237-267.
+
+\bibitem{gareynp}
+Garey, M.R. and Johnson, D.S. [2002], \emph{Computers and intractability} (Vol. 29), New York: wh freeman.
 
 \bibitem{kordecki}
 Kordecki, W. and A. Łyczkowska-Hanćkowiak [2016], \emph{Greedy online colouring with buffering}, arXiv preprint arXiv:1601.00252.
@@ -238,6 +275,12 @@ Kubale, Marek [2004], \emph{Graph colorings}, Vol. 352, American Mathematical So
 
 \bibitem{lovasz}
 Lovász, L. [1975], \emph{Three short proofs in graph theory}, Journal of Combinatorial Theory, Series B, 19(3), 269-271.
+
+\bibitem{moret}
+Moret, B.M. [1998], \emph{The theory of computation}, Addison-Wesley, Reading, Mass.
+
+\bibitem{sharma}
+Sharma, P. C. and Chaudhari, N.S. [2012], \emph{A new reduction from 3-SAT to graph k-colorability for frequency assignment problem}, Int. J. Comp. Applic, 23-27.
 
 \bibitem{welsh}
 Welsh, D. J. and Powell, M. B. [1967], \emph{An upper bound for the chromatic number of a graph and its application to timetabling problems}, The Computer Journal, 10(1), 85-86.
