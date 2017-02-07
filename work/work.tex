@@ -62,11 +62,26 @@ SAT is a conjunction of $m$ clauses, i.e. $C_1 \wedge C_2 \wedge \dots \wedge C_
 \item Show that the graph is 3-colorable, then the given 3-SAT problem is satisfied
 \end{enumerate}
 
-To show how this reduction can be done, I'll create an example 3-SAT problem and reduce it to 3-Colorability. Let's take the following 3-SAT expression:
+To show how this reduction can be done, I'll create an example 3-SAT problem and reduce it to 3-Colorability. This reduction will create a graph \(G = (V, E)\) having \((2n + 3m + 1)\) vertices and \((3n+6m)\) edges \cite{moret}. The process for creating the graph, described below, was taken from \cite{sharma}.\newline
+
+Let's take the following 3-SAT expression:
 
 \begin{align*}
-\left( x_1 \vee \neg x_2 \vee \neg x_3 \right) \wedge \left( \neg x_1 \vee x_2 \vee x_3 \right) \wedge \left( x_1 \vee x_2 \vee x_3 \right)
+E = \left( x_1 \vee \neg x_2 \vee \neg x_3 \right) \wedge \left( \neg x_1 \vee x_2 \vee x_3 \right) \wedge \left( x_1 \vee x_2 \vee x_3 \right)
 \end{align*}
+
+\subsubsection*{Creating the graph}
+\begin{enumerate}
+\item Create a \emph{triangle} for each variable, i.e. \(x_i\). Each has a common vertex \(B\), called the base vertex. This base vertex will be colored a color, say \(p_1\), so that the other two vertices correspond to the variable and it's negation. 
+\item Create a \emph{triangle} for each clause in the formula. 
+\item Connect each vertex of a clause triangle to the corresponding literal vertex.
+\end{enumerate}
+
+Following the above steps, we generate the following graph \(G\) from our 3-SAT expression \(E\):
+
+
+
+
 
 
 \section*{Heuristics}

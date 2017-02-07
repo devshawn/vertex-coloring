@@ -1,0 +1,161 @@
+<!doctype html>
+<html>
+<head>
+    <title>Example Graph</title>
+    <meta http-equiv="refresh" content="2">
+
+
+    <style>
+        body {
+            color: #d3d3d3;
+            font: 12pt arial;
+            background-color: #fff;
+        }
+
+        #mynetwork {
+            margin: 0 auto;
+            width: 800px;
+            height: 800px;
+            border: 1px solid #444444;
+            background-color: #fff;
+        }
+    </style>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.18.0/vis.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.18.0/vis.min.css" rel="stylesheet" type="text/css"/>
+</head>
+
+<body>
+
+<div id="mynetwork"></div>
+<script type="text/javascript">
+    var color = 'gray';
+    var len = undefined;
+
+    var nodes = [
+        // {id: 1, label: " B ", x: 0, y: 0},
+        // {id: 2, label: "x1 ", x: -250, y: 100},
+        // {id: 3, label: "-x1", x: -150, y: 100},
+        // {id: 4, label: "x2 ", x: -50, y: 100},
+        // {id: 5, label: "-x2", x: 50, y: 100},
+        // {id: 6, label: "x3 ", x: 150, y: 100},
+        // {id: 7, label: "-x3", x: 250, y: 100},
+        //
+        // {id: 8, label: "c1_1", x: -250, y: 200, font: {size: 15}},
+        // {id: 9, label: "c1_2", x: -150, y: 200, font: {size: 15}},
+        // {id: 10, label: "c1_3", x: -200, y: 300, font: {size: 15}},
+        // {id: 11, label: "c1_1", x: -50, y: 200, font: {size: 15}},
+        // {id: 12, label: "c2_2", x: 50, y: 200, font: {size: 15}},
+        // {id: 13, label: "c2_3", x: 0, y: 300, font: {size: 15}},
+        // {id: 14, label: "c3_1", x: 150, y: 200, font: {size: 15}},
+        // {id: 15, label: "c3_2", x: 250, y: 200, font: {size: 15}},
+        // {id: 16, label: "c3_3", x: 200, y: 300, font: {size: 15}},
+
+        {id: 1, label: " B ", x: 0, y: 0, group: 1},
+        {id: 2, label: "x1 ", x: -250, y: 100, group: 2},
+        {id: 3, label: "-x1", x: -150, y: 100, group: 3},
+        {id: 4, label: "x2 ", x: -50, y: 100, group: 2},
+        {id: 5, label: "-x2", x: 50, y: 100, group: 3},
+        {id: 6, label: "x3 ", x: 150, y: 100, group: 3},
+        {id: 7, label: "-x3", x: 250, y: 100, group: 2},
+
+        {id: 8, label: "c1_1", x: -250, y: 200, font: {size: 15}, group: 3},
+        {id: 9, label: "c1_2", x: -150, y: 200, font: {size: 15}, group: 2},
+        {id: 10, label: "c1_3", x: -200, y: 300, font: {size: 15}, group: 1},
+        {id: 11, label: "c1_1", x: -50, y: 200, font: {size: 15}, group: 2},
+        {id: 12, label: "c2_2", x: 50, y: 200, font: {size: 15}, group: 3},
+        {id: 13, label: "c2_3", x: 0, y: 300, font: {size: 15}, group: 1},
+        {id: 14, label: "c3_1", x: 150, y: 200, font: {size: 15}, group: 3},
+        {id: 15, label: "c3_2", x: 250, y: 200, font: {size: 15}, group: 1},
+        {id: 16, label: "c3_3", x: 200, y: 300, font: {size: 15}, group: 2},
+
+    ];
+    var edges = [
+        {from: 1, to: 2},
+        {from: 1, to: 3},
+        {from: 1, to: 4},
+        {from: 1, to: 5},
+        {from: 1, to: 6},
+        {from: 1, to: 7},
+        {from: 2, to: 3},
+        {from: 4, to: 5},
+        {from: 6, to: 7},
+
+        {from: 8, to: 9},
+        {from: 8, to: 10},
+        {from: 9, to: 10},
+
+        {from: 11, to: 12},
+        {from: 11, to: 13},
+        {from: 12, to: 13},
+
+        {from: 14, to: 15},
+        {from: 14, to: 16},
+        {from: 15, to: 16},
+
+        {from: 2, to: 8},
+        {from: 5, to: 9},
+        {from: 7, to: 10},
+
+        {from: 3, to: 11},
+        {from: 4, to: 12},
+        {from: 6, to: 13},
+
+        {from: 2, to: 14},
+        {from: 4, to: 15},
+        {from: 6, to: 16},
+
+
+
+    ]
+
+    // create a network
+    var container = document.getElementById('mynetwork');
+    var data = {
+        nodes: nodes,
+        edges: edges
+    };
+    var options = {
+        width: '800px',
+        height: '800px',
+        nodes: {
+            color: '#aaa',
+            shape: 'circle',
+            size: 40,
+            font: {
+                size: 20,
+                color: '#000000'
+            },
+            scaling: {
+              label: {
+                enabled: false
+              }
+            },
+            borderWidth: 2
+        },
+        edges: {
+            color: '#000000',
+            width: 2,
+            smooth: {
+                enabled: false
+            }
+        },
+        physics: {
+            enabled: false
+        },
+        interaction: {
+            dragNodes: false,// do not allow dragging nodes
+            zoomView: false, // do not allow zooming
+            dragView: false  // do not allow dragging
+        }
+
+    };
+    network = new vis.Network(container, data, options);
+    network.moveTo({
+        position: {x: 0, y: 0},
+        offset: {x: -width/2, y: -height/2},
+        scale: 1
+    })
+</script>
+</body>
+</html>
