@@ -79,7 +79,30 @@ E = \left( x_1 \vee \neg x_2 \vee \neg x_3 \right) \wedge \left( \neg x_1 \vee x
 
 Following the above steps, we generate the following graph \(G\) from our 3-SAT expression \(E\):
 
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.6]{images/3sat-1.png}
+\caption{\(E\) represented as a graph \(G\)}
+\end{figure}
 
+If we can properly color graph \(G\) with 3 colors, then the original 3-SAT is satisfiable and the truth values of the variables are denoted by the color they received. This graph is \emph{3-colorable} and the coloring is shown below.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.6]{images/3sat-2.png}
+\caption{A possible 3-coloring of \(G\)}
+\end{figure}
+
+As we see above, \emph{blue} is used for the base vertex and as part of some of the clause triangles. If we let \emph{yellow} denote \emph{true} and \emph{red} denote \emph{false}, we can see that our original 3-SAT is satisfied:
+
+\begin{align*}
+E &= \left( T \vee \neg T \vee \neg F \right) \wedge \left( \neg T \vee T \vee F \right) \wedge \left(T \vee T \vee F \right) \\
+&= \left( T \vee F \vee T \right) \wedge \left( F \vee T \vee F \right) \wedge \left(T \vee T \vee F \right) \\
+&= T \wedge T \wedge T \\
+&= True
+\end{align*}
+
+This shows an example of the reduction from 3-SAT to 3-Colorability. If \(G\) was unable to be colored with 3 colors, then we would know that \(E\) is unable to be satisfied.
 
 
 
