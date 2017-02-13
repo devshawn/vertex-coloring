@@ -1,5 +1,9 @@
 package com.devshawn.coloring.library;
 
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class GraphGenerator {
 
     // simple graph with a given number of vertices
@@ -33,5 +37,30 @@ public class GraphGenerator {
         }
 
         return true;
+    }
+
+    public static int[][] matrixStringToGraph(String str) {
+        Scanner sc = new Scanner(str);
+
+        // Find number of vertices
+        Matcher m = Pattern.compile("\r\n|\r|\n").matcher(str);
+        int vertices = 1;
+        while (m.find())
+        {
+            vertices++;
+        }
+
+        int[][] graph = new int[vertices][];
+
+        for(int i = 0; i < vertices; i++) {
+            String[] line = sc.nextLine().split("");
+            int[] numbers = new int[vertices];
+            for(int j = 0; j < line.length; j++) {
+                numbers[j] = Integer.parseInt(line[j]);
+            }
+            graph[i] = numbers;
+        }
+
+        return graph;
     }
 }

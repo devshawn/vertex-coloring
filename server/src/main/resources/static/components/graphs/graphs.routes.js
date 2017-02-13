@@ -9,5 +9,14 @@ angular.module('coloring')
             controllerAs: "graphsController"
         };
 
+        var graphsCreateState = {
+            name: "graphs-create",
+            url: "/graphs/create",
+            templateUrl: "components/graphs/graphs-create.html",
+            controller: "GraphsCreateController",
+            controllerAs: "graphsCreateController"
+        };
+
         $stateProvider.state(graphsState);
+        $stateProvider.state(graphsCreateState);
     });

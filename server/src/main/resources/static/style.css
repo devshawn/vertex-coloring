@@ -76,3 +76,20 @@
     background: #e67e22;
     color: #fff;
 }
+
+h2 {
+    margin: 0;
+}
+
+.margin-bottom {
+    margin-bottom: 25px;
+}
+
+.btn-full {
+    width: 100%;
+}
+
+.table-header-button {
+    width: 80px;
+    text-align: center;
+}

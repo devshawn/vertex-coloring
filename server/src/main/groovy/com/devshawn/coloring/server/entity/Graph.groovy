@@ -11,4 +11,6 @@ class Graph {
 
     String name
     int[][] matrix
+    int vertices
+    int edges
 }

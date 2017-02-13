@@ -5,4 +5,10 @@ angular.module('coloring')
         GraphService.query(function(results) {
             self.graphs = results;
         });
+
+        self.deleteGraph = function(id) {
+            GraphService.delete({id: id}, function(success) {
+                console.log("Deleted");
+            });
+        }
     });

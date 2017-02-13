@@ -1,12 +1,27 @@
-<table datatable="ng" class="table table-striped table-bordered  row-border hover">
-    <thead>
-    <tr>
-        <th>ID</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="graph in graphsController.graphs">
-        <td>{{ graph.name }}
-    </tr>
-    </tbody>
-</table>
+<div class="col-xs-12 margin-bottom clearfix">
+    <div class="pull-left">
+        <h2>List of Graphs</h2>
+    </div>
+    <div class="pull-right">
+        <a ui-sref="graphs-create" class="btn btn-primary">Create Graph</a>
+    </div>
+</div>
+
+<div class="col-xs-12">
+    <table datatable="ng" class="table table-striped table-bordered  row-border hover">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th class="table-header-button">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="graph in graphsController.graphs">
+            <td>{{ graph.id }}</td>
+            <td>{{ graph.name }}</td>
+            <td class="text-center"><button class="btn btn-xs btn-danger" ng-click="graphsController.deleteGraph(graph.id)"><span class="glyphicon glyphicon-trash"></span></button></td>
+        </tr>
+        </tbody>
+    </table>
+</div>

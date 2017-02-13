@@ -1,5 +1,6 @@
 package com.devshawn.coloring.server.service
 
+import com.devshawn.coloring.library.GraphGenerator
 import com.devshawn.coloring.server.entity.Graph
 import com.devshawn.coloring.server.repository.GraphRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -23,5 +24,15 @@ class GraphService {
 
     List<Graph> list() {
         return graphRepository.findAll()
+    }
+
+    Graph create(Map<String, String> graphData) {
+        int[][] matrix = GraphGenerator.matrixStringToGraph(graphData.get('matrix'))
+        Graph graph = new Graph(name: graphData.get('name'), matrix: matrix, vertices: matrix.length)
+        return save(graph)
+    }
+
+    void delete(String id) {
+        graphRepository.delete(id)
     }
 }
