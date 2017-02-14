@@ -11,22 +11,29 @@
 \setlength{\droptitle}{-1.5cm}
 \setlength\parindent{0pt}
 
+\newcounter{heuristic} \setcounter{heuristic}{0}
+\renewcommand{\theheuristic}{\Alph{heuristic}}
+
+\newenvironment{heuristic}[1]%
+{
+\refstepcounter{heuristic}
+\subsection*{Heuristic \theheuristic}
+}%
+{}
+
 \makeatletter
 \def\BState{\State\hskip-\ALG@thistlm}
 \makeatother
-
 
 \title{Homework Report}
 \date{Last modified: \today}
 \author{Shawn Seymour\\ University of Minnesota Morris}
 
 \newtheorem{prop}{Proposition}
-\newtheorem*{theorem}{Theorem}
+\newtheorem{theorem}{Theorem}
 
 \theoremstyle{definition}
-\newtheorem*{definition}{Definition}
-
-
+\newtheorem{definition}{Definition}
 
 \begin{document}
 
@@ -39,7 +46,7 @@ The vertex coloring problem (VCP) is one of the most common and most researched 
 Vertex coloring is a NP-hard problem.
 \end{prop}
 
-Coloring a graph is computationally complex. It is NP-hard to compute the chromatic number of a given graph \cite{garey}. 
+Coloring a graph is computationally complex. It is NP-hard to compute the chromatic number of a given graph \cite{garey}.
 
 \begin{prop}
 The k-Colorability problem, i.e. can a given graph be colored in k-colors, is a NP-complete problem.
@@ -72,8 +79,8 @@ E = \left( x_1 \vee \neg x_2 \vee \neg x_3 \right) \wedge \left( \neg x_1 \vee x
 
 \subsubsection*{Creating the graph}
 \begin{enumerate}
-\item Create a \emph{triangle} for each variable, i.e. \(x_i\). Each has a common vertex \(B\), called the base vertex. This base vertex will be colored a color, say \(p_1\), so that the other two vertices correspond to the variable and it's negation. 
-\item Create a \emph{triangle} for each clause in the formula. 
+\item Create a \emph{triangle} for each variable, i.e. \(x_i\). Each has a common vertex \(B\), called the base vertex. This base vertex will be colored a color, say \(p_1\), so that the other two vertices correspond to the variable and it's negation.
+\item Create a \emph{triangle} for each clause in the formula.
 \item Connect each vertex of a clause triangle to the corresponding literal vertex.
 \end{enumerate}
 
@@ -110,9 +117,9 @@ This shows an example of the reduction from 3-SAT to 3-Colorability. If \(G\) wa
 \section*{Heuristics}
 As shown above, solving the VCP is very computationally heavy. There are heuristics that give a good, but not necessarily optimal, coloring of a given graph in polynomial time. I will be analyzing and comparing a few of the popular heuristics for solving the VCP. The input for all heuristics defined here is a simple graph \(G = (V, E)\). I will define them as follows:
 
-\subsection*{Heuristic A}
+\heuristic{}\label{heuristic-greedy}
 
-Heuristic A is the greedy algorithm.
+Heuristic \ref{heuristic-greedy} is the greedy algorithm.
 
 \begin{algorithm}
 \caption{Greedy algorithm}
@@ -124,9 +131,9 @@ Heuristic A is the greedy algorithm.
 \end{algorithmic}
 \end{algorithm}
 
-\subsection*{Heuristic B}
+\heuristic{}\label{heuristic-welsh}
 
-Heuristic B is the greedy algorithm with degree sequencing. It orders the vertices according to the decreasing value of their degree. This is also known as the Welsh-Powell algorithm, which is defined in \cite{welsh}.
+Heuristic \ref{heuristic-welsh} is the greedy algorithm with degree sequencing. It orders the vertices according to the decreasing value of their degree. This is also known as the Welsh-Powell algorithm, which is defined in \cite{welsh}.
 
 \begin{algorithm}
 \caption{Welsh-Powell algorithm}
@@ -138,9 +145,9 @@ Heuristic B is the greedy algorithm with degree sequencing. It orders the vertic
 \end{algorithmic}
 \end{algorithm}
 
-\subsection*{Heuristic C}
+\heuristic{}\label{heuristic-mis}
 
-Heuristic C colors a graph by finding maximal independent sets of \(G\).
+Heuristic \ref{heuristic-mis} colors a graph by finding maximal independent sets of \(G\).
 
 \begin{algorithm}
 \caption{Coloring via maximal independent set algorithm}
@@ -158,17 +165,17 @@ Heuristic C colors a graph by finding maximal independent sets of \(G\).
 \section*{Findings}
 
 \begin{prop}
-Heuristic A and Heuristic B do not always produce an optimal solution, i.e. they do not always produce a minimum coloring of a graph.
+Heuristic \ref{heuristic-greedy} and Heuristic \ref{heuristic-welsh} do not always produce an optimal solution, i.e. they do not always produce a minimum coloring of a graph.
 \end{prop}
 
-I will show this for \emph{heuristic B}. It is trivial to show the same for \emph{heuristic A} as \emph{heuristic B} includes the same steps as \emph{heuristic A}. I will construct a simple graph, \(G = (V, E)\), such that:
+I will show this for \emph{heuristic \ref{heuristic-welsh}}. It is trivial to show the same for \emph{heuristic \ref{heuristic-greedy}} as \emph{heuristic \ref{heuristic-welsh}} includes the same steps as \emph{heuristic \ref{heuristic-greedy}}. I will construct a simple graph, \(G = (V, E)\), such that:
 
 \begin{align}
 |V| &\geq 8 \\
 \chi(G) &> \chi^{*}(G)
 \end{align}
 
-Let \(\chi\) refer to the coloring of \(G\) generated by \emph{heuristic B}. Let \(\chi^{*}\) be the optimal coloring of \(G\).
+Let \(\chi\) refer to the coloring of \(G\) generated by \emph{heuristic \ref{heuristic-welsh}}. Let \(\chi^{*}\) be the optimal coloring of \(G\).
 
 \subsection*{Example 1}
 I constructed a simple graph, \(G = (V, E)\), such that \(\Delta(G) = 3\) and \(\delta(G) = 1\). I've let \(|V| = 8\) for this example.
@@ -179,12 +186,12 @@ I constructed a simple graph, \(G = (V, E)\), such that \(\Delta(G) = 3\) and \(
 \caption{Uncolored original graph \(G\)}
 \end{figure}
 
-By applying \emph{heuristic B}, we get the following coloring. The numbers indicate the ordering of vertices before applying the heuristic. Any vertex of the same degree got assigned arbitrarily. This results in \(\chi(G) = 3\).
+By applying \emph{heuristic \ref{heuristic-welsh}}, we get the following coloring. The numbers indicate the ordering of vertices before applying the heuristic. Any vertex of the same degree got assigned arbitrarily. This results in \(\chi(G) = 3\).
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.6]{images/graph-2.png}
-\caption{Coloring from applying heuristic B}
+\caption{Coloring from applying heuristic \ref{heuristic-welsh}}
 \end{figure}
 
 \begin{definition}[Bipartite graph]
@@ -200,7 +207,7 @@ We can see that this is a bipartite graph, defined above by \cite{bondymurty}. T
 \end{figure}
 
 \begin{prop}
-Heuristic C also does not always produce an optimal solution, i.e. it does not always produce a minimum coloring of a graph.
+Heuristic \ref{heuristic-mis} also does not always produce an optimal solution, i.e. it does not always produce a minimum coloring of a graph.
 \end{prop}
 
 \subsection*{Example 2}
@@ -212,15 +219,15 @@ To show this, I will create another example that satisfies conditions \((1)\) an
 \caption{Uncolored original graph \(K\)}
 \end{figure}
 
-By applying heuristic C and finding maximal independent sets, we see that \(K\) is \emph{5-colorable}.
+By applying heuristic \ref{heuristic-mis} and finding maximal independent sets, we see that \(K\) is \emph{5-colorable}.
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.38]{images/mis-2.png}
-\caption{Coloring of \(K\) after applying heuristic C}
+\caption{Coloring of \(K\) after applying heuristic \ref{heuristic-mis}}
 \end{figure}
 
-This is a non-optimal solution. We can see that the subgraph created by vertices \(\{5, 6, 7, 8\}\) is complete and thus we need at least 4 colors. This graph is \emph{4-colorable} however, meaning \(\chi^{*}(K) = 4\). Thus, we can see that heuristic C does not always give us an optimal solution.
+This is a non-optimal solution. We can see that the subgraph created by vertices \(\{5, 6, 7, 8\}\) is complete and thus we need at least 4 colors. This graph is \emph{4-colorable} however, meaning \(\chi^{*}(K) = 4\). Thus, we can see that heuristic \ref{heuristic-mis} does not always give us an optimal solution.
 
 \begin{figure}[H]
 \centering
@@ -229,13 +236,13 @@ This is a non-optimal solution. We can see that the subgraph created by vertices
 \end{figure}
 
 \begin{prop}
-Heuristic A and heuristic B have an upper bound of \(\Delta + 1\).
+Heuristic \ref{heuristic-greedy} and heuristic \ref{heuristic-welsh} have an upper bound of \(\Delta + 1\).
 \end{prop}
 
 To show this, I will create another example that satisfies conditions \((1)\) and \((2)\) from above. After doing some research into bipartite graphs, I learned that \emph{crown graphs} are excellent at showing how bad greedy heuristics can be, as shown and defined in \cite{kordecki}.
 
 \begin{definition}[Crown Graph]
-A crown graph \(CR_n = (V, E)\) is an undirected graph with two sets of vertices where \(V = V_1 \cup V_2\) with an edge from \(v_i \in V_1\) to \(v_{j} \in V_2\) whenever \(i \neq j\). A crown graph can also be viewed as a complete bipartite graph where the edges of a perfect matching have been removed.
+A crown graph \(CR_n = (V, E)\) is an undirected graph such that \(U = \{u_1, u_2, \dots, u_i\}\) and \(W = \{w_1, w_2, \dots, w_j\}\) where \(V = U \cup W\), \(U \cap W = \emptyset\), and \(|U| = |W|\). There is an edge from \(u_i\) to \(w_j\) whenever \(i \neq j\). A crown graph can also be viewed as a complete bipartite graph where the edges of a perfect matching have been removed.
 \end{definition}
 
 \subsection*{Example 3}
@@ -253,7 +260,7 @@ We can see that \(\Delta(G) = 4\). We can also see \(d_G(v) = 4\) for all \(v \i
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.38]{images/graph-5.png}
-\caption{Worst-case coloring of \(H\) using either heuristic A or B}
+\caption{Worst-case coloring of \(H\) using either heuristic \ref{heuristic-greedy} or \ref{heuristic-welsh}}
 \end{figure}
 
 In Figure 5, using either heuristic with this ordering, we get \(\chi(H) = 5\). This gives us \(\frac{|V|}{2}\) colors. This is the worst-case for a crown graph as shown in \cite{johnson}, but this graph also demonstrates the upper bounds for these heuristics. \newline
@@ -266,7 +273,7 @@ We can see that \(\chi(H) = \Delta(H) + 1\). This is very easy to see in a \emph
 For any connected undirected graph \(G\) with maximum degree \(\Delta\), the chromatic number of \(G\) is at most \(\Delta\) unless \(G\) is a complete graph or an odd cycle, in which case the chromatic number is \(\Delta + 1\).
 \end{theorem}
 
-The proof of \emph{Brook's Theorem} can be found in \cite{lovasz}. Overall, heuristic A and heuristic B can produce some very undesirable results. In graph \(H\), at the worst case, these heuristics produce \(\chi(H) = 5\) when \(\chi^{*}(H) = 2\) as it is bipartite. This is shown below.
+The proof of \emph{Brook's Theorem} can be found in \cite{lovasz}. Overall, heuristic \ref{heuristic-greedy} and heuristic \ref{heuristic-welsh} can produce some very undesirable results. In graph \(H\), at the worst case, these heuristics produce \(\chi(H) = 5\) when \(\chi^{*}(H) = 2\) as it is bipartite. This is shown below.
 
 \begin{figure}[H]
 \centering
@@ -277,13 +284,13 @@ The proof of \emph{Brook's Theorem} can be found in \cite{lovasz}. Overall, heur
 \newpage
 
 \begin{prop}
-Heuristic A and Heuristic B have a running time of $O(|V| + |E|)$.
+Heuristic \ref{heuristic-greedy} and Heuristic \ref{heuristic-welsh} have a running time of $O(|V| + |E|)$.
 \end{prop}
 
-It is possible to implement heuristic A and heuristic B efficiently and achieve a linear running time \cite{kubale}. By using an adjacency list representation of a graph \(G = (V, E)\), the greedy algorithm will look once at each vertex and each edge twice. This is because for each vertex, all of its neighbors are checked. This leads to the algorithm crossing each edge twuce. As this is still linear, we know \(O(|V| + 2|E|) = O(|V| + |E|)\).
+It is possible to implement heuristic \ref{heuristic-greedy} and heuristic \ref{heuristic-welsh} efficiently and achieve a linear running time \cite{kubale}. By using an adjacency list representation of a graph \(G = (V, E)\), the greedy algorithm will look once at each vertex and each edge twice. This is because for each vertex, all of its neighbors are checked. This leads to the algorithm crossing each edge twuce. As this is still linear, we know \(O(|V| + 2|E|) = O(|V| + |E|)\).
 
 \begin{prop}
-Heuristic A and Heuristic B produce a feasible, proper coloring of input graph \(G = (V, E)\).
+Heuristic \ref{heuristic-greedy} and Heuristic \ref{heuristic-welsh} produce a feasible, proper coloring of input graph \(G = (V, E)\).
 \end{prop}
 
 Let \(G = (V, E)\) be a simple graph. Assume that two vertices, say \(v_1, v_2 \in V\), are connected by an edge \(e_1 \in E\). Assume that \(v_1, v_2\) are colored the same color, say \(p_1\). We know that in both heuristics, we assign the smallest color \(p_i\) that is not being used by any of the neighboring vertices connected by an edge \(e_i\). WLOG, the heuristic would color \(v_1\) color \(p_1\). The next iteration, while vertex \(v_2\) is selected, the heuristic would see color \(p_1\) is assigned to a neighboring vertex \((v_1)\), and assign the next available color \(p_2\). Thus, we've reached a contradiction.
