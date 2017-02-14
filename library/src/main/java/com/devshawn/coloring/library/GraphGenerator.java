@@ -1,5 +1,6 @@
 package com.devshawn.coloring.library;
 
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -62,5 +63,36 @@ public class GraphGenerator {
         }
 
         return graph;
+    }
+
+    public static int[][] generateAdjacencyMatrix(int vertices, List<Tuple> edges) {
+        int[][] graph = new int[vertices][vertices];
+
+        for(Tuple edge : edges) {
+            graph[edge.to][edge.from] = 1;
+            graph[edge.from][edge.to] = 1;
+        }
+
+        return graph;
+    }
+
+    public static String adjacencyMatrixToString(int[][] graph) {
+        String str = "";
+        for(int i = 0; i < graph.length; i++) {
+            for(int j = 0; j < graph.length; j++) {
+                str += graph[i][j];
+            }
+            str += "\n";
+        }
+        return str;
+    }
+}
+
+class Tuple {
+    public final int from;
+    public final int to;
+    public Tuple(int from, int to) {
+        this.from = from;
+        this.to = to;
     }
 }
