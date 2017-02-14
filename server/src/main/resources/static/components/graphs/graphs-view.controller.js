@@ -4,7 +4,7 @@ angular.module('coloring')
 
         GraphService.get({id: $stateParams.id}, function(results) {
             self.graph = results;
-            self.showGraph = (results.vertices < 50);
+            self.showGraph = (results.vertices < 51);
             if(self.showGraph) {
                 generateVisualization(results.matrix);
             }

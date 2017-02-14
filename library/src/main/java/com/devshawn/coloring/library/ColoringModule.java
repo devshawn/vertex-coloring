@@ -95,7 +95,8 @@ public class ColoringModule {
 
         // Sort our vertices by decreasing degree
         List<Integer> indexList = Arrays.asList(orderedVertices);
-        Collections.sort(indexList, (left, right) -> (degrees[indexList.indexOf(right)] - degrees[indexList.indexOf(left)]));
+        Collections.sort(indexList, (left, right) -> (degrees[indexList.indexOf(left)] - degrees[indexList.indexOf(right)]));
+        Collections.reverse(indexList);
         orderedVertices = indexList.toArray(new Integer[graph.length]);
         System.out.println(Arrays.toString(orderedVertices));
 
@@ -206,7 +207,8 @@ public class ColoringModule {
 
         // Sort our vertices by decreasing degree
         List<Integer> indexList = Arrays.asList(orderedVertices);
-        Collections.sort(indexList, (left, right) -> (degrees[indexList.indexOf(right)] - degrees[indexList.indexOf(left)]));
+        Collections.sort(indexList, (left, right) -> (degrees[indexList.indexOf(left)] - degrees[indexList.indexOf(right)]));
+        Collections.reverse(indexList);
         orderedVertices = indexList.toArray(new Integer[graph.length]);
         System.out.println(Arrays.toString(orderedVertices));
 

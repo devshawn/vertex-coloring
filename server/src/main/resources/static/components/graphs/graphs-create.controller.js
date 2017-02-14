@@ -20,4 +20,22 @@ angular.module('coloring')
             }
         }
 
+        self.generateGraph = function() {
+            console.log(self.edges.length);
+            if(self.name2 && self.vertices && self.edges != null) {
+                console.log("A");
+
+                var data = {
+                    name: self.name2,
+                    vertices: self.vertices,
+                    edges: self.edges
+                };
+
+                GraphService.save(data, function(response) {
+                    console.log(response);
+                    $state.go('graphs');
+                });
+            }
+        }
+
     });

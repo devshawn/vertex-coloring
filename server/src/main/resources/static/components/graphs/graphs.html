@@ -14,6 +14,7 @@
             <th>Name</th>
             <th>Vertices</th>
             <th class="table-header-button">View</th>
+            <th class="table-header-button">Color</th>
             <th class="table-header-button">Delete</th>
         </tr>
         </thead>
@@ -22,6 +23,7 @@
             <td>{{ graph.name }}</td>
             <td>{{ graph.vertices }}</td>
             <td class="text-center"><a ui-sref="graphs-view({id: graph.id})" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-search"></span></a></td>
+            <td class="text-center"><a ui-sref="colorings-create-coloring({id: graph.id})" class="btn btn-xs btn-warning"><span class="glyphicon glyphicon-tint"></span></a></td>
             <td class="text-center"><button class="btn btn-xs btn-danger" ng-click="graphsController.deleteGraph(graph.id, $index)"><span class="glyphicon glyphicon-trash"></span></button></td>
         </tr>
         </tbody>

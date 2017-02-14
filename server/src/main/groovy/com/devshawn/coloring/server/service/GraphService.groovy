@@ -27,7 +27,14 @@ class GraphService {
     }
 
     Graph create(Map<String, String> graphData) {
-        int[][] matrix = GraphGenerator.matrixStringToGraph(graphData.get('matrix'))
+        if(graphData.containsKey('matrix')) {
+            int[][] matrix = GraphGenerator.matrixStringToGraph(graphData.get('matrix'))
+            Graph graph = new Graph(name: graphData.get('name'), matrix: matrix, vertices: matrix.length)
+            return save(graph)
+        }
+        double percentage = Integer.parseInt(graphData.get('edges')) / 100.0
+        int[][] matrix = GraphGenerator.simple(Integer.parseInt(graphData.get('vertices')), percentage)
+
         Graph graph = new Graph(name: graphData.get('name'), matrix: matrix, vertices: matrix.length)
         return save(graph)
     }

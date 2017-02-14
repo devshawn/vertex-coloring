@@ -3,7 +3,7 @@ angular.module('coloring')
         var self = this;
 
         ColoringsService.get({id: $stateParams.id}, function(results) {
-            self.showGraph = (results.graph.vertices < 50);
+            self.showGraph = (results.graph.vertices < 51);
             if(self.showGraph) {
                 generateVisualization(results.graph.matrix, results.result.coloring);
             }
