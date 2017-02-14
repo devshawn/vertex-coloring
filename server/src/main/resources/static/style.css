@@ -93,3 +93,7 @@ h2 {
     width: 80px;
     text-align: center;
 }
+
+#graph-view {
+    height: 800px;
+}

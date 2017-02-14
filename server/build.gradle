@@ -36,6 +36,7 @@ dependencies {
     compile('org.webjars.bower:angular-ui-router:1.0.0-rc.1')
     compile('org.webjars:datatables:1.10.13')
     compile('org.webjars:angular-datatables:0.5.2')
+    compile('org.webjars:visjs:4.8.2')
 
     runtime('org.springframework.boot:spring-boot-devtools')
     testCompile('org.springframework.boot:spring-boot-starter-test')

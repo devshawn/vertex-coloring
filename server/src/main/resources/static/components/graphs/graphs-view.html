@@ -1,0 +1,48 @@
+<div class="col-xs-12 margin-bottom clearfix">
+    <div class="pull-left">
+        <h2>Viewing Graph</h2>
+    </div>
+    <div class="pull-right">
+        <a ui-sref="graphs" class="btn btn-primary">List Graphs</a>
+    </div>
+</div>
+
+<div class="col-xs-12 col-md-6">
+    <div class="panel panel-default">
+        <div class="panel-heading panel-orange">Graph Information</div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label for="name">Graph Name</label>
+                <input type="text" class="form-control" id="name" name="name" ng-model="graphsViewController.graph.name" readonly>
+            </div>
+            <div class="form-group">
+                <label for="vertices">Graph Vertices</label>
+                <input type="text" class="form-control" id="vertices" name="vertices" ng-model="graphsViewController.graph.vertices" readonly>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-12 col-md-6">
+    <div class="panel panel-default">
+        <div class="panel-heading panel-orange">Graph Adjacency Matrix</div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label for="vertices">Graph Matrix</label>
+                <textarea class="form-control" rows="5" id="matrix" name="matrix" ng-model="graphsViewController.graph.matrix" readonly></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-12">
+    <div class="panel panel-default">
+        <div class="panel-heading panel-orange">Graph Visualization</div>
+        <div class="panel-body">
+            <vis-network id="graph-view" data="graphsViewController.network_data" options="graphsViewController.network_options" ng-show="graphsViewController.showGraph">
+            </vis-network>
+            <span ng-show="graphsViewController.graph && !graphsViewController.showGraph">This graph is too big to visualize.</span>
+        </div>
+    </div>
+</div>
+

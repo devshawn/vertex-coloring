@@ -17,6 +17,15 @@ angular.module('coloring')
             controllerAs: "graphsCreateController"
         };
 
+        var graphsViewState = {
+            name: "graphs-view",
+            url: "/graphs/:id",
+            templateUrl: "components/graphs/graphs-view.html",
+            controller: "GraphsViewController",
+            controllerAs: "graphsViewController"
+        };
+
         $stateProvider.state(graphsState);
         $stateProvider.state(graphsCreateState);
+        $stateProvider.state(graphsViewState);
     });

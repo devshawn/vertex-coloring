@@ -11,16 +11,18 @@
     <table datatable="ng" class="table table-striped table-bordered  row-border hover">
         <thead>
         <tr>
-            <th>ID</th>
             <th>Name</th>
+            <th>Vertices</th>
+            <th class="table-header-button">View</th>
             <th class="table-header-button">Delete</th>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="graph in graphsController.graphs">
-            <td>{{ graph.id }}</td>
             <td>{{ graph.name }}</td>
-            <td class="text-center"><button class="btn btn-xs btn-danger" ng-click="graphsController.deleteGraph(graph.id)"><span class="glyphicon glyphicon-trash"></span></button></td>
+            <td>{{ graph.vertices }}</td>
+            <td class="text-center"><a ui-sref="graphs-view({id: graph.id})" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-search"></span></a></td>
+            <td class="text-center"><button class="btn btn-xs btn-danger" ng-click="graphsController.deleteGraph(graph.id, $index)"><span class="glyphicon glyphicon-trash"></span></button></td>
         </tr>
         </tbody>
     </table>
