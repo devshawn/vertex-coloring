@@ -28,9 +28,9 @@ public class MaximalIndependentSetSpec {
                 {1, 1, 1, 1, 0}
         };
 
-        Coloring coloring = new Coloring();
-        coloring.setGraph(graph);
-        ColoringResult result = coloring.applyHeuristic(ColoringHeuristic.MAXIMAL_INDEPENDENT_SET);
+        ColoringModule coloringModule = new ColoringModule();
+        coloringModule.setGraph(graph);
+        ColoringResult result = coloringModule.applyHeuristic(ColoringHeuristic.MAXIMAL_INDEPENDENT_SET);
 
         assertEquals(3, result.getColoringNumber());
         int[] expectedColoring = {0, 1, 1, 0, 2};

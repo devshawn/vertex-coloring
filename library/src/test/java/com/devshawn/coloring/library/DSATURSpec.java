@@ -30,9 +30,9 @@ public class DSATURSpec {
                 {1, 1, 1, 1, 0}
         };
 
-        Coloring coloring = new Coloring();
-        coloring.setGraph(graph);
-        ColoringResult result = coloring.applyHeuristic(ColoringHeuristic.DSATUR);
+        ColoringModule coloringModule = new ColoringModule();
+        coloringModule.setGraph(graph);
+        ColoringResult result = coloringModule.applyHeuristic(ColoringHeuristic.DSATUR);
 
         System.out.println(Arrays.toString(result.getColoring()));
     }

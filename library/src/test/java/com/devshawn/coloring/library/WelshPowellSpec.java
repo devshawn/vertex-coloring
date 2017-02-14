@@ -30,9 +30,9 @@ public class WelshPowellSpec {
                 {1, 1, 1, 1, 0}
         };
 
-        Coloring coloring = new Coloring();
-        coloring.setGraph(graph);
-        ColoringResult result = coloring.applyHeuristic(ColoringHeuristic.WELSH_POWELL);
+        ColoringModule coloringModule = new ColoringModule();
+        coloringModule.setGraph(graph);
+        ColoringResult result = coloringModule.applyHeuristic(ColoringHeuristic.WELSH_POWELL);
 
         assertEquals(3, result.getColoringNumber());
         int[] expectedColoring = {1, 2, 2, 1, 0};
@@ -61,10 +61,10 @@ public class WelshPowellSpec {
                 {1, 1, 1, 1, 0}
         };
 
-        Coloring coloring = new Coloring();
-        coloring.setGraph(graph);
-        ColoringResult greedyResult = coloring.applyHeuristic(ColoringHeuristic.GREEDY);
-        ColoringResult welshPowellResult = coloring.applyHeuristic(ColoringHeuristic.WELSH_POWELL);
+        ColoringModule coloringModule = new ColoringModule();
+        coloringModule.setGraph(graph);
+        ColoringResult greedyResult = coloringModule.applyHeuristic(ColoringHeuristic.GREEDY);
+        ColoringResult welshPowellResult = coloringModule.applyHeuristic(ColoringHeuristic.WELSH_POWELL);
         for(int i = 0; i < greedyResult.getColoring().length; i++) {
             assertNotEquals(greedyResult.getColoring()[i], welshPowellResult.getColoring()[i]);
         }

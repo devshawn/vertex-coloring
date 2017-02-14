@@ -1,0 +1,52 @@
+<div class="col-xs-12 margin-bottom clearfix">
+    <div class="pull-left">
+        <h2>Viewing Coloring</h2>
+    </div>
+    <div class="pull-right">
+        <a ui-sref="colorings" class="btn btn-primary">List Colorings</a>
+    </div>
+</div>
+
+<div class="col-xs-12 col-md-6">
+    <div class="panel panel-default">
+        <div class="panel-heading panel-orange">Coloring Information</div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label>Heuristic Used</label>
+                <input type="text" class="form-control" ng-model="coloringsViewController.coloring.result.heuristic" readonly>
+            </div>
+            <div class="form-group">
+                <label>Colors Used</label>
+                <input type="text" class="form-control" ng-model="coloringsViewController.coloring.result.coloringNumber" readonly>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-12 col-md-6">
+    <div class="panel panel-default">
+        <div class="panel-heading panel-orange">Graph Information</div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label>Graph Name</label>
+                <input type="text" class="form-control" ng-model="coloringsViewController.coloring.graph.name" readonly>
+            </div>
+            <div class="form-group">
+                <label>Graph Vertices</label>
+                <input type="text" class="form-control" ng-model="coloringsViewController.coloring.graph.vertices" readonly>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-12">
+    <div class="panel panel-default">
+        <div class="panel-heading panel-orange">Graph Visualization</div>
+        <div class="panel-body">
+            <vis-network id="graph-view" data="coloringsViewController.network_data" ng-show="coloringsViewController.showGraph">
+            </vis-network>
+            <span ng-show="coloringsViewController.graph && !coloringsViewController.showGraph">This graph is too big to visualize.</span>
+        </div>
+    </div>
+</div>
+

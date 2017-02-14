@@ -2,7 +2,7 @@ package com.devshawn.coloring.library;
 
 import java.util.*;
 
-public class Coloring {
+public class ColoringModule {
 
     private int[][] graph;
     private int vertexCount;

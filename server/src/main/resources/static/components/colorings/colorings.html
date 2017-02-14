@@ -1,0 +1,27 @@
+<div class="col-xs-12 margin-bottom clearfix">
+    <div class="pull-left">
+        <h2>List of Colorings</h2>
+    </div>
+    <div class="pull-right">
+        <a ui-sref="colorings-create" class="btn btn-primary">Generate Coloring</a>
+    </div>
+</div>
+
+<div class="col-xs-12">
+    <table datatable="ng" class="table table-striped table-bordered">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th class="table-header-button">View</th>
+            <th class="table-header-button">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="coloringModule in coloringsController.colorings">
+            <td>{{ coloringModule.id }}</td>
+            <td class="text-center"><a ui-sref="colorings-view({id: coloringModule.id})" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-search"></span></a></td>
+            <td class="text-center"><button class="btn btn-xs btn-danger" ng-click="coloringsController.deleteColoring(coloringModule.id, $index)"><span class="glyphicon glyphicon-trash"></span></button></td>
+        </tr>
+        </tbody>
+    </table>
+</div>

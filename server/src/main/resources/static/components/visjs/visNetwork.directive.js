@@ -43,6 +43,41 @@ angular.module('coloring')
 
                 var network = null;
 
+                var options = {
+                    width: '100%',
+                    height: '600px',
+                    nodes: {
+                        color: '#aaa',
+                        shape: 'circle',
+                        size: 10,
+                        font: {
+                            size: 10,
+                            color: '#000000'
+                        },
+                        borderWidth: 2
+                    },
+                    edges: {
+                        color: '#000000',
+                        width: 2,
+                        smooth: {
+                            enabled: false
+                        }
+                    },
+                    physics: {
+                        solver: 'repulsion',
+                        repulsion: {
+                            nodeDistance: 80
+                        },
+                        stabilization: {
+                            enabled: true,
+                            iterations: 180, // maximum number of iteration to stabilize
+                            updateInterval: 10,
+                            onlyDynamicEdges: false,
+                            fit: true
+                        }
+                    }
+                };
+
                 scope.$watch('data', function () {
                     // Sanity check
                     if (scope.data == null) {
@@ -55,7 +90,7 @@ angular.module('coloring')
                         network.destroy();
                     }
 
-                    network = new vis.Network(element[0], scope.data, scope.options);
+                    network = new vis.Network(element[0], scope.data, options);
                     network.fit();
                     network.on('stabilized', function() {
                         //network.fit();
@@ -73,12 +108,12 @@ angular.module('coloring')
                     }
                 });
 
-                scope.$watchCollection('options', function (options) {
-                    if (network == null) {
-                        return;
-                    }
-                    network.setOptions(options);
-                });
+                // scope.$watchCollection('options', function (options) {
+                //     if (network == null) {
+                //         return;
+                //     }
+                //     network.setOptions(options);
+                // });
             }
         };
     });

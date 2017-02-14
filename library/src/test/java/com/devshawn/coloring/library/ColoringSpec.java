@@ -23,11 +23,11 @@ public class ColoringSpec {
                 {1, 1, 0}
         };
 
-        Coloring coloring = new Coloring();
-        coloring.setGraph(graph);
-        assertTrue(graph == coloring.getGraph());
-        assertEquals(3, coloring.getVertexCount());
-        assertEquals(3, coloring.getEdgeCount());
+        ColoringModule coloringModule = new ColoringModule();
+        coloringModule.setGraph(graph);
+        assertTrue(graph == coloringModule.getGraph());
+        assertEquals(3, coloringModule.getVertexCount());
+        assertEquals(3, coloringModule.getEdgeCount());
 
     }
 
@@ -40,8 +40,8 @@ public class ColoringSpec {
                 {1, 1, 0}
         };
 
-        Coloring coloring = new Coloring();
-        coloring.setGraph(graph);
+        ColoringModule coloringModule = new ColoringModule();
+        coloringModule.setGraph(graph);
     }
 
     @Test
@@ -55,8 +55,8 @@ public class ColoringSpec {
                 {1, 1, 0}
         };
 
-        Coloring coloring = new Coloring();
-        coloring.setGraph(graph);
+        ColoringModule coloringModule = new ColoringModule();
+        coloringModule.setGraph(graph);
     }
 
 }

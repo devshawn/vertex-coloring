@@ -81,13 +81,13 @@ public class Main {
 
         int[][] graph = GraphGenerator.simple(vertices, percentage);
 
-        Coloring coloring = new Coloring();
-        coloring.setGraph(graph);
+        ColoringModule coloringModule = new ColoringModule();
+        coloringModule.setGraph(graph);
 
-        output.println("Edges generated: " + coloring.getEdgeCount());
+        output.println("Edges generated: " + coloringModule.getEdgeCount());
         output.flush();
 
-        ColoringResult result = coloring.applyHeuristic(ColoringHeuristic.GREEDY);
+        ColoringResult result = coloringModule.applyHeuristic(ColoringHeuristic.GREEDY);
         result.printSummary(output);
         sc.nextLine();
     }
@@ -115,9 +115,9 @@ public class Main {
         }
 
 
-        Coloring coloring = new Coloring();
-        coloring.setGraph(graph);
-        ColoringResult result = coloring.applyHeuristic(ColoringHeuristic.GREEDY);
+        ColoringModule coloringModule = new ColoringModule();
+        coloringModule.setGraph(graph);
+        ColoringResult result = coloringModule.applyHeuristic(ColoringHeuristic.GREEDY);
         result.printSummary(output);
     }
 }

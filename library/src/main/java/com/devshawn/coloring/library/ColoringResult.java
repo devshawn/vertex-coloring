@@ -44,6 +44,8 @@ public class ColoringResult {
         return this.result;
     }
 
+    public ColoringHeuristic getHeuristic() { return this.heuristicUsed; }
+
     public String getSummary() {
         String string = "The graph was colored with the " + heuristicUsed.getName() + " heuristic.";
 

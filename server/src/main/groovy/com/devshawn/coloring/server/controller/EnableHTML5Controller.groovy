@@ -15,4 +15,9 @@ class EnableHTML5Controller {
     public String redirect2() {
         return "forward:/"
     }
+
+    @RequestMapping(value = "/{[path:[^\\.]*}/{[path:[^\\.]*}/{[id:[^\\.]*}")
+    public String redirect3() {
+        return "forward:/"
+    }
 }
