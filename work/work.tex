@@ -145,6 +145,28 @@ Heuristic \ref{heuristic-welsh} is the greedy algorithm with degree sequencing. 
 \end{algorithmic}
 \end{algorithm}
 
+\heuristic{}\label{heuristic-dsatur}
+
+Heuristic \ref{heuristic-dsatur} is very similar to heuristic \ref{heuristic-welsh}, but colors based on the \emph{saturation} degree of vertices, which is defined below by \cite{spinrad}. The original DSATUR algorithm was proposed by \cite{brelaz}.
+
+\begin{definition}[Saturation degree]
+The saturation degree of a vertex is the number of different colors used for vertices adjacency to it.
+\end{definition}
+
+\begin{algorithm}
+\caption{DSATUR algorithm}
+\begin{algorithmic}[1]
+\State Find the vertex $\in V$ with maximum degree and color it with color 1
+\While{There are uncolored vertices}
+\State Choose an uncolored vertex with maximum saturation degree
+\State If there is a tie, choose the vertex with maximum degree
+\State Color the vertex with the least possible number
+\EndWhile
+\end{algorithmic}
+\end{algorithm}
+
+\newpage
+
 \heuristic{}\label{heuristic-mis}
 
 Heuristic \ref{heuristic-mis} colors a graph by finding maximal independent sets of \(G\).
@@ -159,8 +181,6 @@ Heuristic \ref{heuristic-mis} colors a graph by finding maximal independent sets
 \EndWhile
 \end{algorithmic}
 \end{algorithm}
-
-\newpage
 
 \section*{Findings}
 
@@ -281,8 +301,6 @@ The proof of \emph{Brook's Theorem} can be found in \cite{lovasz}. Overall, heur
 \caption{Optimal coloring of \(H\)}
 \end{figure}
 
-\newpage
-
 \begin{prop}
 Heuristic \ref{heuristic-greedy} and Heuristic \ref{heuristic-welsh} have a running time of $O(|V| + |E|)$.
 \end{prop}
@@ -302,6 +320,9 @@ Let \(G = (V, E)\) be a simple graph. Assume that two vertices, say \(v_1, v_2 \
 Bondy, J.A. and U.S.R. Murty [1976],
 \emph{Graph theory with applications},
 American Elsevier Publishing, New York, NY.
+
+\bibitem{brelaz}
+Brélaz, D. [1979]. \emph{New methods to color the vertices of a graph}. Communications of the ACM, 22(4), pp.251-256.
 
 \bibitem{johnson}
 Johnson, D. S. [1974], \emph{Worst-case behavior of graph coloring algorithms}, Proc. 5th Southeastern Conf. on Combinatorics, Graph Theory, and Computing, Utilitas Mathematicae, Winnipeg, pp. 513–527.
@@ -326,6 +347,9 @@ Moret, B.M. [1998], \emph{The theory of computation}, Addison-Wesley, Reading, M
 
 \bibitem{sharma}
 Sharma, P. C. and Chaudhari, N.S. [2012], \emph{A new reduction from 3-SAT to graph k-colorability for frequency assignment problem}, Int. J. Comp. Applic, 23-27.
+
+\bibitem{spinrad}
+Spinrad, J. P. and Vijayan, G. [1985], \emph{Worst case analysis of a graph coloring algorithm}. Discrete Applied Mathematics, 12(1), pp.89-92.
 
 \bibitem{welsh}
 Welsh, D. J. and Powell, M. B. [1967], \emph{An upper bound for the chromatic number of a graph and its application to timetabling problems}, The Computer Journal, 10(1), 85-86.
