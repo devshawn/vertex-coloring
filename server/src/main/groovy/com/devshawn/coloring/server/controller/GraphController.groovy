@@ -15,6 +15,7 @@ import javax.validation.Valid
 @RestController
 @RequestMapping("/api/graphs")
 class GraphController {
+    final int maxVerticesToShowMatrix = 99
 
     @Autowired
     GraphService graphService
@@ -22,6 +23,11 @@ class GraphController {
     @RequestMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     List getGraphs() {
         List<Graph> graphs = graphService.list()
+        for(Graph graph : graphs) {
+            if(graph.vertices > maxVerticesToShowMatrix) {
+                graph.matrix = null
+            }
+        }
         return graphs
     }
 
@@ -35,6 +41,9 @@ class GraphController {
     @RequestMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     Graph get(@PathVariable String id) {
         Graph graph = graphService.get(id)
+        if(graph.vertices > maxVerticesToShowMatrix) {
+            graph.matrix = null
+        }
         return graph
     }
 

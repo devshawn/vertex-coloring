@@ -15,7 +15,7 @@ public class ColoringResultSpec {
     @Test
     public void getSummary() {
         int[] results = {0};
-        ColoringResult result = new ColoringResult(results, ColoringHeuristic.GREEDY);
+        ColoringResult result = new ColoringResult(results, ColoringHeuristic.GREEDY, 0);
 
         String expectedResult = "The graph was colored with the greedy heuristic.";
         expectedResult += "\r\n\tColor usage:";
@@ -32,14 +32,11 @@ public class ColoringResultSpec {
     @Test
     public void printSummary() {
         int[] results = {0};
-        ColoringResult result = new ColoringResult(results, ColoringHeuristic.GREEDY);
+        ColoringResult result = new ColoringResult(results, ColoringHeuristic.GREEDY, 0);
         StringWriter writer = new StringWriter();
         result.printSummary(new PrintWriter(writer));
         assertThat(writer.toString(), containsString("Colors used: 1"));
     }
-
-
-
 
 }
 

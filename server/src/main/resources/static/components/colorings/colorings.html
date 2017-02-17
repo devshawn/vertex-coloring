@@ -14,6 +14,7 @@
             <th>Graph Name</th>
             <th>Heuristic Used</th>
             <th>Colors Used</th>
+            <th>Type</th>
             <th class="table-header-button">View</th>
             <th class="table-header-button">Delete</th>
         </tr>
@@ -23,6 +24,7 @@
             <td>{{ coloring.graph.name }}</td>
             <td>{{ coloring.result.heuristic }}</td>
             <td>{{ coloring.result.coloringNumber }}</td>
+            <td>{{ coloring.type }}</td>
             <td class="text-center"><a ui-sref="colorings-view({id: coloring.id})" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-search"></span></a></td>
             <td class="text-center"><button class="btn btn-xs btn-danger" ng-click="coloringsController.deleteColoring(coloring.id, $index)"><span class="glyphicon glyphicon-trash"></span></button></td>
         </tr>

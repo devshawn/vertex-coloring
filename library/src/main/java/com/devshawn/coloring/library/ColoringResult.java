@@ -7,12 +7,13 @@ public class ColoringResult {
     private int highestColor;
     private ColoringHeuristic heuristicUsed;
     private int[] colors;
+    private long time;
 
     public ColoringResult() {
 
     }
 
-    public ColoringResult(int[] result, ColoringHeuristic heuristicUsed) {
+    public ColoringResult(int[] result, ColoringHeuristic heuristicUsed, long time) {
 
         // Find how many colors we used
         int highestColor = -1;
@@ -34,6 +35,7 @@ public class ColoringResult {
 
         this.result = result;
         this.heuristicUsed = heuristicUsed;
+        this.time = time;
     }
 
     public int getColoringNumber() {
@@ -43,6 +45,8 @@ public class ColoringResult {
     public int[] getColoring() {
         return this.result;
     }
+
+    public long getTime() { return this.time; }
 
     public ColoringHeuristic getHeuristic() { return this.heuristicUsed; }
 

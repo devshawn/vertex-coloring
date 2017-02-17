@@ -8,8 +8,12 @@ angular.module('coloring')
             if(self.showGraph) {
                 generateVisualization(results.matrix);
             }
-            self.graph.matrix = arrayGraphToString(results.matrix);
 
+            if(results.matrix != null) {
+                self.graph.matrix = arrayGraphToString(results.matrix);
+            } else {
+                self.graph.matrix = "The graph has too many vertices to show the matrix.";
+            }
         });
 
         var arrayGraphToString = function(array) {

@@ -19,17 +19,25 @@
                 <label for="vertices">Graph Vertices</label>
                 <input type="text" class="form-control" id="vertices" name="vertices" ng-model="graphsViewController.graph.vertices" readonly>
             </div>
+            <div class="form-group">
+                <label for="edges">Graph Edges</label>
+                <input type="text" class="form-control" id="edges" name="edges" ng-model="graphsViewController.graph.edges" readonly>
+            </div>
         </div>
     </div>
 </div>
 
 <div class="col-xs-12 col-md-6">
     <div class="panel panel-default">
-        <div class="panel-heading panel-orange">Graph Adjacency Matrix</div>
+        <div class="panel-heading panel-orange">Graph Details</div>
         <div class="panel-body">
             <div class="form-group">
-                <label for="vertices">Graph Matrix</label>
+                <label for="matrix">Graph Matrix</label>
                 <textarea class="form-control" rows="5" id="matrix" name="matrix" ng-model="graphsViewController.graph.matrix" readonly></textarea>
+            </div>
+            <div class="form-group">
+                <label for="type">Graph Type</label>
+                <input type="text" class="form-control" id="type" name="type" ng-model="graphsViewController.graph.type" readonly>
             </div>
         </div>
     </div>

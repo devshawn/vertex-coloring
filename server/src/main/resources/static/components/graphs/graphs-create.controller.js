@@ -15,10 +15,10 @@ angular.module('coloring')
 
                 GraphService.save(data, function(response) {
                     console.log(response);
-                    $state.go('graphs');
+                    $state.go('graphs-view', { 'id': response.id });
                 });
             }
-        }
+        };
 
         self.generateGraph = function() {
             console.log(self.edges.length);
@@ -33,9 +33,11 @@ angular.module('coloring')
 
                 GraphService.save(data, function(response) {
                     console.log(response);
-                    $state.go('graphs');
+                    $state.go('graphs-view', { 'id': response.id });
+                }, function(error) {
+                    console.log(error);
                 });
             }
-        }
+        };
 
     });

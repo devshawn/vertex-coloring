@@ -11,16 +11,16 @@
     <div class="panel panel-default">
         <div class="panel-heading panel-orange">Your Own Graph</div>
         <div class="panel-body">
-            <form>
+            <form name="createForm">
                 <div class="form-group">
                     <label for="name">Graph Name</label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Nickname" ng-model="graphsCreateController.name">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Nickname" ng-model="graphsCreateController.name" required>
                 </div>
                 <div class="form-group">
                     <label for="matrix">Adjacency Matrix</label>
-                    <textarea class="form-control" rows="5" id="matrix" name="matrix" ng-model="graphsCreateController.matrix"></textarea>
+                    <textarea class="form-control" rows="5" id="matrix" name="matrix" ng-model="graphsCreateController.matrix" required></textarea>
                 </div>
-                <button type="submit" class="btn btn-success btn-full" ng-click="graphsCreateController.createGraph()">Create Graph</button>
+                <button type="submit" class="btn btn-success btn-full" ng-click="graphsCreateController.createGraph()" ng-disabled="createForm.$invalid">Create Graph</button>
             </form>
         </div>
     </div>
@@ -30,20 +30,20 @@
     <div class="panel panel-default">
         <div class="panel-heading panel-orange">Generate Graph</div>
         <div class="panel-body">
-            <form>
+            <form name="generateForm">
                 <div class="form-group">
                     <label>Graph Name</label>
-                    <input type="text" class="form-control" placeholder="Nickname" ng-model="graphsCreateController.name2">
+                    <input type="text" class="form-control" placeholder="Nickname" ng-model="graphsCreateController.name2" required>
                 </div>
                 <div class="form-group">
                     <label>Vertices to Generate</label>
-                    <input type="number" class="form-control" ng-model="graphsCreateController.vertices">
+                    <input type="number" class="form-control" ng-model="graphsCreateController.vertices" required>
                 </div>
                 <div class="form-group">
                     <label>Percentage of Edges (0-100)</label>
-                    <input type="number" class="form-control" ng-model="graphsCreateController.edges">
+                    <input type="number" class="form-control" ng-model="graphsCreateController.edges" required>
                 </div>
-                <button type="submit" class="btn btn-success btn-full" ng-click="graphsCreateController.generateGraph()">Create Graph</button>
+                <button type="submit" class="btn btn-success btn-full" ng-click="graphsCreateController.generateGraph()" ng-disabled="generateForm.$invalid">Create Graph</button>
             </form>
         </div>
     </div>

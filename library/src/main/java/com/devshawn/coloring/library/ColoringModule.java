@@ -34,6 +34,7 @@ public class ColoringModule {
 
     // Greedy heuristic
     private ColoringResult applyGreedyHeuristic() {
+        long start = System.nanoTime();
 
         // Make result array of vertices, assign no color to them
         int[] result = new int[graph.length];
@@ -69,12 +70,15 @@ public class ColoringModule {
             for(int j = 0; j < graph.length; j++) available[j] = true;
         }
 
+        long end = System.nanoTime();
+
         // Generate a ColorResult
-        return new ColoringResult(result, ColoringHeuristic.GREEDY);
+        return new ColoringResult(result, ColoringHeuristic.GREEDY, (end - start));
     }
 
     // Greedy plus degree sequencing heuristic (Welsh-Powell algorithm)
     private ColoringResult applyWelshPowell() {
+        long start = System.nanoTime();
 
         // Make result array of vertices, assign no color to them
         int[] result = new int[graph.length];
@@ -130,11 +134,13 @@ public class ColoringModule {
             for(int j = 0; j < graph.length; j++) available[j] = true;
         }
 
+        long end = System.nanoTime();
 
-        return new ColoringResult(result, ColoringHeuristic.WELSH_POWELL);
+        return new ColoringResult(result, ColoringHeuristic.WELSH_POWELL, (end - start));
     }
 
     private ColoringResult applyMaximalIndependentSet() {
+        long start = System.nanoTime();
 
         // Make result array of vertices, assign no color to them
         int[] result = new int[graph.length];
@@ -183,10 +189,13 @@ public class ColoringModule {
             color++;
         }
 
-        return new ColoringResult(result, ColoringHeuristic.MAXIMAL_INDEPENDENT_SET);
+        long end = System.nanoTime();
+
+        return new ColoringResult(result, ColoringHeuristic.MAXIMAL_INDEPENDENT_SET, (end - start));
     }
 
     private ColoringResult applyDSATUR() {
+        long start = System.nanoTime();
 
         // Make result array of vertices, assign no color to them
         int[] result = new int[graph.length];
@@ -234,7 +243,9 @@ public class ColoringModule {
             selectedVertex = getMaximumVertexFromSaturated(saturated, vertices);
         }
 
-        return new ColoringResult(result, ColoringHeuristic.DSATUR);
+        long end = System.nanoTime();
+
+        return new ColoringResult(result, ColoringHeuristic.DSATUR, (end - start));
     }
 
     private int getMaximumVertexFromSaturated(Set<Integer>[] saturated, Set<Integer> vertices) {

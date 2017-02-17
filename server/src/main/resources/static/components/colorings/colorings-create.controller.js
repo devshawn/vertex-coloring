@@ -29,7 +29,7 @@ angular.module('coloring')
 
                 ColoringsService.save(data, function(response) {
                     console.log(response);
-                    $state.go('colorings');
+                    $state.go('colorings-view', { 'id' : response.id });
                 });
             }
         }
