@@ -1,5 +1,5 @@
 angular.module('coloring')
-    .controller('GraphsCreateController', function (GraphService, $state) {
+    .controller('GraphsCreateController', function (GraphService, $state, AlertService) {
         var self = this;
 
         self.createGraph = function() {
@@ -14,8 +14,11 @@ angular.module('coloring')
                 };
 
                 GraphService.save(data, function(response) {
-                    console.log(response);
                     $state.go('graphs-view', { 'id': response.id });
+                }, function(error) {
+                    if(error.status === 500) {
+                        AlertService.Warning(error.data.message);
+                    }
                 });
             }
         };
@@ -23,7 +26,6 @@ angular.module('coloring')
         self.generateGraph = function() {
             console.log(self.edges.length);
             if(self.name2 && self.vertices && self.edges != null) {
-                console.log("A");
 
                 var data = {
                     name: self.name2,
