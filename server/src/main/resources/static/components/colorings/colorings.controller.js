@@ -1,6 +1,12 @@
 angular.module('coloring')
-    .controller('ColoringsController', function (ColoringsService, $state) {
+    .controller('ColoringsController', function (ColoringsService, $state, DTOptionsBuilder, DTColumnDefBuilder) {
         var self = this;
+
+        self.dtOptions = DTOptionsBuilder.newOptions();
+        self.dtColumnDefs = [
+            DTColumnDefBuilder.newColumnDef(4).notSortable(),
+            DTColumnDefBuilder.newColumnDef(5).notSortable()
+        ];
 
         ColoringsService.query(function(results) {
             self.colorings = results;
