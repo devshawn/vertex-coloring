@@ -2,6 +2,7 @@ package com.devshawn.coloring.server.entity
 
 import com.devshawn.coloring.library.ColoringResult
 import com.devshawn.coloring.server.enums.GeneratedType
+import com.devshawn.coloring.server.enums.SimulationType
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.DBRef
 import org.springframework.data.mongodb.core.mapping.Document
@@ -17,4 +18,7 @@ class Simulation {
 
     @DBRef
     List<Coloring> colorings
+
+    String name
+    SimulationType type
 }

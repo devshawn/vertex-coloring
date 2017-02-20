@@ -39,7 +39,8 @@ class ColoringService {
         ColoringModule coloringModule = new ColoringModule()
         coloringModule.setGraph(graph.matrix)
         ColoringResult result = coloringModule.applyHeuristic(ColoringHeuristic.valueOf(coloringData.get('heuristic')))
-        Coloring coloring = new Coloring(graph: graph, result: result, type: GeneratedType.USER_GENERATED, time: (result.time / 1000000))
+        GeneratedType type = (coloringData.get('type') != null) ? GeneratedType.SIMULATION_GENERATED : GeneratedType.USER_GENERATED
+        Coloring coloring = new Coloring(graph: graph, result: result, type: type, time: (result.time / 1000000))
         return save(coloring)
     }
 

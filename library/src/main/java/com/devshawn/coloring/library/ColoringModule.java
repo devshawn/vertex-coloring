@@ -85,24 +85,24 @@ public class ColoringModule {
         for(int i = 0; i < graph.length; i++) result[i] = -1;
 
         // Calculate degree of each vertex
-        int[] degrees = new int[graph.length];
         Integer[] orderedVertices = new Integer[graph.length];
+        List<Vertex> vertexList = new ArrayList<>();
 
         for(int i = 0; i < graph.length; i++) {
-            orderedVertices[i] = i;
+            int degree = 0;
             for(int j = 0; j < graph.length; j++) {
                 if(graph[i][j] == 1) {
-                    degrees[i]++;
+                    degree++;
                 }
             }
+            vertexList.add(new Vertex(i, degree));
         }
 
-        // Sort our vertices by decreasing degree
-        List<Integer> indexList = Arrays.asList(orderedVertices);
-        Collections.sort(indexList, (left, right) -> (degrees[indexList.indexOf(left)] - degrees[indexList.indexOf(right)]));
-        Collections.reverse(indexList);
-        orderedVertices = indexList.toArray(new Integer[graph.length]);
-        System.out.println(Arrays.toString(orderedVertices));
+        Collections.sort(vertexList);
+
+        for(int i = 0; i < graph.length; i++) {
+            orderedVertices[i] = vertexList.get(i).getId();
+        }
 
         // Make temporary available array to see what colors are available
         boolean available[] = new boolean[graph.length];
@@ -202,24 +202,24 @@ public class ColoringModule {
         for(int i = 0; i < graph.length; i++) result[i] = -1;
 
         // Calculate degree of each vertex
-        int[] degrees = new int[graph.length];
         Integer[] orderedVertices = new Integer[graph.length];
+        List<Vertex> vertexList = new ArrayList<>();
 
         for(int i = 0; i < graph.length; i++) {
-            orderedVertices[i] = i;
+            int degree = 0;
             for(int j = 0; j < graph.length; j++) {
                 if(graph[i][j] == 1) {
-                    degrees[i]++;
+                    degree++;
                 }
             }
+            vertexList.add(new Vertex(i, degree));
         }
 
-        // Sort our vertices by decreasing degree
-        List<Integer> indexList = Arrays.asList(orderedVertices);
-        Collections.sort(indexList, (left, right) -> (degrees[indexList.indexOf(left)] - degrees[indexList.indexOf(right)]));
-        Collections.reverse(indexList);
-        orderedVertices = indexList.toArray(new Integer[graph.length]);
-        System.out.println(Arrays.toString(orderedVertices));
+        Collections.sort(vertexList);
+
+        for(int i = 0; i < graph.length; i++) {
+            orderedVertices[i] = vertexList.get(i).getId();
+        }
 
         Set<Integer> vertices = new HashSet<>();
         for(int i = 0; i < graph.length; i++) {

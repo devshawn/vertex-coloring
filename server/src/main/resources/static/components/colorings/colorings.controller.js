@@ -1,6 +1,7 @@
 angular.module('coloring')
     .controller('ColoringsController', function (ColoringsService, $state, DTOptionsBuilder, DTColumnDefBuilder) {
         var self = this;
+        self.colorings = [];
 
         self.dtOptions = DTOptionsBuilder.newOptions();
         self.dtColumnDefs = [
@@ -16,5 +17,5 @@ angular.module('coloring')
             ColoringsService.delete({id: id}, function(success) {
                 self.colorings.splice(index, 1);
             });
-        }
+        };
     });

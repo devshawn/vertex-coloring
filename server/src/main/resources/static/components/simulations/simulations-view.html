@@ -1,0 +1,77 @@
+<div class="col-xs-12 margin-bottom clearfix">
+    <div class="pull-left">
+        <h2>Viewing Simulation</h2>
+    </div>
+    <div class="pull-right">
+        <a ui-sref="simulations" class="btn btn-primary">List Simulations</a>
+    </div>
+</div>
+
+<div class="col-xs-12 col-md-6">
+    <div class="panel panel-default">
+        <div class="panel-heading panel-orange">Simulation Information</div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label for="name">Simulation Name</label>
+                <input type="text" class="form-control" id="name" name="name" ng-model="simulationsViewController.simulation.name" readonly>
+            </div>
+            <div class="form-group">
+                <label for="type">Simulation Type</label>
+                <input type="text" class="form-control" id="type" name="type" ng-model="simulationsViewController.simulation.type" readonly>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-12 col-md-6">
+    <div class="panel panel-default">
+        <div class="panel-heading panel-orange">Graph Details</div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label for="graphName">Graph Name</label>
+                <input type="text" class="form-control" id="graphName" name="name" ng-model="simulationsViewController.simulation.graph.name" readonly>
+            </div>
+            <div class="form-group">
+                <label for="vertices">Graph Vertices</label>
+                <input type="text" class="form-control" id="vertices" name="vertices" ng-model="simulationsViewController.simulation.graph.vertices" readonly>
+            </div>
+            <div class="form-group">
+                <label for="edges">Graph Edges</label>
+                <input type="text" class="form-control" id="edges" name="edges" ng-model="simulationsViewController.simulation.graph.edges" readonly>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-12">
+    <div class="panel panel-default">
+        <div class="panel-heading panel-orange">Simulation Details</div>
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th></th>
+                <th class="table-result-header">Greedy</th>
+                <th class="table-result-header">Welsh-Powell</th>
+                <th class="table-result-header">MIS</th>
+                <th class="table-result-header">DSATUR</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Colors Used</strong></td>
+                    <td class="text-center">{{ simulationsViewController.colorings.greedy.result.coloringNumber }}</td>
+                    <td class="text-center">{{ simulationsViewController.colorings.welsh.result.coloringNumber }}</td>
+                    <td class="text-center">{{ simulationsViewController.colorings.mis.result.coloringNumber }}</td>
+                    <td class="text-center">{{ simulationsViewController.colorings.dsatur.result.coloringNumber }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Time (nanoseconds)</strong></td>
+                    <td class="text-center">{{ simulationsViewController.colorings.greedy.result.time }}</td>
+                    <td class="text-center">{{ simulationsViewController.colorings.welsh.result.time }}</td>
+                    <td class="text-center">{{ simulationsViewController.colorings.mis.result.time }}</td>
+                    <td class="text-center">{{ simulationsViewController.colorings.dsatur.result.time }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

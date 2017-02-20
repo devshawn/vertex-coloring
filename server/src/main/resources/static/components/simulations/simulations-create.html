@@ -1,0 +1,38 @@
+<div class="col-xs-12 margin-bottom clearfix">
+    <div class="pull-left">
+        <h2>Create Graph</h2>
+    </div>
+    <div class="pull-right">
+        <a ui-sref="graphs" class="btn btn-primary">List Graphs</a>
+    </div>
+</div>
+
+<div class="col-xs-12 col-md-6">
+    <div class="panel panel-default">
+        <div class="panel-heading panel-orange">Run Simple Simulation</div>
+        <div class="panel-body">
+            <form name="simpleForm">
+                <div class="form-group">
+                    <label for="name">Simulation Name</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Nickname" ng-model="simulationsCreateController.simple.name" required>
+                </div>
+                <div class="form-group">
+                    <label for="graph">Graph Utilized in Simulation</label>
+                    <select id="graph" name="graph" class="form-control" ng-model="simulationsCreateController.simple.graph" ng-options="graph.id as graph.name for graph in simulationsCreateController.graphs" required>
+                        <option value="">Choose a graph...</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-success btn-full" ng-click="simulationsCreateController.runSimpleSimulation()" ng-disabled="simpleForm.$invalid">Run Simulation</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-12 col-md-6">
+    <div class="panel panel-default">
+        <div class="panel-heading panel-orange">Run Complex Simulation</div>
+        <div class="panel-body">
+
+        </div>
+    </div>
+</div>
