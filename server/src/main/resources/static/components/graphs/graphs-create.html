@@ -9,7 +9,7 @@
 
 <div class="col-xs-12 col-md-6">
     <div class="panel panel-default">
-        <div class="panel-heading panel-orange">Your Own Graph</div>
+        <div class="panel-heading panel-orange">Enter Your Own Graph</div>
         <div class="panel-body">
             <form name="createForm">
                 <div class="form-group">
@@ -17,7 +17,7 @@
                     <input type="text" class="form-control" id="name" name="name" placeholder="Nickname" ng-model="graphsCreateController.name" required>
                 </div>
                 <div class="form-group">
-                    <label for="matrix">Adjacency Matrix</label>
+                    <label for="matrix">Lower Triangular Matrix</label>
                     <textarea class="form-control" rows="5" id="matrix" name="matrix" ng-model="graphsCreateController.matrix" required></textarea>
                 </div>
                 <button type="submit" class="btn btn-success btn-full" ng-click="graphsCreateController.createGraph()" ng-disabled="createForm.$invalid">Create Graph</button>
@@ -45,6 +45,19 @@
                 </div>
                 <button type="submit" class="btn btn-success btn-full" ng-click="graphsCreateController.generateGraph()" ng-disabled="generateForm.$invalid">Create Graph</button>
             </form>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-12">
+    <div class="panel panel-default">
+        <div class="panel-heading panel-orange">Graph Information</div>
+        <div class="panel-body">
+            <p>Graphs must be simple graphs with a symmetric adjacency matrix.
+                When entering a graph above, enter the lower triangular matrix. For example, a complete graph with three vertices would be entered as so:</p>
+
+            <p class="mono">0<br/>10<br />110</p>
+
         </div>
     </div>
 </div>

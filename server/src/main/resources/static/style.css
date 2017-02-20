@@ -94,6 +94,10 @@ h2 {
     text-align: center;
 }
 
+.mono {
+    font-family: monospace;
+}
+
 #graph-view {
     height: 800px;
 }
