@@ -1,0 +1,24 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+
+\begin{document}
+
+\noindent\textbf{Presenter}: Shawn Seymour
+
+\vspace{0.3cm}
+
+\noindent\textbf{Project Adviser}: Peh Ng (Mathematics)
+
+\vspace{0.3cm}
+
+\noindent\textbf{Title}: Vertex Coloring and Applications
+
+\vspace{0.3cm}
+
+Consider the map of the 48 contiguous states in the USA, and suppose we want to color each state so that no two states that share a boundary have the same color. In general, we could represent every state with a \emph{vertex} and draw an \emph{edge} between two states that share a border. This problem can be modeled by a mathematical structure called a graph. A graph, denoted \(G = (V,E)\), is a set of vertices \(V\) and a set of edges \(E\). The \emph{Vertex Coloring} problem on \(G\) aims to find the minimum number of colors (the chromatic number) needed to color the vertices such that no two adjacent nodes have the same color. Vertex coloring can solve real-world problems such as finding the minimum number of time slots to schedule a final exam period so that no two courses (taken by the same student) are scheduled at the same time slot. \newline
+
+In general, finding the chromatic number of a graph is an NP-hard problem, meaning there is no known efficient time algorithm to solve it and there will likely not be one. Hence, there is interest in finding approximation algorithms (heuristics) to find the chromatic number. In this research, we present three heuristics used to find good approximate vertex colorings in an efficient time period even though they may not give us the optimal minimum coloring of the graph. This is important as it allows us to approximately solve complex problems in a reasonable amount of time. We will present computational results comparing the efficiency (time and quality) of these heuristics.
+
+
+\end{document}
