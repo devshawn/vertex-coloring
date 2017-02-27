@@ -1,0 +1,29 @@
+<div class="col-xs-12 margin-bottom clearfix">
+    <div class="pull-left">
+        <h2>List of Results</h2>
+    </div>
+    <div class="pull-right">
+        <a ui-sref="results-create" class="btn btn-primary">Generate Result</a>
+    </div>
+</div>
+
+<div class="col-xs-12">
+    <table datatable="ng" class="table table-striped table-bordered" dt-options="resultsController.dtOptions" dt-column-defs="resultsController.dtColumnDefs">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Vertices</th>
+            <th class="table-header-button">View</th>
+            <th class="table-header-button">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="result in resultsController.results">
+            <td>{{ result.name }}</td>
+            <td>{{ result.vertices }}</td>
+            <td class="text-center"><a ui-sref="results-view({id: result.id})" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-search"></span></a></td>
+            <td class="text-center"><button class="btn btn-xs btn-danger" ng-click="resultsController.deleteResult(result.id, $index)"><span class="glyphicon glyphicon-trash"></span></button></td>
+        </tr>
+        </tbody>
+    </table>
+</div>

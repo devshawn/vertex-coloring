@@ -1,0 +1,36 @@
+<div class="col-xs-12 margin-bottom clearfix">
+    <div class="pull-left">
+        <h2>Generate Result</h2>
+    </div>
+    <div class="pull-right">
+        <a ui-sref="results" class="btn btn-primary">List Results</a>
+    </div>
+</div>
+
+<div class="col-xs-12 col-md-6">
+    <div class="panel panel-default">
+        <div class="panel-heading panel-orange">Generate Result</div>
+        <div class="panel-body">
+            <form name="resultForm">
+                <div class="form-group">
+                    <label for="name">Result Name</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Nickname" ng-model="resultsCreateController.name" required>
+                </div>
+                <div class="form-group">
+                    <label for="vertices">Number of Vertices</label>
+                    <input type="number" class="form-control" id="vertices" name="vertices" placeholder="Number of vertices" ng-model="resultsCreateController.vertices" required>
+                </div>
+                <button type="submit" class="btn btn-success btn-full" ng-click="resultsCreateController.createResult()" ng-disabled="resultForm.$invalid">Generate Result</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-12 col-md-6">
+    <div class="panel panel-default">
+        <div class="panel-heading panel-orange">Result Information</div>
+        <div class="panel-body">
+            <p>Results are complex simulations. They run many simulations on randomly generated graphs. It runs simulations on graphs with different edge percentages.</p>
+        </div>
+    </div>
+</div>

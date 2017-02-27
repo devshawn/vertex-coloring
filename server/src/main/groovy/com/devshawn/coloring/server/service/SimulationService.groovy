@@ -63,12 +63,16 @@ class SimulationService {
         if(simulationData.get('type') == 'SIMPLE') {
             Graph graph = graphService.get(simulationData.get('graphId'))
             List<Coloring> colorings = runIteration(simulationData.get('graphId'))
-            Simulation simulation = new Simulation(name: simulationData.get('name'), type: simulationData.get('type'), graph: graph, colorings: colorings)
+            Simulation simulation = new Simulation(name: simulationData.get('name'), type: SimulationType.SIMPLE, graph: graph, colorings: colorings)
 
             return save(simulation)
         }
 
-        return save(new Simulation())
+        Graph graph = graphService.get(simulationData.get('graphId'))
+        List<Coloring> colorings = runIteration(simulationData.get('graphId'))
+        Simulation simulation = new Simulation(name: simulationData.get('name'), type: SimulationType.COMPLEX, graph: graph, colorings: colorings)
+
+        return save(simulation)
     }
 
     void delete(String id) {

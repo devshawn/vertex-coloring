@@ -2,6 +2,7 @@ angular.module('coloring')
     .controller('SimulationsCreateController', function (SimulationService, GraphService, $state, AlertService) {
         var self = this;
         self.simple = {};
+        self.complex = {};
 
         GraphService.query({}, function(results) {
             self.graphs = results;
@@ -20,6 +21,6 @@ angular.module('coloring')
             }, function (error) {
                 AlertService.Warning(error.data.message);
             });
-        }
+        };
 
     });

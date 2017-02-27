@@ -1,0 +1,102 @@
+<div class="col-xs-12 margin-bottom clearfix">
+    <div class="pull-left">
+        <h2>Viewing Result</h2>
+    </div>
+    <div class="pull-right">
+        <a ui-sref="results" class="btn btn-primary">List Results</a>
+    </div>
+</div>
+
+<div class="col-xs-12">
+    <div class="panel panel-default">
+        <div class="panel-heading panel-orange">Result Information</div>
+        <div class="panel-body">
+            <div class="form-group col-xs-12 col-md-6">
+                <label for="name">Result Name</label>
+                <input type="text" class="form-control" id="name" name="name" ng-model="resultsViewController.result.name" readonly>
+            </div>
+            <div class="form-group col-xs-12 col-md-6">
+                <label for="vertices">Number of Vertices</label>
+                <input type="text" class="form-control" id="vertices" name="vertices" ng-model="resultsViewController.result.vertices" readonly>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-12">
+    <div class="panel panel-default">
+        <div class="panel-heading panel-orange">List of simulations</div>
+        <div class="remove-dt-style">
+            <table datatable="ng" class="table table-striped table-bordered-custom" dt-options="resultsViewController.dtSimOptions" dt-column-defs="resultsViewController.dtSimColumnDefs">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th class="table-header-button">View</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="simulation in resultsViewController.result.simulations">
+                    <td>{{ simulation.name }}</td>
+                    <td class="text-center"><a ui-sref="simulations-view({id: simulation.id})" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-search"></span></a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-12">
+    <div class="panel panel-default">
+        <div class="panel-heading panel-orange">Colors used</div>
+        <div class="remove-dt-style">
+            <table datatable="ng" class="table table-striped table-bordered-custom" dt-options="resultsViewController.dtColorsOptions" dt-column-defs="resultsViewController.dtColorsColumnDefs">
+                <thead>
+                <tr>
+                    <th>Graph</th>
+                    <th class="table-result-header-small">Greedy</th>
+                    <th class="table-result-header-small">Welsh-Powell</th>
+                    <th class="table-result-header-small">MIS</th>
+                    <th class="table-result-header-small">DSATUR</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="simulation in resultsViewController.result.simulations">
+                    <td>{{ simulation.smallName }}</td>
+                    <td>{{ simulation.greedy.colors }}</td>
+                    <td>{{ simulation.welsh.colors }}</td>
+                    <td>{{ simulation.mis.colors }}</td>
+                    <td>{{ simulation.dsatur.colors }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-12">
+    <div class="panel panel-default">
+        <div class="panel-heading panel-orange">Time Taken</div>
+        <div class="remove-dt-style">
+            <table datatable="ng" class="table table-striped table-bordered-custom" dt-options="resultsViewController.dtTimeOptions" dt-column-defs="resultsViewController.dtTimeColumnDefs">
+                <thead>
+                <tr>
+                    <th>Graph</th>
+                    <th class="table-result-header-small">Greedy</th>
+                    <th class="table-result-header-small">Welsh-Powell</th>
+                    <th class="table-result-header-small">MIS</th>
+                    <th class="table-result-header-small">DSATUR</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="simulation in resultsViewController.result.simulations">
+                    <td>{{ simulation.smallName }}</td>
+                    <td>{{ simulation.greedy.time }}</td>
+                    <td>{{ simulation.welsh.time }}</td>
+                    <td>{{ simulation.mis.time }}</td>
+                    <td>{{ simulation.dsatur.time }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

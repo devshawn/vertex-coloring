@@ -48,7 +48,8 @@ class GraphService {
         double percentage = Integer.parseInt(graphData.get('edges')) / 100.0
         int[][] matrix = GraphGenerator.simple(Integer.parseInt(graphData.get('vertices')), percentage)
         coloringModule.setGraph(matrix)
-        Graph graph = new Graph(name: graphData.get('name'), matrix: matrix, vertices: matrix.length, edges: coloringModule.getEdgeCount(), type: GeneratedType.USER_GENERATED)
+        GeneratedType type = (graphData.containsKey("simulation") ? GeneratedType.SIMULATION_GENERATED : GeneratedType.USER_GENERATED)
+        Graph graph = new Graph(name: graphData.get('name'), matrix: matrix, vertices: matrix.length, edges: coloringModule.getEdgeCount(), type: type)
         return save(graph)
     }
 

@@ -11,6 +11,7 @@
     <div class="panel panel-default">
         <div class="panel-heading panel-orange">Run Simple Simulation</div>
         <div class="panel-body">
+            <p>Simple simulations let you run one simulation on a single graph.</p>
             <form name="simpleForm">
                 <div class="form-group">
                     <label for="name">Simulation Name</label>
@@ -32,7 +33,18 @@
     <div class="panel panel-default">
         <div class="panel-heading panel-orange">Run Complex Simulation</div>
         <div class="panel-body">
-
+            <p>Complex simulations run many simulations on randomly generated graphs.</p>
+            <form name="complexForm">
+                <div class="form-group">
+                    <label for="result">Result Name</label>
+                    <input type="text" class="form-control" id="result" name="name" placeholder="Nickname" ng-model="simulationsCreateController.complex.name" required>
+                </div>
+                <div class="form-group">
+                    <label for="runs">Number Of Runs For Each Edge Percentage</label>
+                    <input type="number" class="form-control" id="runs" name="runs" placeholder="1" ng-model="simulationsCreateController.complex.runs" required>
+                </div>
+                <button type="submit" class="btn btn-success btn-full" ng-click="simulationsCreateController.runComplexSimulation()" ng-disabled="complexForm.$invalid">Run Simulation</button>
+            </form>
         </div>
     </div>
 </div>

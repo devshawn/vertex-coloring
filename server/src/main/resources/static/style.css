@@ -99,10 +99,30 @@ h2 {
     text-align: center;
 }
 
+.table-result-header-small {
+    width: 150px;
+    text-align: center;
+}
+
 .mono {
     font-family: monospace;
 }
 
 #graph-view {
     height: 800px;
+}
+
+.remove-dt-style {
+    margin-top: -48px !important;
+    padding: 0;
+}
+
+.table-bordered-custom th,
+.table-bordered-custom td {
+    border: 1px solid #eceeef;
+}
+
+.table-bordered-custom thead th,
+.table-bordered-custom thead td {
+    border-bottom-width: 2px;
 }
