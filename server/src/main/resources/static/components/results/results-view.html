@@ -100,3 +100,28 @@
         </div>
     </div>
 </div>
+
+<div class="col-xs-12">
+    <div class="panel panel-default">
+        <div class="panel-heading panel-orange">Graph of running time</div>
+        <div class="panel-body">
+            <canvas id="time" class="chart chart-line" chart-data="resultsViewController.time.data"
+                    chart-labels="resultsViewController.time.labels" chart-series="resultsViewController.time.series" chart-options="options"
+                    chart-dataset-override="datasetOverride" chart-click="onClick">
+            </canvas>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-12">
+    <div class="panel panel-default">
+        <div class="panel-heading panel-orange">Graph of colors used</div>
+        <div class="panel-body">
+            <canvas id="colors" class="chart chart-bar" chart-data="resultsViewController.colors.data"
+                    chart-labels="resultsViewController.colors.labels" chart-series="resultsViewController.colors.series" chart-options="options"
+                    chart-dataset-override="datasetOverride" chart-click="onClick">
+            </canvas>
+        </div>
+    </div>
+    <br /><br /><br /><br /><br /><br /><br /><br />
+</div>
