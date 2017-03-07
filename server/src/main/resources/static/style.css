@@ -104,6 +104,11 @@ h2 {
     text-align: center;
 }
 
+.table-result-header-smallest {
+    width: 120px;
+    text-align: center;
+}
+
 .mono {
     font-family: monospace;
 }

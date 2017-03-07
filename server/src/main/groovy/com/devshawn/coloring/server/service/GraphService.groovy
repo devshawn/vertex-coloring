@@ -32,7 +32,12 @@ class GraphService {
     }
 
     List<Graph> list() {
-        return graphRepository.findAll()
+        List<Graph> graphs = graphRepository.findAll()
+        List<Graph> graphsList = new ArrayList<Graph>()
+        for(Graph graph : graphs) {
+            graphsList.add(new Graph(name: graph.name, vertices: graph.vertices, edges: graph.edges, type: graph.type, id: graph.id))
+        }
+        return graphsList
     }
 
     Graph create(Map<String, String> graphData) {

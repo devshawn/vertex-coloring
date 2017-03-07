@@ -15,9 +15,13 @@
                 <label for="name">Result Name</label>
                 <input type="text" class="form-control" id="name" name="name" ng-model="resultsViewController.result.name" readonly>
             </div>
-            <div class="form-group col-xs-12 col-md-6">
+            <div class="form-group col-xs-12 col-md-3">
                 <label for="vertices">Number of Vertices</label>
                 <input type="text" class="form-control" id="vertices" name="vertices" ng-model="resultsViewController.result.vertices" readonly>
+            </div>
+            <div class="form-group col-xs-12 col-md-3">
+                <label for="runs">Number of Runs</label>
+                <input type="text" class="form-control" id="runs" name="runs" ng-model="resultsViewController.result.runs" readonly>
             </div>
         </div>
     </div>
@@ -25,29 +29,7 @@
 
 <div class="col-xs-12">
     <div class="panel panel-default">
-        <div class="panel-heading panel-orange">List of simulations</div>
-        <div class="remove-dt-style">
-            <table datatable="ng" class="table table-striped table-bordered-custom" dt-options="resultsViewController.dtSimOptions" dt-column-defs="resultsViewController.dtSimColumnDefs">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th class="table-header-button">View</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="simulation in resultsViewController.result.simulations">
-                    <td>{{ simulation.name }}</td>
-                    <td class="text-center"><a ui-sref="simulations-view({id: simulation.id})" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-search"></span></a></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-<div class="col-xs-12">
-    <div class="panel panel-default">
-        <div class="panel-heading panel-orange">Colors used</div>
+        <div class="panel-heading panel-orange">Average colors used</div>
         <div class="remove-dt-style">
             <table datatable="ng" class="table table-striped table-bordered-custom" dt-options="resultsViewController.dtColorsOptions" dt-column-defs="resultsViewController.dtColorsColumnDefs">
                 <thead>
@@ -75,7 +57,7 @@
 
 <div class="col-xs-12">
     <div class="panel panel-default">
-        <div class="panel-heading panel-orange">Time Taken</div>
+        <div class="panel-heading panel-orange">Average time taken</div>
         <div class="remove-dt-style">
             <table datatable="ng" class="table table-striped table-bordered-custom" dt-options="resultsViewController.dtTimeOptions" dt-column-defs="resultsViewController.dtTimeColumnDefs">
                 <thead>
@@ -103,12 +85,64 @@
 
 <div class="col-xs-12">
     <div class="panel panel-default">
-        <div class="panel-heading panel-orange">Graph of running time</div>
-        <div class="panel-body">
-            <canvas id="time" class="chart chart-line" chart-data="resultsViewController.time.data"
-                    chart-labels="resultsViewController.time.labels" chart-series="resultsViewController.time.series" chart-options="options"
-                    chart-dataset-override="datasetOverride" chart-click="onClick">
-            </canvas>
+        <div class="panel-heading panel-orange">Comparing colors used</div>
+        <div class="remove-dt-style">
+            <table datatable="ng" class="table table-striped table-bordered-custom" dt-options="resultsViewController.dtColorsOptions" dt-column-defs="resultsViewController.dtColorsColumnDefs">
+                <thead>
+                <tr>
+                    <th>Graph</th>
+                    <th class="table-result-header-smallest">GRDY & WP</th>
+                    <th class="table-result-header-smallest">GRDY & MIS</th>
+                    <th class="table-result-header-smallest">GRDY & DSAT</th>
+                    <th class="table-result-header-smallest">WP & MIS</th>
+                    <th class="table-result-header-smallest">WP & DSAT</th>
+                    <th class="table-result-header-smallest">MIS & DSAT</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="comparison in resultsViewController.result.comparisonSummaries">
+                    <td>{{ comparison.name }}</td>
+                    <td>{{ comparison.greedy_wp.colors}}</td>
+                    <td>{{ comparison.greedy_mis.colors}}</td>
+                    <td>{{ comparison.greedy_dsatur.colors}}</td>
+                    <td>{{ comparison.wp_mis.colors}}</td>
+                    <td>{{ comparison.wp_dsatur.colors}}</td>
+                    <td>{{ comparison.mis_dsatur.colors}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-12">
+    <div class="panel panel-default">
+        <div class="panel-heading panel-orange">Comparing colors used percent difference</div>
+        <div class="remove-dt-style">
+            <table datatable="ng" class="table table-striped table-bordered-custom" dt-options="resultsViewController.dtColorsOptions" dt-column-defs="resultsViewController.dtColorsColumnDefs">
+                <thead>
+                <tr>
+                    <th>Graph</th>
+                    <th class="table-result-header-smallest">GRDY & WP</th>
+                    <th class="table-result-header-smallest">GRDY & MIS</th>
+                    <th class="table-result-header-smallest">GRDY & DSAT</th>
+                    <th class="table-result-header-smallest">WP & MIS</th>
+                    <th class="table-result-header-smallest">WP & DSAT</th>
+                    <th class="table-result-header-smallest">MIS & DSAT</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="comparison in resultsViewController.result.comparisonSummaries">
+                    <td>{{ comparison.name }}%</td>
+                    <td>{{ comparison.greedy_wp.percentage}}%</td>
+                    <td>{{ comparison.greedy_mis.percentage}}%</td>
+                    <td>{{ comparison.greedy_dsatur.percentage}}%</td>
+                    <td>{{ comparison.wp_mis.percentage}}%</td>
+                    <td>{{ comparison.wp_dsatur.percentage}}%</td>
+                    <td>{{ comparison.mis_dsatur.percentage}}%</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
@@ -123,5 +157,40 @@
             </canvas>
         </div>
     </div>
+</div>
+
+<div class="col-xs-12">
+    <div class="panel panel-default">
+        <div class="panel-heading panel-orange">Graph of running time</div>
+        <div class="panel-body">
+            <canvas id="time" class="chart chart-line" chart-data="resultsViewController.time.data"
+                    chart-labels="resultsViewController.time.labels" chart-series="resultsViewController.time.series" chart-options="options"
+                    chart-dataset-override="datasetOverride" chart-click="onClick">
+            </canvas>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-12">
+    <div class="panel panel-default">
+        <div class="panel-heading panel-orange">List of simulations</div>
+        <div class="remove-dt-style">
+            <table datatable="ng" class="table table-striped table-bordered-custom" dt-options="resultsViewController.dtSimOptions" dt-column-defs="resultsViewController.dtSimColumnDefs">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th class="table-header-button">View</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="simulation in resultsViewController.result.simulationsList">
+                    <td>{{ simulation.name }}</td>
+                    <td class="text-center"><a ui-sref="simulations-view({id: simulation.id})" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-search"></span></a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
     <br /><br /><br /><br /><br /><br /><br /><br />
+
 </div>

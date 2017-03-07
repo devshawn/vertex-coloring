@@ -4,6 +4,6 @@ import com.devshawn.coloring.library.ColoringHeuristic
 
 class HeuristicResult {
     ColoringHeuristic heuristic
-    int colors
+    double colors
     long time
 }

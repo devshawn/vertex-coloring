@@ -30,7 +30,15 @@ class ColoringService {
     }
 
     List<Coloring> list() {
-        return coloringRepository.findAll()
+        List<Coloring> colorings = coloringRepository.findAll()
+        List<Coloring> coloringsList = new ArrayList<Coloring>()
+
+        for(Coloring coloring : colorings) {
+            ColoringResult result = coloring.result
+            coloringsList.add(new Coloring(id: coloring.id, graph: new Graph(name: coloring.graph.name), result: result, type: coloring.type))
+        }
+
+        return coloringsList
     }
 
     Coloring create(Map<String, String> coloringData) {

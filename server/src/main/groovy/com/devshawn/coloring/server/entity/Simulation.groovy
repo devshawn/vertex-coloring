@@ -21,4 +21,5 @@ class Simulation {
 
     String name
     SimulationType type
+    Integer edgePercentage
 }

@@ -93,7 +93,10 @@ angular.module('coloring')
                         id: 'y-axis-1',
                         type: 'linear',
                         display: true,
-                        position: 'left'
+                        position: 'left',
+                        ticks: {
+                            beginAtZero: true
+                        }
                     }
                 ]
             },

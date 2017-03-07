@@ -20,6 +20,10 @@
                     <label for="vertices">Number of Vertices</label>
                     <input type="number" class="form-control" id="vertices" name="vertices" placeholder="Number of vertices" ng-model="resultsCreateController.vertices" required>
                 </div>
+                <div class="form-group">
+                    <label for="runs">Number of Runs for each Edge Percentage</label>
+                    <input type="number" class="form-control" id="runs" name="vertices" placeholder="Number of runs" ng-model="resultsCreateController.runs" required>
+                </div>
                 <button type="submit" class="btn btn-success btn-full" ng-click="resultsCreateController.createResult()" ng-disabled="resultForm.$invalid">Generate Result</button>
             </form>
         </div>

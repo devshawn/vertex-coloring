@@ -46,17 +46,13 @@ class SimulationService {
 
     List<Simulation> list() {
         List<Simulation> simulations = simulationRepository.findAll()
+        List<Simulation> simulationsList = new ArrayList<Simulation>()
 
         for(Simulation simulation : simulations) {
-            if(simulation.type == SimulationType.SIMPLE) {
-                simulation.graph.matrix = null
-                for(Coloring coloring : simulation.colorings) {
-                    coloring.graph = null
-                }
-            }
+            simulationsList.add(new Simulation(name: simulation.name, type: simulation.type, id: simulation.id))
         }
 
-        return simulations
+        return simulationsList
     }
 
     Simulation create(Map<String, String> simulationData) {
@@ -70,7 +66,7 @@ class SimulationService {
 
         Graph graph = graphService.get(simulationData.get('graphId'))
         List<Coloring> colorings = runIteration(simulationData.get('graphId'))
-        Simulation simulation = new Simulation(name: simulationData.get('name'), type: SimulationType.COMPLEX, graph: graph, colorings: colorings)
+        Simulation simulation = new Simulation(name: simulationData.get('name'), type: SimulationType.COMPLEX, graph: graph, colorings: colorings, edgePercentage: Integer.parseInt(simulationData.get('edgePercentage')))
 
         return save(simulation)
     }

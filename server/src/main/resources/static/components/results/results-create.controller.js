@@ -6,7 +6,8 @@ angular.module('coloring')
 
             var data = {
                 name: self.name,
-                vertices: self.vertices
+                vertices: self.vertices,
+                runs: self.runs
             };
 
             ResultService.save(data, function (response) {
