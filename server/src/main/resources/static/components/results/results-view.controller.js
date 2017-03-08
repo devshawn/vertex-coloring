@@ -13,6 +13,12 @@ angular.module('coloring')
             labels: []
         };
 
+        self.compare = {
+            data: [],
+            series: ["GRDY-WP", "GRDY-MIS", "GRDY-DSAT", "WP-MIS", "WP-DSAT", "MIS-DSAT"],
+            labels: []
+        };
+
         self.dtSimOptions = DTOptionsBuilder.newOptions();
         self.dtSimOptions.withOption('paging', false).withOption('searching', false).withOption('info', false);
         self.dtSimColumnDefs = [
@@ -81,6 +87,27 @@ angular.module('coloring')
             }
 
             self.colors.data = [greedy, welsh, mis, dsatur];
+
+
+            var greedywp = [];
+            var greedymis = [];
+            var greedydsatur = [];
+            var wpmis = [];
+            var wpdsatur = [];
+            var misdsatur = [];
+
+            for(var i = 0; i < results.comparisonSummaries.length; i++) {
+                self.compare.labels.push(results.comparisonSummaries[i].name);
+                greedywp.push(results.comparisonSummaries[i].greedy_wp.colors);
+                greedymis.push(results.comparisonSummaries[i].greedy_mis.colors);
+                greedydsatur.push(results.comparisonSummaries[i].greedy_dsatur.colors);
+                wpmis.push(results.comparisonSummaries[i].wp_mis.colors);
+                wpdsatur.push(results.comparisonSummaries[i].wp_dsatur.colors);
+                misdsatur.push(results.comparisonSummaries[i].mis_dsatur.colors);
+            }
+
+            self.compare.data = [greedywp, greedymis, greedydsatur, wpmis, wpdsatur, misdsatur];
+
             self.result = results;
         });
 

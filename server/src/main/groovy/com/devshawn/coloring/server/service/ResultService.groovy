@@ -77,7 +77,7 @@ class ResultService {
             }
 
             for(HeuristicResult heuristicResult : heuristicResults) {
-                heuristicResult.colors /= result.runs
+                heuristicResult.colors = round(heuristicResult.colors / result.runs, 2)
                 heuristicResult.time /= result.runs
             }
 

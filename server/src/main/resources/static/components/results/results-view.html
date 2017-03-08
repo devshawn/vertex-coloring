@@ -161,6 +161,18 @@
 
 <div class="col-xs-12">
     <div class="panel panel-default">
+        <div class="panel-heading panel-orange">Graph of comparisons</div>
+        <div class="panel-body">
+            <canvas id="compare" class="chart chart-bar" chart-data="resultsViewController.compare.data"
+                    chart-labels="resultsViewController.compare.labels" chart-series="resultsViewController.compare.series" chart-options="options"
+                    chart-dataset-override="datasetOverride" chart-click="onClick">
+            </canvas>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-12">
+    <div class="panel panel-default">
         <div class="panel-heading panel-orange">Graph of running time</div>
         <div class="panel-body">
             <canvas id="time" class="chart chart-line" chart-data="resultsViewController.time.data"
