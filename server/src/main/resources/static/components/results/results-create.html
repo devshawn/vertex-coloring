@@ -24,6 +24,18 @@
                     <label for="runs">Number of Runs for each Edge Percentage</label>
                     <input type="number" class="form-control" id="runs" name="vertices" placeholder="Number of runs" ng-model="resultsCreateController.runs" required>
                 </div>
+                <div class="form-group">
+                    <label for="start">Starting Edge Percentage (0-100)</label>
+                    <input type="number" class="form-control" id="start" name="start" placeholder="Starting edge percentage" ng-model="resultsCreateController.start" required>
+                </div>
+                <div class="form-group">
+                    <label for="end">Ending Edge Percentage (0-100)</label>
+                    <input type="number" class="form-control" id="end" name="end" placeholder="Ending edge percentage" ng-model="resultsCreateController.end" required>
+                </div>
+                <div class="form-group">
+                    <label for="increment">Edge Percentage Increment (1-10)</label>
+                    <input type="number" class="form-control" id="increment" name="increment" placeholder="Edge percentage increment" ng-model="resultsCreateController.increment" required>
+                </div>
                 <button type="submit" class="btn btn-success btn-full" ng-click="resultsCreateController.createResult()" ng-disabled="resultForm.$invalid">Generate Result</button>
             </form>
         </div>

@@ -53,7 +53,7 @@ class ResultService {
 //        }
 
         Map<Integer, List<Simulation>> percentages = new HashMap<>()
-        for(int i = Constants.EDGE_PERCENTAGE_START; i <= Constants.EDGE_PERCENTAGE_END; i += Constants.EDGE_PERCENTAGE_INCREMENT) {
+        for(int i = result.start; i <= result.end; i += result.increment) {
             percentages.put(i, new ArrayList<Simulation>())
         }
 
@@ -61,7 +61,7 @@ class ResultService {
             percentages.get(simulation.edgePercentage).add(simulation)
         }
 
-        for(int i = Constants.EDGE_PERCENTAGE_START; i <= Constants.EDGE_PERCENTAGE_END; i += Constants.EDGE_PERCENTAGE_INCREMENT) {
+        for(int i = result.start; i <= result.end; i += result.increment) {
             List<HeuristicResult> heuristicResults = new ArrayList<>()
             heuristicResults.add(new HeuristicResult(heuristic: ColoringHeuristic.GREEDY, time: 0, colors: 0))
             heuristicResults.add(new HeuristicResult(heuristic: ColoringHeuristic.WELSH_POWELL, time: 0, colors: 0))
@@ -130,7 +130,8 @@ class ResultService {
                     mis_dsatur: mis_dsatur))
         }
 
-        ResultSummary resultSummary = new ResultSummary(id: result.id, name: result.name, runs: result.runs, simulations: simulationResults, comparisonSummaries: comparisonSummaries, simulationsList: sims, vertices: result.vertices)
+        ResultSummary resultSummary = new ResultSummary(id: result.id, name: result.name, runs: result.runs, simulations: simulationResults,
+                comparisonSummaries: comparisonSummaries, vertices: result.vertices, start: result.start, end: result.end, increment: result.increment)
         return resultSummary
     }
 
@@ -141,7 +142,10 @@ class ResultService {
     Result create(Map<String, String> resultData) {
         List<Simulation> simulations = runSimulations(resultData)
         int runs = Integer.parseInt(resultData.get("runs"))
-        Result result = new Result(name: resultData.get("name"), simulations: simulations, vertices: Integer.parseInt(resultData.get("vertices")), runs: runs)
+        int start = Integer.parseInt(resultData.get("start"))
+        int end = Integer.parseInt(resultData.get("end"))
+        int increment = Integer.parseInt(resultData.get("increment"))
+        Result result = new Result(name: resultData.get("name"), simulations: simulations, vertices: Integer.parseInt(resultData.get("vertices")), runs: runs, start: start, end: end, increment: increment)
         return save(result)
     }
 
@@ -159,8 +163,24 @@ class ResultService {
 
     List<Simulation> runSimulations(Map<String, String> resultData) {
         List<Simulation> simulations = new ArrayList<>()
+        int start = Integer.parseInt(resultData.get("start"))
+        int end = Integer.parseInt(resultData.get("end"))
+        int increment = Integer.parseInt(resultData.get("increment"))
 
-        for(int i = Constants.EDGE_PERCENTAGE_START; i <= Constants.EDGE_PERCENTAGE_END; i += Constants.EDGE_PERCENTAGE_INCREMENT) {
+        for(int i = 0; i < Constants.WARMUP_RUNS; i++) {
+            Graph graph = graphService.get(Constants.WARMUP_GRAPH_ID)
+            Map<String, String> simulationData = new HashMap<>()
+            println i
+            simulationData.put("name", "Warmup")
+            simulationData.put("type", "complex")
+            simulationData.put("graphId", graph.id)
+            simulationData.put("edgePercentage", "50")
+
+            Simulation simulation = simulationService.create(simulationData)
+            simulationService.delete(simulation.id)
+        }
+
+        for(int i = start; i <= end; i += increment) {
             for(Integer j = 1; j <= Integer.parseInt(resultData.get("runs")); j++) {
                 // Generate a graph
                 Map<String, String> graphData = new HashMap<>()

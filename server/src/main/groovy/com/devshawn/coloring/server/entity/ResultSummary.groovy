@@ -6,8 +6,10 @@ class ResultSummary {
     String name
     int vertices
     int runs
+    int start
+    int end
+    int increment
     List<SimulationResult> simulations
-    List<Simulation> simulationsList
     List<ComparisonSummary> comparisonSummaries
 
 }

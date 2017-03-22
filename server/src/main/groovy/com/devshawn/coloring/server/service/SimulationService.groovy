@@ -45,7 +45,7 @@ class SimulationService {
     }
 
     List<Simulation> list() {
-        List<Simulation> simulations = simulationRepository.findAll()
+        List<Simulation> simulations = simulationRepository.findByType(SimulationType.SIMPLE)
         List<Simulation> simulationsList = new ArrayList<Simulation>()
 
         for(Simulation simulation : simulations) {

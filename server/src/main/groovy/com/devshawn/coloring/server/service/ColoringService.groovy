@@ -30,7 +30,7 @@ class ColoringService {
     }
 
     List<Coloring> list() {
-        List<Coloring> colorings = coloringRepository.findAll()
+        List<Coloring> colorings = coloringRepository.findByType(GeneratedType.USER_GENERATED)
         List<Coloring> coloringsList = new ArrayList<Coloring>()
 
         for(Coloring coloring : colorings) {

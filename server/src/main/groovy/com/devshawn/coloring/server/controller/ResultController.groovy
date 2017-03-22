@@ -23,9 +23,7 @@ class ResultController {
     @RequestMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     List getResults() {
         List<Result> results = resultService.list()
-        for(Result result : results) {
-            result.simulations = null
-        }
+
         return results
     }
 

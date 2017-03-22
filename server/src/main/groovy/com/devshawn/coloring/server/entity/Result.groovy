@@ -16,5 +16,8 @@ class Result {
     String name
     int vertices
     int runs
+    int start
+    int end
+    int increment
 
 }
