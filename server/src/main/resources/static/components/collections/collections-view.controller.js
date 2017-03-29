@@ -1,18 +1,26 @@
 angular.module('coloring')
     .controller('CollectionsViewController', function (CollectionService, $stateParams, $scope, DTOptionsBuilder, DTColumnDefBuilder) {
         var self = this;
+        self.colors = [];
+        self.time = [];
         self.compare = [];
+        self.percentDifference = [];
+        self.timePercentage = [];
+        self.timePercentDifference = [];
 
         CollectionService.get({id: $stateParams.id}, function(results) {
             self.collection = results;
 
+            // percent error
             for(var i = 0; i < self.collection.results.length; i++) {
                 var toPush = {
                     name: self.collection.results[i].name,
+                    vertices: self.collection.results[i].vertices,
                     data: [],
-                    series: ["GRDY-WP", "GRDY-MIS", "GRDY-DSAT", "WP-MIS", "WP-DSAT", "MIS-DSAT"],
+                    series: ["GRDY-WP", "GRDY-DSAT", "WP-DSAT"],
+                    // series: ["GRDY-WP", "GRDY-MIS", "GRDY-DSAT", "WP-MIS", "WP-DSAT", "MIS-DSAT"],
                     labels: []
-                }
+                };
 
                 var greedywp = [];
                 var greedymis = [];
@@ -31,14 +39,125 @@ angular.module('coloring')
                     misdsatur.push(self.collection.results[i].comparisonSummaries[j].mis_dsatur.colors);
                 }
 
-                toPush.data = [greedywp, greedymis, greedydsatur, wpmis, wpdsatur, misdsatur];
+                toPush.data = [greedywp, greedydsatur, wpdsatur];
+                // toPush.data = [greedywp, greedymis, greedydsatur, wpmis, wpdsatur, misdsatur];
 
                 self.compare.push(toPush);
             }
 
+            // percent difference
+            for(var i = 0; i < self.collection.results.length; i++) {
+                var toPush = {
+                    name: self.collection.results[i].name,
+                    vertices: self.collection.results[i].vertices,
+                    data: [],
+                    series: ["GRDY-WP", "GRDY-DSAT", "WP-DSAT"],
+                    // series: ["GRDY-WP", "GRDY-MIS", "GRDY-DSAT", "WP-MIS", "WP-DSAT", "MIS-DSAT"],
+                    labels: []
+                }
+
+                var greedywp = [];
+                var greedymis = [];
+                var greedydsatur = [];
+                var wpmis = [];
+                var wpdsatur = [];
+                var misdsatur = [];
+
+                for(var j = 0; j < self.collection.results[i].comparisonSummaries.length; j++) {
+                    toPush.labels.push(self.collection.results[i].comparisonSummaries[j].name);
+                    greedywp.push(self.collection.results[i].comparisonSummaries[j].greedy_wp.percentDifference);
+                    greedymis.push(self.collection.results[i].comparisonSummaries[j].greedy_mis.percentDifference);
+                    greedydsatur.push(self.collection.results[i].comparisonSummaries[j].greedy_dsatur.percentDifference);
+                    wpmis.push(self.collection.results[i].comparisonSummaries[j].wp_mis.percentDifference);
+                    wpdsatur.push(self.collection.results[i].comparisonSummaries[j].wp_dsatur.percentDifference);
+                    misdsatur.push(self.collection.results[i].comparisonSummaries[j].mis_dsatur.percentDifference);
+                }
+
+                toPush.data = [greedywp, greedydsatur, wpdsatur];
+
+                self.percentDifference.push(toPush);
+            }
+
+            // time percent error
+            for(var i = 0; i < self.collection.results.length; i++) {
+                var toPush = {
+                    name: self.collection.results[i].name,
+                    vertices: self.collection.results[i].vertices,
+                    data: [],
+                    series: ["GRDY-WP", "GRDY-DSAT", "WP-DSAT"],
+                    // series: ["GRDY-WP", "GRDY-MIS", "GRDY-DSAT", "WP-MIS", "WP-DSAT", "MIS-DSAT"],
+                    labels: []
+                }
+
+                var greedywp = [];
+                var greedymis = [];
+                var greedydsatur = [];
+                var wpmis = [];
+                var wpdsatur = [];
+                var misdsatur = [];
+
+                for(var j = 0; j < self.collection.results[i].comparisonSummaries.length; j++) {
+                    toPush.labels.push(self.collection.results[i].comparisonSummaries[j].name);
+                    greedywp.push(self.collection.results[i].comparisonSummaries[j].greedy_wp.timePercentage);
+                    greedymis.push(self.collection.results[i].comparisonSummaries[j].greedy_mis.timePercentage);
+                    greedydsatur.push(self.collection.results[i].comparisonSummaries[j].greedy_dsatur.timePercentage);
+                    wpmis.push(self.collection.results[i].comparisonSummaries[j].wp_mis.timePercentage);
+                    wpdsatur.push(self.collection.results[i].comparisonSummaries[j].wp_dsatur.timePercentage);
+                    misdsatur.push(self.collection.results[i].comparisonSummaries[j].mis_dsatur.timePercentage);
+                }
+
+                toPush.data = [greedywp, greedydsatur, wpdsatur];
+
+                self.timePercentage.push(toPush);
+            }
+
+            // time percent difference
+            for(var i = 0; i < self.collection.results.length; i++) {
+                var toPush = {
+                    name: self.collection.results[i].name,
+                    vertices: self.collection.results[i].vertices,
+                    data: [],
+                    series: ["GRDY-WP", "GRDY-DSAT", "WP-DSAT"],
+                    // series: ["GRDY-WP", "GRDY-MIS", "GRDY-DSAT", "WP-MIS", "WP-DSAT", "MIS-DSAT"],
+                    labels: []
+                }
+
+                var greedywp = [];
+                var greedymis = [];
+                var greedydsatur = [];
+                var wpmis = [];
+                var wpdsatur = [];
+                var misdsatur = [];
+
+                for(var j = 0; j < self.collection.results[i].comparisonSummaries.length; j++) {
+                    toPush.labels.push(self.collection.results[i].comparisonSummaries[j].name);
+                    greedywp.push(self.collection.results[i].comparisonSummaries[j].greedy_wp.timePercentDifference);
+                    greedymis.push(self.collection.results[i].comparisonSummaries[j].greedy_mis.timePercentDifference);
+                    greedydsatur.push(self.collection.results[i].comparisonSummaries[j].greedy_dsatur.timePercentDifference);
+                    wpmis.push(self.collection.results[i].comparisonSummaries[j].wp_mis.timePercentDifference);
+                    wpdsatur.push(self.collection.results[i].comparisonSummaries[j].wp_dsatur.timePercentDifference);
+                    misdsatur.push(self.collection.results[i].comparisonSummaries[j].mis_dsatur.timePercentDifference);
+                }
+
+                toPush.data = [greedywp, greedydsatur, wpdsatur];
+
+                self.timePercentDifference.push(toPush);
+            }
+
+            self.compare.sort(self.sortingFunction);
+            self.percentDifference.sort(self.sortingFunction);
+            self.timePercentDifference.sort(self.sortingFunction);
+
+
+
         });
 
+        self.sortingFunction = function(a, b) {
+            return a.vertices - b.vertices;
+        };
+
         $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }];
+        $scope.colors = ['#ff6384', '#46BFBD', '#FDB45C'];
         $scope.options = {
             scales: {
                 yAxes: [

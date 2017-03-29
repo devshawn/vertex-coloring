@@ -7,6 +7,7 @@
     </div>
 </div>
 
+
 <div class="col-xs-12 col-md-6">
     <div class="panel panel-default">
         <div class="panel-heading panel-orange">Collection Information</div>
@@ -30,11 +31,71 @@
     </div>
 </div>
 
+<div class="col-xs-12">
+    Percent Error
+    <hr>
+</div>
+
 <div class="col-xs-12" ng-repeat="comparison in collectionsViewController.compare">
     <div class="panel panel-default">
-        <div class="panel-heading panel-orange">Graph of color comparison: {{ comparison.name }}</div>
+        <div class="panel-heading panel-orange">Graph of color comparison (percent error): {{ comparison.vertices }} vertices</div>
         <div class="panel-body">
             <canvas class="chart chart-bar" chart-data="comparison.data"
+                    chart-colors="colors"
+                    chart-labels="comparison.labels" chart-series="comparison.series" chart-options="options"
+                    chart-dataset-override="datasetOverride" chart-click="onClick">
+            </canvas>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-12">
+    Percent Difference
+    <hr>
+</div>
+
+<div class="col-xs-12" ng-repeat="comparison in collectionsViewController.percentDifference">
+    <div class="panel panel-default">
+        <div class="panel-heading panel-orange">Graph of color comparison (percent difference): {{ comparison.vertices }} vertices</div>
+        <div class="panel-body">
+            <canvas class="chart chart-bar" chart-data="comparison.data"
+                    chart-colors="colors"
+                    chart-labels="comparison.labels" chart-series="comparison.series" chart-options="options"
+                    chart-dataset-override="datasetOverride" chart-click="onClick">
+            </canvas>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-12">
+    Time Percent Error
+    <hr>
+</div>
+
+<div class="col-xs-12" ng-repeat="comparison in collectionsViewController.timePercentDifference">
+    <div class="panel panel-default">
+        <div class="panel-heading panel-orange">Graph of time comparison (percent error): {{ comparison.vertices }} vertices</div>
+        <div class="panel-body">
+            <canvas class="chart chart-bar" chart-data="comparison.data"
+                    chart-colors="colors"
+                    chart-labels="comparison.labels" chart-series="comparison.series" chart-options="options"
+                    chart-dataset-override="datasetOverride" chart-click="onClick">
+            </canvas>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-12">
+    Time Percent Difference
+    <hr>
+</div>
+
+<div class="col-xs-12" ng-repeat="comparison in collectionsViewController.timePercentDifference">
+    <div class="panel panel-default">
+        <div class="panel-heading panel-orange">Graph of time comparison (percent difference): {{ comparison.vertices }} vertices</div>
+        <div class="panel-body">
+            <canvas class="chart chart-bar" chart-data="comparison.data"
+                    chart-colors="colors"
                     chart-labels="comparison.labels" chart-series="comparison.series" chart-options="options"
                     chart-dataset-override="datasetOverride" chart-click="onClick">
             </canvas>
