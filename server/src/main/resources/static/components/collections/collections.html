@@ -1,0 +1,27 @@
+<div class="col-xs-12 margin-bottom clearfix">
+    <div class="pull-left">
+        <h2>List of Collections</h2>
+    </div>
+    <div class="pull-right">
+        <a ui-sref="collections-create" class="btn btn-primary">Create Collection</a>
+    </div>
+</div>
+
+<div class="col-xs-12">
+    <table datatable="ng" class="table table-striped table-bordered" dt-options="collectionsController.dtOptions" dt-column-defs="collectionsController.dtColumnDefs">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th class="table-header-button">View</th>
+            <th class="table-header-button">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="collection in collectionsController.collections">
+            <td>{{ collection.name }}</td>
+            <td class="text-center"><a ui-sref="collections-view({id: collection.id})" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-search"></span></a></td>
+            <td class="text-center"><button class="btn btn-xs btn-danger" ng-click="collectionsController.deleteCollection(collection.id, $index)"><span class="glyphicon glyphicon-trash"></span></button></td>
+        </tr>
+        </tbody>
+    </table>
+</div>

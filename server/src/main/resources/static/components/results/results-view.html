@@ -129,7 +129,7 @@
 
 <div class="col-xs-12">
     <div class="panel panel-default">
-        <div class="panel-heading panel-orange">Comparing colors used percent difference</div>
+        <div class="panel-heading panel-orange">Comparing colors used percent error</div>
         <div class="remove-dt-style">
             <table datatable="ng" class="table table-striped table-bordered-custom" dt-options="resultsViewController.dtColorsOptions" dt-column-defs="resultsViewController.dtColorsColumnDefs">
                 <thead>
@@ -161,6 +161,38 @@
 
 <div class="col-xs-12">
     <div class="panel panel-default">
+        <div class="panel-heading panel-orange">Comparing colors used percent difference</div>
+        <div class="remove-dt-style">
+            <table datatable="ng" class="table table-striped table-bordered-custom" dt-options="resultsViewController.dtColorsOptions" dt-column-defs="resultsViewController.dtColorsColumnDefs">
+                <thead>
+                <tr>
+                    <th>Graph</th>
+                    <th class="table-result-header-smallest">GRDY & WP</th>
+                    <th class="table-result-header-smallest">GRDY & MIS</th>
+                    <th class="table-result-header-smallest">GRDY & DSAT</th>
+                    <th class="table-result-header-smallest">WP & MIS</th>
+                    <th class="table-result-header-smallest">WP & DSAT</th>
+                    <th class="table-result-header-smallest">MIS & DSAT</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="comparison in resultsViewController.result.comparisonSummaries">
+                    <td>{{ comparison.name }}%</td>
+                    <td>{{ comparison.greedy_wp.percentDifference}}%</td>
+                    <td>{{ comparison.greedy_mis.percentDifference}}%</td>
+                    <td>{{ comparison.greedy_dsatur.percentDifference}}%</td>
+                    <td>{{ comparison.wp_mis.percentDifference}}%</td>
+                    <td>{{ comparison.wp_dsatur.percentDifference}}%</td>
+                    <td>{{ comparison.mis_dsatur.percentDifference}}%</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-12">
+    <div class="panel panel-default">
         <div class="panel-heading panel-orange">Graph of colors used</div>
         <div class="panel-body">
             <canvas id="colors" class="chart chart-bar" chart-data="resultsViewController.colors.data"
@@ -173,10 +205,22 @@
 
 <div class="col-xs-12">
     <div class="panel panel-default">
-        <div class="panel-heading panel-orange">Graph of comparisons</div>
+        <div class="panel-heading panel-orange">Graph of color comparisons</div>
         <div class="panel-body">
             <canvas id="compare" class="chart chart-bar" chart-data="resultsViewController.compare.data"
                     chart-labels="resultsViewController.compare.labels" chart-series="resultsViewController.compare.series" chart-options="options"
+                    chart-dataset-override="datasetOverride" chart-click="onClick">
+            </canvas>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-12">
+    <div class="panel panel-default">
+        <div class="panel-heading panel-orange">Graph of color percent difference comparisons</div>
+        <div class="panel-body">
+            <canvas id="colorsPercentage" class="chart chart-bar" chart-data="resultsViewController.colorsPercentage.data"
+                    chart-labels="resultsViewController.colorsPercentage.labels" chart-series="resultsViewController.colorsPercentage.series" chart-options="options"
                     chart-dataset-override="datasetOverride" chart-click="onClick">
             </canvas>
         </div>
@@ -189,6 +233,18 @@
         <div class="panel-body">
             <canvas id="time" class="chart chart-line" chart-data="resultsViewController.time.data"
                     chart-labels="resultsViewController.time.labels" chart-series="resultsViewController.time.series" chart-options="options"
+                    chart-dataset-override="datasetOverride" chart-click="onClick">
+            </canvas>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-12">
+    <div class="panel panel-default">
+        <div class="panel-heading panel-orange">Graph of running time comparisons</div>
+        <div class="panel-body">
+            <canvas id="timeCompare" class="chart chart-bar" chart-data="resultsViewController.timeCompare.data"
+                    chart-labels="resultsViewController.timeCompare.labels" chart-series="resultsViewController.timeCompare.series" chart-options="options"
                     chart-dataset-override="datasetOverride" chart-click="onClick">
             </canvas>
         </div>

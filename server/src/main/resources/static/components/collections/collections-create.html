@@ -1,0 +1,37 @@
+<div class="col-xs-12 margin-bottom clearfix">
+    <div class="pull-left">
+        <h2>Create Collection</h2>
+    </div>
+    <div class="pull-right">
+        <a ui-sref="collections" class="btn btn-primary">List Collections</a>
+    </div>
+</div>
+
+<div class="col-xs-12 col-md-6">
+    <div class="panel panel-default">
+        <div class="panel-heading panel-orange">Create Collection</div>
+        <div class="panel-body">
+            <form name="collectionForm">
+                <div class="form-group">
+                    <label for="name">Collection Name</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Nickname" ng-model="collectionsCreateController.name" required>
+                </div>
+                <div class="form-group">
+                    <label for="results">List of Results</label>
+                    <textarea class="form-control" id="results" name="results" ng-model="collectionsCreateController.results" placeholder="Put result IDs here"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-success btn-full" ng-click="collectionsCreateController.createCollection()" ng-disabled="collectionForm.$invalid">Create Collection</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-12 col-md-6">
+    <div class="panel panel-default">
+        <div class="panel-heading panel-orange">Result Information</div>
+        <div class="panel-body">
+            <p>Collections are lists of results to make it easier to compare different results.</p>
+        </div>
+    </div>
+</div>

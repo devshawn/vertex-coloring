@@ -52,6 +52,15 @@ class ColoringService {
         return save(coloring)
     }
 
+    Coloring createForResult(Map<String, String> coloringData, Graph graph) {
+        ColoringModule coloringModule = new ColoringModule()
+        coloringModule.setGraph(graph.matrix)
+        ColoringResult result = coloringModule.applyHeuristic(ColoringHeuristic.valueOf(coloringData.get('heuristic')))
+        GeneratedType type = (coloringData.get('type') != null) ? GeneratedType.SIMULATION_GENERATED : GeneratedType.USER_GENERATED
+        Coloring coloring = new Coloring(graph: graph, result: result, type: type, time: (result.time / 1000000))
+        return coloring
+    }
+
     void delete(String id) {
         coloringRepository.delete(id)
     }

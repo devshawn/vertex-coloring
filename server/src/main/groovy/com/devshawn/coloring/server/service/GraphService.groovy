@@ -58,6 +58,17 @@ class GraphService {
         return save(graph)
     }
 
+    Graph createForResult(Map<String, String> graphData) {
+        ColoringModule coloringModule = new ColoringModule()
+
+        double percentage = Integer.parseInt(graphData.get('edges')) / 100.0
+        int[][] matrix = GraphGenerator.simple(Integer.parseInt(graphData.get('vertices')), percentage)
+        coloringModule.setGraph(matrix)
+        GeneratedType type = (graphData.containsKey("simulation") ? GeneratedType.SIMULATION_GENERATED : GeneratedType.USER_GENERATED)
+        Graph graph = new Graph(name: graphData.get('name'), matrix: matrix, vertices: matrix.length, edges: coloringModule.getEdgeCount(), type: type)
+        return graph
+    }
+
     void delete(String id) {
         Graph graph = graphRepository.findById(id)
         List<Coloring> colorings = coloringRepository.findByGraph(graph)

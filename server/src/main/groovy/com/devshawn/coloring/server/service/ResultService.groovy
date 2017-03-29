@@ -39,29 +39,29 @@ class ResultService {
         return resultRepository.findById(id)
     }
 
-    ResultSummary getSummary(String id) {
-        List<SimulationResult> simulationResults = new ArrayList<>()
+    List<Result> list() {
+        return resultRepository.findAll()
+    }
 
-        Result result = resultRepository.findById(id)
-//        for(Simulation simulation : result.simulations) {
-//            simulation.graph = null
-//            List<HeuristicResult> heuristicResults = new ArrayList<>()
-//            for(Coloring coloring : simulation.colorings) {
-//                heuristicResults.add(new HeuristicResult(heuristic: coloring.result.heuristic, time: coloring.result.time, colors: coloring.result.coloringNumber))
-//            }
-//            simulationResults.add(new SimulationResult(name: simulation.name, id: simulation.id, heuristics: heuristicResults, smallName: simulation.name.substring(simulation.name.lastIndexOf(':') + 2)))
-//        }
+    Result create(Map<String, String> resultData) {
+        List<Simulation> simulations = runSimulations(resultData)
+        int runs = Integer.parseInt(resultData.get("runs"))
+        int start = Integer.parseInt(resultData.get("start"))
+        int end = Integer.parseInt(resultData.get("end"))
+        int increment = Integer.parseInt(resultData.get("increment"))
 
         Map<Integer, List<Simulation>> percentages = new HashMap<>()
-        for(int i = result.start; i <= result.end; i += result.increment) {
+        for(int i = start; i <= end; i += increment) {
             percentages.put(i, new ArrayList<Simulation>())
         }
 
-        for(Simulation simulation : result.simulations) {
+        List<SimulationResult> simulationResults = new ArrayList<>()
+
+        for(Simulation simulation : simulations) {
             percentages.get(simulation.edgePercentage).add(simulation)
         }
 
-        for(int i = result.start; i <= result.end; i += result.increment) {
+        for(int i = start; i <= end; i += increment) {
             List<HeuristicResult> heuristicResults = new ArrayList<>()
             heuristicResults.add(new HeuristicResult(heuristic: ColoringHeuristic.GREEDY, time: 0, colors: 0))
             heuristicResults.add(new HeuristicResult(heuristic: ColoringHeuristic.WELSH_POWELL, time: 0, colors: 0))
@@ -77,8 +77,8 @@ class ResultService {
             }
 
             for(HeuristicResult heuristicResult : heuristicResults) {
-                heuristicResult.colors = round(heuristicResult.colors / result.runs, 2)
-                heuristicResult.time /= result.runs
+                heuristicResult.colors = round(heuristicResult.colors / runs, 2)
+                heuristicResult.time /= runs
             }
 
             simulationResults.add(new SimulationResult(name: i + "% edges", heuristics: heuristicResults, smallName: i + "% edges"))
@@ -86,7 +86,7 @@ class ResultService {
         }
 
         List<Simulation> sims = new ArrayList<>()
-        for(Simulation simulation : result.simulations) {
+        for(Simulation simulation : simulations) {
             sims.add(new Simulation(id: simulation.id, name: simulation.name))
         }
 
@@ -96,31 +96,68 @@ class ResultService {
             HeuristicResult wp = simulationResult.heuristics.find { it.heuristic == ColoringHeuristic.WELSH_POWELL }
             HeuristicResult mis = simulationResult.heuristics.find { it.heuristic == ColoringHeuristic.MAXIMAL_INDEPENDENT_SET }
             HeuristicResult dsatur = simulationResult.heuristics.find { it.heuristic == ColoringHeuristic.DSATUR }
-            
+
             double colors = greedy.colors - wp.colors
             double percentage = ((greedy.colors - wp.colors) / greedy.colors) * 100
-            Comparison greedy_wp = new Comparison(colors: round(colors, 2), percentage: round(percentage, 2))
+            double percentDifference = (Math.abs(greedy.colors - wp.colors) / ((greedy.colors + wp.colors) / 2)) * 100
+            long time = greedy.time - wp.time
+            double timePercentage = ((greedy.time - wp.time) / greedy.time) * -100
+            double timePercentDifference = ((Math.abs(greedy.time - wp.time) / ((greedy.time + wp.time) / 2))) * 100
+
+            Comparison greedy_wp = new Comparison(colors: round(colors, 2), percentage: round(percentage, 2),
+                    percentDifference: round(percentDifference, 2), time: time, timePercentage: round(timePercentage, 2),
+                    timePercentDifference: round(timePercentDifference, 2))
 
             colors = greedy.colors - mis.colors
             percentage = ((greedy.colors - mis.colors) / greedy.colors) * 100
-            Comparison greedy_mis = new Comparison(colors: round(colors, 2), percentage: round(percentage, 2))
+            percentDifference = (Math.abs(greedy.colors - mis.colors) / ((greedy.colors + mis.colors) / 2)) * 100
+            time = greedy.time - mis.time
+            timePercentage = ((greedy.time - mis.time) / greedy.time) * -100
+            timePercentDifference = ((Math.abs(greedy.time - mis.time) / ((greedy.time + mis.time) / 2))) * 100
+            Comparison greedy_mis = new Comparison(colors: round(colors, 2), percentage: round(percentage, 2),
+                    percentDifference: round(percentDifference, 2), time: time, timePercentage: round(timePercentage, 2),
+                    timePercentDifference: round(timePercentDifference, 2))
 
             colors = greedy.colors - dsatur.colors
             percentage = ((greedy.colors - dsatur.colors) / greedy.colors) * 100
-            Comparison greedy_dsatur = new Comparison(colors: round(colors, 2), percentage: round(percentage, 2))
+            percentDifference = (Math.abs(greedy.colors - dsatur.colors) / ((greedy.colors + dsatur.colors) / 2)) * 100
+            time = greedy.time - dsatur.time
+            timePercentage = ((greedy.time - dsatur.time) / greedy.time) * -100
+            timePercentDifference = ((Math.abs(greedy.time - dsatur.time) / ((greedy.time + dsatur.time) / 2))) * 100
+            Comparison greedy_dsatur = new Comparison(colors: round(colors, 2), percentage: round(percentage, 2),
+                    percentDifference: round(percentDifference, 2), time: time, timePercentage: round(timePercentage, 2),
+                    timePercentDifference: round(timePercentDifference, 2))
 
             colors = wp.colors - mis.colors
             percentage = ((wp.colors - mis.colors) / wp.colors) * 100
-            Comparison wp_mis = new Comparison(colors: round(colors, 2), percentage: round(percentage, 2))
+            percentDifference = (Math.abs(wp.colors - mis.colors) / ((wp.colors + mis.colors) / 2)) * 100
+            time = wp.time - mis.time
+            timePercentage = ((wp.time - mis.time) / wp.time) * -100
+            timePercentDifference = ((Math.abs(wp.time - mis.time) / ((wp.time + mis.time) / 2))) * 100
+            Comparison wp_mis = new Comparison(colors: round(colors, 2), percentage: round(percentage, 2),
+                    percentDifference: round(percentDifference, 2), time: time, timePercentage: round(timePercentage, 2),
+                    timePercentDifference: round(timePercentDifference, 2))
 
             colors = wp.colors - dsatur.colors
             percentage = ((wp.colors - dsatur.colors) / wp.colors) * 100
-            Comparison wp_dsatur = new Comparison(colors: round(colors, 2), percentage: round(percentage, 2))
+            percentDifference = (Math.abs(wp.colors - dsatur.colors) / ((wp.colors + dsatur.colors) / 2)) * 100
+            time = wp.time - dsatur.time
+            timePercentage = ((wp.time - dsatur.time) / wp.time) * -100
+            timePercentDifference = ((Math.abs(wp.time - dsatur.time) / ((wp.time + dsatur.time) / 2))) * 100
+            Comparison wp_dsatur = new Comparison(colors: round(colors, 2), percentage: round(percentage, 2),
+                    percentDifference: round(percentDifference, 2), time: time, timePercentage: round(timePercentage, 2),
+                    timePercentDifference: round(timePercentDifference, 2))
 
             colors = mis.colors - dsatur.colors
             percentage = ((mis.colors - dsatur.colors) / mis.colors) * 100
-            Comparison mis_dsatur = new Comparison(colors: round(colors, 2), percentage: round(percentage, 2))
-            
+            percentDifference = (Math.abs(mis.colors - dsatur.colors) / ((mis.colors + dsatur.colors) / 2)) * 100
+            time = mis.time - dsatur.time
+            timePercentage = ((mis.time - dsatur.time) / mis.time) * -100
+            timePercentDifference = ((Math.abs(mis.time - dsatur.time) / ((mis.time + dsatur.time) / 2))) * 100
+            Comparison mis_dsatur = new Comparison(colors: round(colors, 2), percentage: round(percentage, 2),
+                    percentDifference: round(percentDifference, 2), time: time, timePercentage: round(timePercentage, 2),
+                    timePercentDifference: round(timePercentDifference, 2))
+
             comparisonSummaries.add(new ComparisonSummary(name: simulationResult.name,
                     greedy_wp: greedy_wp,
                     greedy_mis: greedy_mis,
@@ -130,34 +167,13 @@ class ResultService {
                     mis_dsatur: mis_dsatur))
         }
 
-        ResultSummary resultSummary = new ResultSummary(id: result.id, name: result.name, runs: result.runs, simulations: simulationResults,
-                comparisonSummaries: comparisonSummaries, vertices: result.vertices, start: result.start, end: result.end, increment: result.increment)
-        return resultSummary
-    }
+        Result result = new Result(name: resultData.get("name"), simulations: simulationResults, comparisonSummaries: comparisonSummaries,
+                vertices: Integer.parseInt(resultData.get("vertices")), runs: runs, start: start, end: end, increment: increment)
 
-    List<Result> list() {
-        return resultRepository.findAll()
-    }
-
-    Result create(Map<String, String> resultData) {
-        List<Simulation> simulations = runSimulations(resultData)
-        int runs = Integer.parseInt(resultData.get("runs"))
-        int start = Integer.parseInt(resultData.get("start"))
-        int end = Integer.parseInt(resultData.get("end"))
-        int increment = Integer.parseInt(resultData.get("increment"))
-        Result result = new Result(name: resultData.get("name"), simulations: simulations, vertices: Integer.parseInt(resultData.get("vertices")), runs: runs, start: start, end: end, increment: increment)
         return save(result)
     }
 
     void delete(String id) {
-        Result result = resultRepository.findById(id)
-        for(Simulation simulation : result.simulations) {
-            Graph graph = simulation.graph
-            if(graph) {
-                graphService.delete(graph.id)
-            }
-            simulationService.delete(simulation.id)
-        }
         resultRepository.delete(id)
     }
 
@@ -167,28 +183,30 @@ class ResultService {
         int end = Integer.parseInt(resultData.get("end"))
         int increment = Integer.parseInt(resultData.get("increment"))
 
+        Map<String, String> graphData = new HashMap<>()
+        graphData.put("simulation", "true")
+        graphData.put("edges", "1")
+        graphData.put("vertices", "50")
+        graphData.put("name", "Warmup")
+        Graph warmupGraph = graphService.createForResult(graphData)
+
         for(int i = 0; i < Constants.WARMUP_RUNS; i++) {
-            Graph graph = graphService.get(Constants.WARMUP_GRAPH_ID)
             Map<String, String> simulationData = new HashMap<>()
-            println i
             simulationData.put("name", "Warmup")
             simulationData.put("type", "complex")
-            simulationData.put("graphId", graph.id)
             simulationData.put("edgePercentage", "50")
-
-            Simulation simulation = simulationService.create(simulationData)
-            simulationService.delete(simulation.id)
+            Simulation simulation = simulationService.createForResult(simulationData, warmupGraph)
         }
 
         for(int i = start; i <= end; i += increment) {
             for(Integer j = 1; j <= Integer.parseInt(resultData.get("runs")); j++) {
                 // Generate a graph
-                Map<String, String> graphData = new HashMap<>()
+                graphData = new HashMap<>()
                 graphData.put("simulation", "true")
                 graphData.put("edges", i.toString())
                 graphData.put("vertices", resultData.get("vertices"))
                 graphData.put("name", "Generated by result " + resultData.get("name") + " (run #" + j + "): " + i + "% edges")
-                Graph graph = graphService.create(graphData)
+                Graph graph = graphService.createForResult(graphData)
 
                 // Run simulation on graph
                 Map<String, String> simulationData = new HashMap<>()
@@ -196,7 +214,7 @@ class ResultService {
                 simulationData.put("type", "complex")
                 simulationData.put("graphId", graph.id)
                 simulationData.put("edgePercentage", i.toString())
-                Simulation simulation = simulationService.create(simulationData)
+                Simulation simulation = simulationService.createForResult(simulationData, graph)
                 simulations.add(simulation)
             }
         }

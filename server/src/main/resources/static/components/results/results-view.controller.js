@@ -13,7 +13,19 @@ angular.module('coloring')
             labels: []
         };
 
+        self.colorsPercentage = {
+            data: [],
+            series: ["GRDY-WP", "GRDY-MIS", "GRDY-DSAT", "WP-MIS", "WP-DSAT", "MIS-DSAT"],
+            labels: []
+        };
+
         self.compare = {
+            data: [],
+            series: ["GRDY-WP", "GRDY-MIS", "GRDY-DSAT", "WP-MIS", "WP-DSAT", "MIS-DSAT"],
+            labels: []
+        };
+
+        self.timeCompare = {
             data: [],
             series: ["GRDY-WP", "GRDY-MIS", "GRDY-DSAT", "WP-MIS", "WP-DSAT", "MIS-DSAT"],
             labels: []
@@ -107,6 +119,44 @@ angular.module('coloring')
             }
 
             self.compare.data = [greedywp, greedymis, greedydsatur, wpmis, wpdsatur, misdsatur];
+
+            greedywp = [];
+            greedymis = [];
+            greedydsatur = [];
+            wpmis = [];
+            wpdsatur = [];
+            misdsatur = [];
+
+            for(var i = 0; i < results.comparisonSummaries.length; i++) {
+                self.colorsPercentage.labels.push(results.comparisonSummaries[i].name);
+                greedywp.push(results.comparisonSummaries[i].greedy_wp.percentDifference);
+                greedymis.push(results.comparisonSummaries[i].greedy_mis.percentDifference);
+                greedydsatur.push(results.comparisonSummaries[i].greedy_dsatur.percentDifference);
+                wpmis.push(results.comparisonSummaries[i].wp_mis.percentDifference);
+                wpdsatur.push(results.comparisonSummaries[i].wp_dsatur.percentDifference);
+                misdsatur.push(results.comparisonSummaries[i].mis_dsatur.percentDifference);
+            }
+
+            self.colorsPercentage.data = [greedywp, greedymis, greedydsatur, wpmis, wpdsatur, misdsatur];
+
+            greedywp = [];
+            greedymis = [];
+            greedydsatur = [];
+            wpmis = [];
+            wpdsatur = [];
+            misdsatur = [];
+
+            for(var i = 0; i < results.comparisonSummaries.length; i++) {
+                self.timeCompare.labels.push(results.comparisonSummaries[i].name);
+                greedywp.push(results.comparisonSummaries[i].greedy_wp.timePercentDifference);
+                greedymis.push(results.comparisonSummaries[i].greedy_mis.timePercentDifference);
+                greedydsatur.push(results.comparisonSummaries[i].greedy_dsatur.timePercentDifference);
+                wpmis.push(results.comparisonSummaries[i].wp_mis.timePercentDifference);
+                wpdsatur.push(results.comparisonSummaries[i].wp_dsatur.timePercentDifference);
+                misdsatur.push(results.comparisonSummaries[i].mis_dsatur.timePercentDifference);
+            }
+
+            self.timeCompare.data = [greedywp, greedymis, greedydsatur, wpmis, wpdsatur, misdsatur];
 
             self.result = results;
         });

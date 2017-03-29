@@ -71,6 +71,12 @@ class SimulationService {
         return save(simulation)
     }
 
+    Simulation createForResult(Map<String, String> simulationData, Graph graph) {
+        List<Coloring> colorings = runIterationForResult(graph)
+        Simulation simulation = new Simulation(name: simulationData.get('name'), type: SimulationType.COMPLEX, graph: graph, colorings: colorings, edgePercentage: Integer.parseInt(simulationData.get('edgePercentage')))
+        return simulation
+    }
+
     void delete(String id) {
         Simulation simulation = simulationRepository.findById(id)
         for(Coloring coloring : simulation.colorings) {
@@ -96,6 +102,26 @@ class SimulationService {
 
         data.put("heuristic", "DSATUR")
         colorings.add(coloringService.create(data))
+
+        return colorings
+    }
+
+    private List<Coloring> runIterationForResult(Graph graph) {
+        List<Coloring> colorings = new ArrayList<Coloring>()
+        Map<String, String> data = new HashMap<String, String>()
+        data.put("type", "simulation")
+
+        data.put("heuristic", "GREEDY")
+        colorings.add(coloringService.createForResult(data, graph))
+
+        data.put("heuristic", "WELSH_POWELL")
+        colorings.add(coloringService.createForResult(data, graph))
+
+        data.put("heuristic", "MAXIMAL_INDEPENDENT_SET")
+        colorings.add(coloringService.createForResult(data, graph))
+
+        data.put("heuristic", "DSATUR")
+        colorings.add(coloringService.createForResult(data, graph))
 
         return colorings
     }

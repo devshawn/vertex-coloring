@@ -1,0 +1,48 @@
+<div class="col-xs-12 margin-bottom clearfix">
+    <div class="pull-left">
+        <h2>Viewing Collection</h2>
+    </div>
+    <div class="pull-right">
+        <a ui-sref="collections" class="btn btn-primary">List Collections</a>
+    </div>
+</div>
+
+<div class="col-xs-12 col-md-6">
+    <div class="panel panel-default">
+        <div class="panel-heading panel-orange">Collection Information</div>
+        <div class="panel-body">
+            <form name="collectionForm">
+                <div class="form-group">
+                    <label for="name">Collection Name</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Nickname" ng-model="collectionsViewController.collection.name" readonly>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-12 col-md-6">
+    <div class="panel panel-default">
+        <div class="panel-heading panel-orange">Results in Collection</div>
+        <div class="list-group">
+            <div class="list-group-item" ng-repeat="result in collectionsViewController.collection.results">{{ result.name }}</div>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-12" ng-repeat="comparison in collectionsViewController.compare">
+    <div class="panel panel-default">
+        <div class="panel-heading panel-orange">Graph of color comparison: {{ comparison.name }}</div>
+        <div class="panel-body">
+            <canvas class="chart chart-bar" chart-data="comparison.data"
+                    chart-labels="comparison.labels" chart-series="comparison.series" chart-options="options"
+                    chart-dataset-override="datasetOverride" chart-click="onClick">
+            </canvas>
+        </div>
+    </div>
+</div>
+
+
+<div class="col-xs-12">
+    <br /><br /><br /><br /><br /><br /><br /><br />
+</div>
