@@ -3,43 +3,43 @@ angular.module('coloring')
         var self = this;
         self.time = {
             data: [],
-            series: ["Greedy", "Welsh-Powell", "MIS", "DSATUR"],
+            series: ["Greedy", "Welsh-Powell", "DSATUR"],
             labels: []
         };
 
         self.colors = {
             data: [],
-            series: ["Greedy", "Welsh-Powell", "MIS", "DSATUR"],
+            series: ["Greedy", "Welsh-Powell", "DSATUR"],
             labels: []
         };
 
         self.colorsPercentage = {
             data: [],
-            series: ["GRDY-WP", "GRDY-MIS", "GRDY-DSAT", "WP-MIS", "WP-DSAT", "MIS-DSAT"],
+            series: ["GRDY-WP", "GRDY-DSAT", "WP-DSAT"],
             labels: []
         };
 
         self.minimumPercentDifference = {
             data: [],
-            series: ["GRDY-WP", "GRDY-MIS", "GRDY-DSAT", "WP-MIS", "WP-DSAT", "MIS-DSAT"],
+            series: ["GRDY-WP", "GRDY-DSAT", "WP-DSAT"],
             labels: []
         };
 
         self.maximumPercentDifference = {
             data: [],
-            series: ["GRDY-WP", "GRDY-MIS", "GRDY-DSAT", "WP-MIS", "WP-DSAT", "MIS-DSAT"],
+            series: ["GRDY-WP", "GRDY-DSAT", "WP-DSAT"],
             labels: []
         };
 
         self.compare = {
             data: [],
-            series: ["GRDY-WP", "GRDY-MIS", "GRDY-DSAT", "WP-MIS", "WP-DSAT", "MIS-DSAT"],
+            series: ["GRDY-WP", "GRDY-DSAT", "WP-DSAT"],
             labels: []
         };
 
         self.timeCompare = {
             data: [],
-            series: ["GRDY-WP", "GRDY-MIS", "GRDY-DSAT", "WP-MIS", "WP-DSAT", "MIS-DSAT"],
+            series: ["GRDY-WP", "GRDY-DSAT", "WP-DSAT"],
             labels: []
         };
 
@@ -95,7 +95,7 @@ angular.module('coloring')
                 dsatur.push(results.simulations[i].dsatur.time);
             }
 
-            self.time.data = [greedy, welsh, mis, dsatur];
+            self.time.data = [greedy, welsh, dsatur];
 
             greedy = [];
             welsh = [];
@@ -110,7 +110,7 @@ angular.module('coloring')
                 dsatur.push(results.simulations[i].dsatur.colors);
             }
 
-            self.colors.data = [greedy, welsh, mis, dsatur];
+            self.colors.data = [greedy, welsh, dsatur];
 
 
             var greedywp = [];
@@ -130,7 +130,7 @@ angular.module('coloring')
                 misdsatur.push(results.comparisonSummaries[i].mis_dsatur.colors);
             }
 
-            self.compare.data = [greedywp, greedymis, greedydsatur, wpmis, wpdsatur, misdsatur];
+            self.compare.data = [greedywp, greedydsatur, wpdsatur];
 
             greedywp = [];
             greedymis = [];
@@ -149,7 +149,7 @@ angular.module('coloring')
                 misdsatur.push(results.comparisonSummaries[i].mis_dsatur.percentDifference);
             }
 
-            self.colorsPercentage.data = [greedywp, greedymis, greedydsatur, wpmis, wpdsatur, misdsatur];
+            self.colorsPercentage.data = [greedywp, greedydsatur, wpdsatur];
 
             greedywp = [];
             greedymis = [];
@@ -168,7 +168,7 @@ angular.module('coloring')
                 misdsatur.push(results.comparisonSummaries[i].mis_dsatur.minimumPercentDifference);
             }
 
-            self.minimumPercentDifference.data = [greedywp, greedymis, greedydsatur, wpmis, wpdsatur, misdsatur];
+            self.minimumPercentDifference.data = [greedywp, greedydsatur, wpdsatur];
 
             greedywp = [];
             greedymis = [];
@@ -187,7 +187,7 @@ angular.module('coloring')
                 misdsatur.push(results.comparisonSummaries[i].mis_dsatur.maximumPercentDifference);
             }
 
-            self.maximumPercentDifference.data = [greedywp, greedymis, greedydsatur, wpmis, wpdsatur, misdsatur];
+            self.maximumPercentDifference.data = [greedywp, greedydsatur, wpdsatur];
 
             greedywp = [];
             greedymis = [];
@@ -206,13 +206,14 @@ angular.module('coloring')
                 misdsatur.push(results.comparisonSummaries[i].mis_dsatur.timePercentDifference);
             }
 
-            self.timeCompare.data = [greedywp, greedymis, greedydsatur, wpmis, wpdsatur, misdsatur];
+            self.timeCompare.data = [greedywp, greedydsatur, wpdsatur];
 
             self.result = results;
         });
 
 
         $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }];
+        $scope.colors = ['#ff6384', '#46BFBD', '#FDB45C'];
         $scope.options = {
             scales: {
                 yAxes: [

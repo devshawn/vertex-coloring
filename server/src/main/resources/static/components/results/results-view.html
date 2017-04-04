@@ -49,7 +49,6 @@
                     <th>Graph</th>
                     <th class="table-result-header-small">Greedy</th>
                     <th class="table-result-header-small">Welsh-Powell</th>
-                    <th class="table-result-header-small">MIS</th>
                     <th class="table-result-header-small">DSATUR</th>
                 </tr>
                 </thead>
@@ -58,7 +57,6 @@
                     <td>{{ simulation.smallName }}</td>
                     <td>{{ simulation.greedy.colors }}</td>
                     <td>{{ simulation.welsh.colors }}</td>
-                    <td>{{ simulation.mis.colors }}</td>
                     <td>{{ simulation.dsatur.colors }}</td>
                 </tr>
                 </tbody>
@@ -77,7 +75,6 @@
                     <th>Graph</th>
                     <th class="table-result-header-small">Greedy</th>
                     <th class="table-result-header-small">Welsh-Powell</th>
-                    <th class="table-result-header-small">MIS</th>
                     <th class="table-result-header-small">DSATUR</th>
                 </tr>
                 </thead>
@@ -86,7 +83,6 @@
                     <td>{{ simulation.smallName }}</td>
                     <td>{{ simulation.greedy.minimum }}</td>
                     <td>{{ simulation.welsh.minimum }}</td>
-                    <td>{{ simulation.mis.minimum }}</td>
                     <td>{{ simulation.dsatur.minimum }}</td>
                 </tr>
                 </tbody>
@@ -105,7 +101,6 @@
                     <th>Graph</th>
                     <th class="table-result-header-small">Greedy</th>
                     <th class="table-result-header-small">Welsh-Powell</th>
-                    <th class="table-result-header-small">MIS</th>
                     <th class="table-result-header-small">DSATUR</th>
                 </tr>
                 </thead>
@@ -114,7 +109,6 @@
                     <td>{{ simulation.smallName }}</td>
                     <td>{{ simulation.greedy.maximum }}</td>
                     <td>{{ simulation.welsh.maximum }}</td>
-                    <td>{{ simulation.mis.maximum }}</td>
                     <td>{{ simulation.dsatur.maximum }}</td>
                 </tr>
                 </tbody>
@@ -133,7 +127,6 @@
                     <th>Graph</th>
                     <th class="table-result-header-small">Greedy</th>
                     <th class="table-result-header-small">Welsh-Powell</th>
-                    <th class="table-result-header-small">MIS</th>
                     <th class="table-result-header-small">DSATUR</th>
                 </tr>
                 </thead>
@@ -142,7 +135,6 @@
                     <td>{{ simulation.smallName }}</td>
                     <td>{{ simulation.greedy.time }}</td>
                     <td>{{ simulation.welsh.time }}</td>
-                    <td>{{ simulation.mis.time }}</td>
                     <td>{{ simulation.dsatur.time }}</td>
                 </tr>
                 </tbody>
@@ -160,22 +152,16 @@
                 <tr>
                     <th>Graph</th>
                     <th class="table-result-header-smallest">GRDY & WP</th>
-                    <th class="table-result-header-smallest">GRDY & MIS</th>
                     <th class="table-result-header-smallest">GRDY & DSAT</th>
-                    <th class="table-result-header-smallest">WP & MIS</th>
                     <th class="table-result-header-smallest">WP & DSAT</th>
-                    <th class="table-result-header-smallest">MIS & DSAT</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr ng-repeat="comparison in resultsViewController.result.comparisonSummaries">
                     <td>{{ comparison.name }}</td>
                     <td>{{ comparison.greedy_wp.colors}}</td>
-                    <td>{{ comparison.greedy_mis.colors}}</td>
                     <td>{{ comparison.greedy_dsatur.colors}}</td>
-                    <td>{{ comparison.wp_mis.colors}}</td>
                     <td>{{ comparison.wp_dsatur.colors}}</td>
-                    <td>{{ comparison.mis_dsatur.colors}}</td>
                 </tr>
                 </tbody>
             </table>
@@ -192,22 +178,16 @@
                 <tr>
                     <th>Graph</th>
                     <th class="table-result-header-smallest">GRDY & WP</th>
-                    <th class="table-result-header-smallest">GRDY & MIS</th>
                     <th class="table-result-header-smallest">GRDY & DSAT</th>
-                    <th class="table-result-header-smallest">WP & MIS</th>
                     <th class="table-result-header-smallest">WP & DSAT</th>
-                    <th class="table-result-header-smallest">MIS & DSAT</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr ng-repeat="comparison in resultsViewController.result.comparisonSummaries">
-                    <td>{{ comparison.name }}%</td>
+                    <td>{{ comparison.name }}</td>
                     <td>{{ comparison.greedy_wp.percentage}}%</td>
-                    <td>{{ comparison.greedy_mis.percentage}}%</td>
                     <td>{{ comparison.greedy_dsatur.percentage}}%</td>
-                    <td>{{ comparison.wp_mis.percentage}}%</td>
                     <td>{{ comparison.wp_dsatur.percentage}}%</td>
-                    <td>{{ comparison.mis_dsatur.percentage}}%</td>
                 </tr>
                 </tbody>
             </table>
@@ -224,22 +204,16 @@
                 <tr>
                     <th>Graph</th>
                     <th class="table-result-header-smallest">GRDY & WP</th>
-                    <th class="table-result-header-smallest">GRDY & MIS</th>
                     <th class="table-result-header-smallest">GRDY & DSAT</th>
-                    <th class="table-result-header-smallest">WP & MIS</th>
                     <th class="table-result-header-smallest">WP & DSAT</th>
-                    <th class="table-result-header-smallest">MIS & DSAT</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr ng-repeat="comparison in resultsViewController.result.comparisonSummaries">
-                    <td>{{ comparison.name }}%</td>
+                    <td>{{ comparison.name }}</td>
                     <td>{{ comparison.greedy_wp.percentDifference}}%</td>
-                    <td>{{ comparison.greedy_mis.percentDifference}}%</td>
                     <td>{{ comparison.greedy_dsatur.percentDifference}}%</td>
-                    <td>{{ comparison.wp_mis.percentDifference}}%</td>
                     <td>{{ comparison.wp_dsatur.percentDifference}}%</td>
-                    <td>{{ comparison.mis_dsatur.percentDifference}}%</td>
                 </tr>
                 </tbody>
             </table>
@@ -252,6 +226,7 @@
         <div class="panel-heading panel-orange">Graph of colors used</div>
         <div class="panel-body">
             <canvas id="colors" class="chart chart-bar" chart-data="resultsViewController.colors.data"
+                    chart-colors="colors"
                     chart-labels="resultsViewController.colors.labels" chart-series="resultsViewController.colors.series" chart-options="options"
                     chart-dataset-override="datasetOverride" chart-click="onClick">
             </canvas>
@@ -264,6 +239,7 @@
         <div class="panel-heading panel-orange">Graph of color comparisons</div>
         <div class="panel-body">
             <canvas id="compare" class="chart chart-bar" chart-data="resultsViewController.compare.data"
+                    chart-colors="colors"
                     chart-labels="resultsViewController.compare.labels" chart-series="resultsViewController.compare.series" chart-options="options"
                     chart-dataset-override="datasetOverride" chart-click="onClick">
             </canvas>
@@ -276,6 +252,7 @@
         <div class="panel-heading panel-orange">Graph of color percent difference comparisons</div>
         <div class="panel-body">
             <canvas id="colorsPercentage" class="chart chart-bar" chart-data="resultsViewController.colorsPercentage.data"
+                    chart-colors="colors"
                     chart-labels="resultsViewController.colorsPercentage.labels" chart-series="resultsViewController.colorsPercentage.series" chart-options="options"
                     chart-dataset-override="datasetOverride" chart-click="onClick">
             </canvas>
@@ -288,6 +265,7 @@
         <div class="panel-heading panel-orange">Graph of minimum percent difference comparisons</div>
         <div class="panel-body">
             <canvas id="minimumPercentDifference" class="chart chart-bar" chart-data="resultsViewController.minimumPercentDifference.data"
+                    chart-colors="colors"
                     chart-labels="resultsViewController.minimumPercentDifference.labels" chart-series="resultsViewController.minimumPercentDifference.series" chart-options="options"
                     chart-dataset-override="datasetOverride" chart-click="onClick">
             </canvas>
@@ -300,6 +278,7 @@
         <div class="panel-heading panel-orange">Graph of maximum percent difference comparisons</div>
         <div class="panel-body">
             <canvas id="maximumPercentDifference" class="chart chart-bar" chart-data="resultsViewController.maximumPercentDifference.data"
+                    chart-colors="colors"
                     chart-labels="resultsViewController.maximumPercentDifference.labels" chart-series="resultsViewController.maximumPercentDifference.series" chart-options="options"
                     chart-dataset-override="datasetOverride" chart-click="onClick">
             </canvas>
@@ -312,6 +291,7 @@
         <div class="panel-heading panel-orange">Graph of running time</div>
         <div class="panel-body">
             <canvas id="time" class="chart chart-line" chart-data="resultsViewController.time.data"
+                    chart-colors="colors"
                     chart-labels="resultsViewController.time.labels" chart-series="resultsViewController.time.series" chart-options="options"
                     chart-dataset-override="datasetOverride" chart-click="onClick">
             </canvas>
@@ -324,6 +304,7 @@
         <div class="panel-heading panel-orange">Graph of running time comparisons</div>
         <div class="panel-body">
             <canvas id="timeCompare" class="chart chart-bar" chart-data="resultsViewController.timeCompare.data"
+                    chart-colors="colors"
                     chart-labels="resultsViewController.timeCompare.labels" chart-series="resultsViewController.timeCompare.series" chart-options="options"
                     chart-dataset-override="datasetOverride" chart-click="onClick">
             </canvas>
