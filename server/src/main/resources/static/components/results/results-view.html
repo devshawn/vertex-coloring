@@ -69,6 +69,62 @@
 
 <div class="col-xs-12">
     <div class="panel panel-default">
+        <div class="panel-heading panel-orange">Minimum colors used</div>
+        <div class="remove-dt-style">
+            <table datatable="ng" class="table table-striped table-bordered-custom" dt-options="resultsViewController.dtColorsOptions" dt-column-defs="resultsViewController.dtColorsColumnDefs">
+                <thead>
+                <tr>
+                    <th>Graph</th>
+                    <th class="table-result-header-small">Greedy</th>
+                    <th class="table-result-header-small">Welsh-Powell</th>
+                    <th class="table-result-header-small">MIS</th>
+                    <th class="table-result-header-small">DSATUR</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="simulation in resultsViewController.result.simulations">
+                    <td>{{ simulation.smallName }}</td>
+                    <td>{{ simulation.greedy.minimum }}</td>
+                    <td>{{ simulation.welsh.minimum }}</td>
+                    <td>{{ simulation.mis.minimum }}</td>
+                    <td>{{ simulation.dsatur.minimum }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-12">
+    <div class="panel panel-default">
+        <div class="panel-heading panel-orange">Maximum colors used</div>
+        <div class="remove-dt-style">
+            <table datatable="ng" class="table table-striped table-bordered-custom" dt-options="resultsViewController.dtColorsOptions" dt-column-defs="resultsViewController.dtColorsColumnDefs">
+                <thead>
+                <tr>
+                    <th>Graph</th>
+                    <th class="table-result-header-small">Greedy</th>
+                    <th class="table-result-header-small">Welsh-Powell</th>
+                    <th class="table-result-header-small">MIS</th>
+                    <th class="table-result-header-small">DSATUR</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="simulation in resultsViewController.result.simulations">
+                    <td>{{ simulation.smallName }}</td>
+                    <td>{{ simulation.greedy.maximum }}</td>
+                    <td>{{ simulation.welsh.maximum }}</td>
+                    <td>{{ simulation.mis.maximum }}</td>
+                    <td>{{ simulation.dsatur.maximum }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-12">
+    <div class="panel panel-default">
         <div class="panel-heading panel-orange">Average time taken</div>
         <div class="remove-dt-style">
             <table datatable="ng" class="table table-striped table-bordered-custom" dt-options="resultsViewController.dtTimeOptions" dt-column-defs="resultsViewController.dtTimeColumnDefs">
@@ -221,6 +277,30 @@
         <div class="panel-body">
             <canvas id="colorsPercentage" class="chart chart-bar" chart-data="resultsViewController.colorsPercentage.data"
                     chart-labels="resultsViewController.colorsPercentage.labels" chart-series="resultsViewController.colorsPercentage.series" chart-options="options"
+                    chart-dataset-override="datasetOverride" chart-click="onClick">
+            </canvas>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-12">
+    <div class="panel panel-default">
+        <div class="panel-heading panel-orange">Graph of minimum percent difference comparisons</div>
+        <div class="panel-body">
+            <canvas id="minimumPercentDifference" class="chart chart-bar" chart-data="resultsViewController.minimumPercentDifference.data"
+                    chart-labels="resultsViewController.minimumPercentDifference.labels" chart-series="resultsViewController.minimumPercentDifference.series" chart-options="options"
+                    chart-dataset-override="datasetOverride" chart-click="onClick">
+            </canvas>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-12">
+    <div class="panel panel-default">
+        <div class="panel-heading panel-orange">Graph of maximum percent difference comparisons</div>
+        <div class="panel-body">
+            <canvas id="maximumPercentDifference" class="chart chart-bar" chart-data="resultsViewController.maximumPercentDifference.data"
+                    chart-labels="resultsViewController.maximumPercentDifference.labels" chart-series="resultsViewController.maximumPercentDifference.series" chart-options="options"
                     chart-dataset-override="datasetOverride" chart-click="onClick">
             </canvas>
         </div>

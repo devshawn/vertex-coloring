@@ -6,4 +6,6 @@ class HeuristicResult {
     ColoringHeuristic heuristic
     double colors
     long time
+    int minimum
+    int maximum
 }

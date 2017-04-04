@@ -7,4 +7,6 @@ class Comparison {
     long time
     double timePercentage
     double timePercentDifference
+    double minimumPercentDifference
+    double maximumPercentDifference
 }

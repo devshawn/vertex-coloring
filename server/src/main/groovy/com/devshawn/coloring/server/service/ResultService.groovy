@@ -63,16 +63,24 @@ class ResultService {
 
         for(int i = start; i <= end; i += increment) {
             List<HeuristicResult> heuristicResults = new ArrayList<>()
-            heuristicResults.add(new HeuristicResult(heuristic: ColoringHeuristic.GREEDY, time: 0, colors: 0))
-            heuristicResults.add(new HeuristicResult(heuristic: ColoringHeuristic.WELSH_POWELL, time: 0, colors: 0))
-            heuristicResults.add(new HeuristicResult(heuristic: ColoringHeuristic.MAXIMAL_INDEPENDENT_SET, time: 0, colors: 0))
-            heuristicResults.add(new HeuristicResult(heuristic: ColoringHeuristic.DSATUR, time: 0, colors: 0))
+            heuristicResults.add(new HeuristicResult(heuristic: ColoringHeuristic.GREEDY, time: 0, colors: 0, maximum: -1, minimum: Integer.MAX_VALUE))
+            heuristicResults.add(new HeuristicResult(heuristic: ColoringHeuristic.WELSH_POWELL, time: 0, colors: 0, maximum: -1, minimum: Integer.MAX_VALUE))
+            heuristicResults.add(new HeuristicResult(heuristic: ColoringHeuristic.MAXIMAL_INDEPENDENT_SET, time: 0, colors: 0, maximum: -1, minimum: Integer.MAX_VALUE))
+            heuristicResults.add(new HeuristicResult(heuristic: ColoringHeuristic.DSATUR, time: 0, colors: 0, maximum: -1, minimum: Integer.MAX_VALUE))
 
             for(Simulation simulation : percentages.get(i)) {
                 for(Coloring coloring : simulation.colorings) {
                     HeuristicResult heuristicResult = heuristicResults.find { it.heuristic == coloring.result.heuristic }
                     heuristicResult.time += coloring.result.time
                     heuristicResult.colors += coloring.result.coloringNumber
+
+                    if(coloring.result.coloringNumber > heuristicResult.maximum) {
+                        heuristicResult.maximum = coloring.result.coloringNumber
+                    }
+
+                    if(coloring.result.coloringNumber < heuristicResult.minimum) {
+                        heuristicResult.minimum = coloring.result.coloringNumber
+                    }
                 }
             }
 
@@ -103,10 +111,13 @@ class ResultService {
             long time = greedy.time - wp.time
             double timePercentage = ((greedy.time - wp.time) / greedy.time) * -100
             double timePercentDifference = ((Math.abs(greedy.time - wp.time) / ((greedy.time + wp.time) / 2))) * 100
+            double minimumPercentDifference = ((Math.abs(greedy.minimum - wp.minimum) / ((greedy.minimum + wp.minimum) / 2))) * 100
+            double maximumPercentDifference = ((Math.abs(greedy.maximum - wp.maximum) / ((greedy.maximum + wp.maximum) / 2))) * 100
 
             Comparison greedy_wp = new Comparison(colors: round(colors, 2), percentage: round(percentage, 2),
                     percentDifference: round(percentDifference, 2), time: time, timePercentage: round(timePercentage, 2),
-                    timePercentDifference: round(timePercentDifference, 2))
+                    timePercentDifference: round(timePercentDifference, 2), minimumPercentDifference: round(minimumPercentDifference, 2),
+                    maximumPercentDifference: round(maximumPercentDifference, 2))
 
             colors = greedy.colors - mis.colors
             percentage = ((greedy.colors - mis.colors) / greedy.colors) * 100
@@ -114,9 +125,12 @@ class ResultService {
             time = greedy.time - mis.time
             timePercentage = ((greedy.time - mis.time) / greedy.time) * -100
             timePercentDifference = ((Math.abs(greedy.time - mis.time) / ((greedy.time + mis.time) / 2))) * 100
+            minimumPercentDifference = ((Math.abs(greedy.minimum - mis.minimum) / ((greedy.minimum + mis.minimum) / 2))) * 100
+            maximumPercentDifference = ((Math.abs(greedy.maximum - mis.maximum) / ((greedy.maximum + mis.maximum) / 2))) * 100
             Comparison greedy_mis = new Comparison(colors: round(colors, 2), percentage: round(percentage, 2),
                     percentDifference: round(percentDifference, 2), time: time, timePercentage: round(timePercentage, 2),
-                    timePercentDifference: round(timePercentDifference, 2))
+                    timePercentDifference: round(timePercentDifference, 2), minimumPercentDifference: round(minimumPercentDifference, 2),
+                    maximumPercentDifference: round(maximumPercentDifference, 2))
 
             colors = greedy.colors - dsatur.colors
             percentage = ((greedy.colors - dsatur.colors) / greedy.colors) * 100
@@ -124,9 +138,12 @@ class ResultService {
             time = greedy.time - dsatur.time
             timePercentage = ((greedy.time - dsatur.time) / greedy.time) * -100
             timePercentDifference = ((Math.abs(greedy.time - dsatur.time) / ((greedy.time + dsatur.time) / 2))) * 100
+            minimumPercentDifference = ((Math.abs(greedy.minimum - dsatur.minimum) / ((greedy.minimum + dsatur.minimum) / 2))) * 100
+            maximumPercentDifference = ((Math.abs(greedy.maximum - dsatur.maximum) / ((greedy.maximum + dsatur.maximum) / 2))) * 100
             Comparison greedy_dsatur = new Comparison(colors: round(colors, 2), percentage: round(percentage, 2),
                     percentDifference: round(percentDifference, 2), time: time, timePercentage: round(timePercentage, 2),
-                    timePercentDifference: round(timePercentDifference, 2))
+                    timePercentDifference: round(timePercentDifference, 2), minimumPercentDifference: round(minimumPercentDifference, 2),
+                    maximumPercentDifference: round(maximumPercentDifference, 2))
 
             colors = wp.colors - mis.colors
             percentage = ((wp.colors - mis.colors) / wp.colors) * 100
@@ -134,9 +151,12 @@ class ResultService {
             time = wp.time - mis.time
             timePercentage = ((wp.time - mis.time) / wp.time) * -100
             timePercentDifference = ((Math.abs(wp.time - mis.time) / ((wp.time + mis.time) / 2))) * 100
+            minimumPercentDifference = ((Math.abs(wp.minimum - mis.minimum) / ((wp.minimum + mis.minimum) / 2))) * 100
+            maximumPercentDifference = ((Math.abs(wp.maximum - mis.maximum) / ((wp.maximum + mis.maximum) / 2))) * 100
             Comparison wp_mis = new Comparison(colors: round(colors, 2), percentage: round(percentage, 2),
                     percentDifference: round(percentDifference, 2), time: time, timePercentage: round(timePercentage, 2),
-                    timePercentDifference: round(timePercentDifference, 2))
+                    timePercentDifference: round(timePercentDifference, 2), minimumPercentDifference: round(minimumPercentDifference, 2),
+                    maximumPercentDifference: round(maximumPercentDifference, 2))
 
             colors = wp.colors - dsatur.colors
             percentage = ((wp.colors - dsatur.colors) / wp.colors) * 100
@@ -144,9 +164,12 @@ class ResultService {
             time = wp.time - dsatur.time
             timePercentage = ((wp.time - dsatur.time) / wp.time) * -100
             timePercentDifference = ((Math.abs(wp.time - dsatur.time) / ((wp.time + dsatur.time) / 2))) * 100
+            minimumPercentDifference = ((Math.abs(wp.minimum - dsatur.minimum) / ((wp.minimum + dsatur.minimum) / 2))) * 100
+            maximumPercentDifference = ((Math.abs(wp.maximum - dsatur.maximum) / ((wp.maximum + dsatur.maximum) / 2))) * 100
             Comparison wp_dsatur = new Comparison(colors: round(colors, 2), percentage: round(percentage, 2),
                     percentDifference: round(percentDifference, 2), time: time, timePercentage: round(timePercentage, 2),
-                    timePercentDifference: round(timePercentDifference, 2))
+                    timePercentDifference: round(timePercentDifference, 2), minimumPercentDifference: round(minimumPercentDifference, 2),
+                    maximumPercentDifference: round(maximumPercentDifference, 2))
 
             colors = mis.colors - dsatur.colors
             percentage = ((mis.colors - dsatur.colors) / mis.colors) * 100
@@ -154,9 +177,12 @@ class ResultService {
             time = mis.time - dsatur.time
             timePercentage = ((mis.time - dsatur.time) / mis.time) * -100
             timePercentDifference = ((Math.abs(mis.time - dsatur.time) / ((mis.time + dsatur.time) / 2))) * 100
+            minimumPercentDifference = ((Math.abs(mis.minimum - dsatur.minimum) / ((mis.minimum + dsatur.minimum) / 2))) * 100
+            maximumPercentDifference = ((Math.abs(mis.maximum - dsatur.maximum) / ((mis.maximum + dsatur.maximum) / 2))) * 100
             Comparison mis_dsatur = new Comparison(colors: round(colors, 2), percentage: round(percentage, 2),
                     percentDifference: round(percentDifference, 2), time: time, timePercentage: round(timePercentage, 2),
-                    timePercentDifference: round(timePercentDifference, 2))
+                    timePercentDifference: round(timePercentDifference, 2), minimumPercentDifference: round(minimumPercentDifference, 2),
+                    maximumPercentDifference: round(maximumPercentDifference, 2))
 
             comparisonSummaries.add(new ComparisonSummary(name: simulationResult.name,
                     greedy_wp: greedy_wp,
