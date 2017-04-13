@@ -5,7 +5,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \documentclass[final]{beamer}
-\usepackage[scale=1.07]{beamerposter}
+\usepackage[scale=1]{beamerposter}
 \usepackage{graphicx}			% allows us to import images
 
 %-----------------------------------------------------------
@@ -131,28 +131,32 @@
       \end{block}
       \vskip2ex
       \begin{block}{Introduction \& Background}
-        \begin{itemize}
-          \setlength\itemsep{0.4em}
-          \item A simple graph $G = (V, E)$ is an undirected graph containing no loops or multiple edges. For our purpose, we assume all graphs are simple.
-          \item An edge, denoted $(v, u) \in E$, connects vertex $v$ to vertex $u$ where $v, u \in V$.
-          \item Two vertices are said to be \emph{adjacent} if they are connected by an edge.
-          \item The \emph{degree} of a vertex $v \in V$, denoted $d_G(v)$, is the number of edges incident to $v$. For example, $d_{G_1}(2) = 3$.
-          \item The \emph{saturation degree} of a vertex $v \in V$ is the number of different colors used for vertices adjacent to it. \newline
-          \begin{figure}[h]
-            \centering
-            \includegraphics[width=\linewidth]{figures/example1-full.pdf}
-            \caption{Example proper vertex colorings of a graph $G_1$ where $\chi(G_1) = 2$}
-          \end{figure}
-          \vspace{0.4cm}
-          \item A \emph{proper vertex coloring} assigns colors to each vertex of $G$ such that no two adjacent vertices share the same color.
-          \item The \emph{chromatic number} of $G$, denoted $\chi(G)$, is the minimum number of colors needed to properly color $G$.
-          \item The \emph{vertex coloring problem} (VCP) on $G$ is to find $\chi(G)$.
-          \item The VCP has been shown by \cite{sharma} to be NP-hard based on a reduction from 3-SAT, a well-known NP-hard problem.
-          \item This means the VCP cannot be optimally solved in polynomial-time, so we must use heuristics (approximation algorithms) to efficiently find ``good'', but non-optimal, solutions.
-          \item The above definitions can be found in \cite{bondymurty}.
-        \end{itemize}
+        A simple graph $G = (V, E)$ is an undirected graph containing no loops or multiple edges. For our purpose, we assume all graphs are simple. An edge, denoted $(v, u) \in E$, connects vertex $v$ to vertex $u$ where $v, u \in V$. Two vertices are said to be \emph{adjacent} if they are connected by an edge. The \emph{degree} of a vertex $v \in V$, denoted $d_G(v)$, is the number of edges incident to $v$. For example, $d_{G_1}(2) = 3$. The \emph{saturation degree} of a vertex $v \in V$ is the number of different colors used for vertices adjacent to it. \newline
+        \begin{figure}[h]
+          \centering
+          \includegraphics[width=\linewidth]{figures/huge.pdf}
+          \caption{Example proper vertex colorings of a graph $G_1$ where $\chi(G_1) = 2$}
+        \end{figure}
+        \vspace{0.4cm}
+        A \emph{proper vertex coloring} assigns colors to each vertex of $G$ such that no two adjacent vertices share the same color. The \emph{chromatic number} of $G$, denoted $\chi(G)$, is the minimum number of colors needed to properly color $G$. The \emph{vertex coloring problem} (VCP) on $G$ is to find $\chi(G)$.\newline
+
+        The VCP has been shown by \cite{sharma} to be NP-hard based on a reduction from 3-SAT, a well-known NP-hard problem. This means the VCP cannot be optimally solved in polynomial-time, so we must use heuristics (approximation algorithms) to efficiently find ``good'', but non-optimal, solutions.
+
+        \vspace{0.65cm}
+
+        \begin{figure}[h]
+          \centering
+          \includegraphics[width=\linewidth]{figures/compare-all.pdf}
+          \caption{Greedy, Welsh-Powell, and DSATUR vertex colorings of a graph $G_2$, respectively}\label{fig:all}
+        \end{figure}
+
+      \end{block}
+
+      \vskip1.8ex
 
 
+      \begin{block}{Acknowledgements \& Information}
+        \small{Special thanks to Peh Ng for her support, feedback, and insightful ideas throughout this project. Thanks to Engin Sungur and Humza Haider for helping with the statistical analysis and data plotting. Source code: \texttt{\footnotesize https://devshawn.com/coloring}.}
       \end{block}
   \end{column}
 
@@ -182,43 +186,13 @@
           \begin{itemize}
             \setlength\itemsep{0.4em}
             \item Graphs were generated based on the \emph{Erdős–Rényi} model. This model generates a random graph with approximately $p$ percent of edges.
-            \item We focused on graphs with $90\%, 91\%, \ldots, 99\%$ edges.
-            \item We ran simulations on 4 sets of graphs: 50 vertices, 100 vertices, 250 vertices, and 500 vertices.
-            \item We focused on comparing the quality (number of colors used) of each heuristic. We calculated this using \emph{percent difference}. We also compared the running time of the three heuristics.
+            \item We focused on graphs with $90\%, 91\%, \ldots, 99\%$ edges. These were the most interesting.
+            \item Simulations were run on 4 sets of graphs: 50 vertices, 100 vertices, 250 vertices, and 500 vertices.
+            \item Each heuristic can produce a different amount of colors used, as shown in Figure \ref{fig:all}. Thus, we focused on comparing the quality (number of colors used) and the efficiency (running time) of the three heuristics.
           \end{itemize}
         \end{block}
       \end{column}
     \end{columns}
-
-    % \begin{block}{Heuristics \& Methods}
-    %   We focused on comparing three heuristics for approximating the VCP:
-    %   \begin{itemize}
-    %     \setlength\itemsep{0.4em}
-    %     \item \textbf{Greedy}: Label each vertex in $V$ (i.e. $v_1,v_2,\ldots,v_n$). Iterate through the vertices and assign the smallest available color.
-    %     \item \textbf{Welsh-Powell} \cite{welsh}: Label each vertex in $V$ (i.e. $v_1,v_2,\ldots,v_n$) such that the vertices are sorted in decreasing order of their degree (i.e. $d_G(v_1) \geq d_G(v_2) \geq \ldots \geq d_G(v_n) $). Iterate through the vertices and assign the smallest available color.
-    %     \item \textbf{DSATUR} \cite{brelaz}: Choose an uncolored vertex $v \in V$ with maximum saturation degree. If there is a tie, choose the vertex with maximum degree. Color $v$ with the smallest available color. Repeat until there are no uncolored vertices.
-    %   \end{itemize}
-    %
-    %   \vspace{0.5cm}
-    %
-    %   We implemented these three heuristics in Java and created a web application for coloring graphs and running simulations of these heuristics on many graphs:
-    %   \vspace{-1.3cm}
-    %   \begin{itemize}
-    %     \setlength\itemsep{0.4em}
-    %     \item We generated graphs based on the \emph{Erdős–Rényi} model. This model generates a graph with approximately $p$ percent of edges.
-    %     \item We initially looked at graphs with $0\%, 10\%, \ldots, 100\%$ edges.
-    %     \begin{itemize}
-    %       \item $0\%$ and $100\%$ are simple to color and uninteresting.
-    %       \item The heuristics did not provide interesting comparisons in this range.
-    %     \end{itemize}
-    %     \item We then looked at graphs with $90\%, 91\%, \ldots, 99\%$ edges.
-    %     \begin{itemize}
-    %       \item This became interesting: large increases in number of colors used.
-    %       \item We decided to focus on this range of graphs for our simulations.
-    %     \end{itemize}
-    %     \item We ran simulations on 4 sets of graphs: 50 vertices, 100 vertices, 250 vertices, and 500 vertices.
-    %     \item We focused on comparing the quality (number of colors used) of each heuristic. We calculated this using \emph{percent difference}.
-    %   \end{itemize}
 
     \vskip2ex
     \begin{block}{Results}
@@ -288,12 +262,9 @@
       \end{itemize}
     \end{block}
 
-    \begin{block}{Acknowledgements \& Information}
-      \small{Special thanks to Peh Ng for her support, feedback, and insightful ideas throughout this project. Source code: \texttt{\footnotesize https://devshawn.com/coloring}.}
-    \end{block}
-
     \begin{block}{References}
-      \footnotesize{\rmfamily{\begin{thebibliography}{99}
+      %footnotesize
+      \small{\rmfamily{\begin{thebibliography}{99}
       \setlength\parskip{0em}
       \setlength\itemsep{0em}
 
