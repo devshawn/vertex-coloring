@@ -126,7 +126,10 @@
     \begin{column}{\onecolwid}
       \begin{block}{Abstract}
         \small
-        Consider the map of the 48 contiguous states in the USA, and suppose we want to color each state so that no two states that share a boundary have the same color. In general, we could represent every state with a vertex and draw an edge between two states that share a border. This problem can be modeled by a mathematical structure called a graph. A graph, denoted G = (V, E), is a set of vertices V and a set of edges E. The Vertex Coloring problem on G aims to find the minimum number of colors (the chromatic number) needed to color the vertices such that no two adjacent vertices have the same color. Vertex coloring can solve real-world problems such as finding the minimum number of time slots to schedule a final exam period so that no two courses (taken by the same student) are scheduled at the same final exam time slot. In general, there is no known efficient time algorithm to find the chromatic number of a graph and there will likely not be one. This class of problem is known in computer science as NP-hard. Hence, there is interest in finding heuristics or approximation algorithms to find the chromatic number. In this research, we present three heuristics used to find good approximate vertex colorings even though they may not give us the optimal minimum coloring of a graph. This is important as it allows us to approximately solve complex problems in minutes rather than hours. We present computational results comparing the efficiency (time and quality) of these heuristics.
+        Consider the map of the 48 contiguous states in the USA, and suppose we want to color each state so that no two states that share a boundary have the same color. In general, we could represent every state with a vertex and draw an edge between two states that share a border. This problem can be modeled by a mathematical structure called a graph. A graph, denoted $G = (V, E)$, is a set of vertices $V$ and a set of edges $E$. The Vertex Coloring problem on $G$ aims to find the minimum number of colors (the chromatic number) needed to color the vertices such that no two adjacent vertices have the same color. Vertex coloring can solve real-world problems such as finding the minimum number of time slots to schedule a final exam period so that no two courses (taken by the same student) are scheduled at the same final exam time slot.
+
+        \vspace{0.4cm}
+        In general, there is no known efficient time algorithm to find the chromatic number of a graph and there will likely not be one. This class of problem is known in computer science as NP-hard. Hence, there is interest in finding heuristics or approximation algorithms to find the chromatic number. In this research, we present three heuristics used to find good approximate vertex colorings even though they may not give us the optimal minimum coloring of a graph. This is important as it allows us to approximately solve complex problems in minutes rather than hours. We present computational results comparing the efficiency (time and quality) of these heuristics.
 
       \end{block}
       \vskip2ex
@@ -186,8 +189,8 @@
           \begin{itemize}
             \setlength\itemsep{0.4em}
             \item Graphs were generated based on the \emph{Erdős–Rényi} model. This model generates a random graph with approximately $p$ percent of edges.
-            \item We focused on graphs with $90\%, 91\%, \ldots, 99\%$ edges. These were the most interesting.
-            \item Simulations were run on 4 sets of graphs: 50 vertices, 100 vertices, 250 vertices, and 500 vertices.
+            \item We analyzed graphs with $10\%, 20\%, \ldots, 90\%$ edges (type). This gave us both sparse and dense graphs.
+            \item Simulations were run on graphs with 5 different amount of vertices: 50, 100, 250, 500, 1000.
             \item Each heuristic can produce a different amount of colors used, as shown in Figure \ref{fig:all}. Thus, we focused on comparing the quality (number of colors used) and the efficiency (running time) of the three heuristics.
           \end{itemize}
         \end{block}
@@ -196,18 +199,17 @@
 
     \vskip2ex
     \begin{block}{Results}
-      \begin{itemize}
-        \item The heuristics were compared based on the percent difference of four properties: average colors used, minimum colors used, maximum colors used, and running time. Two example comparisons are shown in Figure \ref{fig:compare-250} and Figure \ref{fig:compare-time-250}.
-      \end{itemize}
+      We used statistical analysis to compare the number of colors used and the running time of each heuristic based on edge percentage (type) and then also looked at how this changed as the number of vertices changed.
+      \vspace{0cm}
       \begin{columns}
-        \begin{column}{0.75\linewidth}
+        \begin{column}{0.85\linewidth}
           \begin{figure}
-            \includegraphics[width=\linewidth]{figures/comparison1-250.pdf}
-            \caption{Percent difference of average colors used for 250 vertices}\label{fig:compare-250}
+            \includegraphics[width=\linewidth]{figures/plot-colors.pdf}
+            \caption{Comparing number of colors used for the three heuristics}\label{fig:compare-colors}
           \end{figure}
           \begin{figure}
-            \includegraphics[width=\linewidth]{figures/comparison3-250.pdf}
-            \caption{Percent difference of running time for 250 vertices}\label{fig:compare-time-250}
+            \includegraphics[width=\linewidth]{figures/plot-time.pdf}
+            \caption{Comparing running time of each heuristic for each edge percentage}\label{fig:compare-time}
           \end{figure}
         \end{column}
 
@@ -221,45 +223,45 @@
 
     \begin{figure}[h]
       \centering
-      \includegraphics[width=\linewidth]{figures/comparison4.pdf}
-      \caption{Percent difference of avg. colors used as vertices increase (93\% edges)}\label{fig:compare-min-250}
+      \includegraphics[width=\linewidth]{figures/plot-time-2.pdf}
+      \caption{Variance of running time of each heuristic based on edge percentage}\label{fig:compare-time-2}
     \end{figure}
 
     \vspace{-0.2cm}
 
+    \rmfamily
+    \textbf{Color usage results}: \newline
+    Based on computational data of the amount of colors used, we found that there is a \emph{partial order}. This is shown in Figure \ref{fig:compare-colors}.
     \begin{itemize}
-      \setlength\itemsep{0.4em}
-      \rmfamily
-      \item As the number of vertices increased, the percent difference between Greedy and Welsh-Powell as well as Greedy and DSATUR decreased. We also noticed that the percent difference between Welsh-Powell and DSATUR increased. This is shown in Figure \ref{fig:compare-min-250}.
-      \item By looking at our comparisons, we saw that there is a \emph{partial order}.
-      \begin{itemize}
-        \item Welsh-Powell on average used $4-5\%$ less colors than Greedy.
-        \item DSATUR on average used $6-7\%$ less colors than Greedy.
-        \item DSATUR on average used $1-2\%$ less colors than Welsh-Powell.
-      \end{itemize}
-      \item This comparison stayed consistent when we looked at both minimum and maximum number of colors used.
-      \item This led us to the following partial order based on colors used:
-      \vspace{0.1cm}
-      \begin{center}
-        \textbf{Greedy $\leq$ Welsh-Powell $\leq$ DSATUR}
-      \end{center}
-      \item By looking at our running time comparisons, we saw:
-      \begin{itemize}
-        \item Welsh-Powell on average was $90-110\%$ slower than Greedy.
-        \item DSATUR on average was $160-180\%$ slower than Greedy.
-        \item DSATUR on average was $80-100\%$ slower than Welsh-Powell.
-      \end{itemize}
+      \item Greedy uses on average 2.52 colors more than Welsh-Powell.
+      \item Welsh-Powell uses on average 2.79 colors more than DSATUR.
+    \end{itemize}
+    This led us to the following partial order based on colors used:
+    \vspace{0.1cm}
+    \begin{center}
+      \textbf{Greedy $\leq$ Welsh-Powell $\leq$ DSATUR}
+    \end{center}
+    As vertices increased, the partial order defined above stays consistent. DSATUR always used the least colors while Greedy always used the most.\newline
+
+    \textbf{Running time results}: \newline
+    Based on computational data of the running time, we also found a \emph{partial order}, as shown in Figure \ref{fig:compare-time}.
+    \begin{itemize}
+      \item Welsh-Powell is significantly slower than Greedy.
+      \item DSATUR is significantly slower than Welsh-Powell.
+    \end{itemize}
+    \begin{center}
+      \textbf{Greedy $\leq$ Welsh-Powell $\leq$ DSATUR}
+    \end{center}
+    As the edge percentage increases:
+    \begin{itemize}
+      \item DSATUR running time increases.
+      \item Greedy and Welsh-Powell running time increases until 50\% edges then decreases until 90\% edges.
+      \item The difference in running time between DSATUR and Greedy as well as DSATUR and Welsh-Powell grows larger and larger.
     \end{itemize}
 
+
     \begin{block}{Conclusion}
-      \begin{itemize}
-        \item Although we were not able to compare the heuristics colorings to the optimal coloring, we were able to determine what heuristics gave the closest to optimal colors.
-        \item Based on our results, we would suggest using the Welsh-Powell heuristic on most graphs.
-        \begin{itemize}
-          \item We decided that it would be worth 90-100\% more time to use 4-5\% less colors over Greedy. As most of these simulations ran in seconds, it is worth it.
-          \item we decided it is \emph{not} worth using another 80-100\% more time to only use 1-2\% less colors if we use DSATUR over Welsh-Powell.
-        \end{itemize}
-      \end{itemize}
+      Although we were not able to compare the heuristics colorings to the optimal coloring, we were able to determine which heuristics gave the closest to optimal colors. Based on our results, we suggest using \textbf{Welsh-Powell} for most graphs. We believe that it is worth the extra time Welsh-Powell takes compared to Greedy but not worth the extra time DSATUR takes compared to Welsh-Powell.
     \end{block}
 
     \begin{block}{References}
