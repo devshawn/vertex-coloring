@@ -188,7 +188,7 @@
           The three heuristics were implemented in Java and we ran simulations according to the following:
           \begin{itemize}
             \setlength\itemsep{0.4em}
-            \item Graphs were generated based on the \emph{Erdős–Rényi} model. This model generates a random graph with approximately $p$ percent of edges.
+            \item Graphs were generated based on the \emph{Erdős–Rényi} model \cite{erdos}. This model generates a random graph with approximately $p$ percent of edges.
             \item We analyzed graphs with $10\%, 20\%, \ldots, 90\%$ edges (type). This gave us both sparse and dense graphs.
             \item Simulations were run on graphs with 5 different amount of vertices: 50, 100, 250, 500, 1000.
             \item Each heuristic can produce a different amount of colors used, as shown in Figure \ref{fig:all}. Thus, we focused on comparing the quality (number of colors used) and the efficiency (running time) of the three heuristics.
@@ -219,11 +219,11 @@
   \end{column}
   \begin{column}{\sepwid}\end{column}			% empty spacer column
   \begin{column}{\onecolwid}
-    \vskip1.5ex
+    \vskip0.5ex
 
     \begin{figure}[h]
       \centering
-      \includegraphics[width=\linewidth]{figures/plot-time-2.pdf}
+      \includegraphics[width=0.9\linewidth]{figures/plot-time-2.pdf}
       \caption{Variance of running time of each heuristic based on edge percentage}\label{fig:compare-time-2}
     \end{figure}
 
@@ -231,26 +231,29 @@
 
     \rmfamily
     \textbf{Color usage results}: \newline
-    Based on computational data of the amount of colors used, we found that there is a \emph{partial order}. This is shown in Figure \ref{fig:compare-colors}.
+    Based on computational data of the amount of colors used, as shown in Figure \ref{fig:compare-colors}, we found:
     \begin{itemize}
       \item Greedy uses on average 2.52 colors more than Welsh-Powell.
       \item Welsh-Powell uses on average 2.79 colors more than DSATUR.
     \end{itemize}
-    This led us to the following partial order based on colors used:
+    This led us to the following partial order based on colors used, where $A \preceq B$ means heuristic $A$ uses significantly more colors than heuristic $B$.
     \vspace{0.1cm}
     \begin{center}
-      \textbf{Greedy $\leq$ Welsh-Powell $\leq$ DSATUR}
+      \textbf{Greedy $\preceq$ Welsh-Powell $\preceq$ DSATUR}
     \end{center}
-    As vertices increased, the partial order defined above stays consistent. DSATUR always used the least colors while Greedy always used the most.\newline
+    As vertices increased, the partial order defined above stays consistent. DSATUR always used the least colors while Greedy always used the most.
+
+    \vspace{0.4cm}
 
     \textbf{Running time results}: \newline
-    Based on computational data of the running time, we also found a \emph{partial order}, as shown in Figure \ref{fig:compare-time}.
+    Based on computational data of the running time, as shown in Figure \ref{fig:compare-time}, we found:
     \begin{itemize}
       \item Welsh-Powell is significantly slower than Greedy.
       \item DSATUR is significantly slower than Welsh-Powell.
     \end{itemize}
+    This led us to the following partial order based on running time, where $A \preceq B$ means heuristic $A$ uses significantly less time than heuristic $B$.
     \begin{center}
-      \textbf{Greedy $\leq$ Welsh-Powell $\leq$ DSATUR}
+      \textbf{Greedy $\preceq$ Welsh-Powell $\preceq$ DSATUR}
     \end{center}
     As the edge percentage increases:
     \begin{itemize}
@@ -261,21 +264,21 @@
 
 
     \begin{block}{Conclusion}
-      Although we were not able to compare the heuristics colorings to the optimal coloring, we were able to determine which heuristics gave the closest to optimal colors. Based on our results, we suggest using \textbf{Welsh-Powell} for most graphs. We believe that it is worth the extra time Welsh-Powell takes compared to Greedy but not worth the extra time DSATUR takes compared to Welsh-Powell.
+      Although we were not able to compare the heuristics colorings to the optimal coloring, we were able to determine which heuristics gave the closest to optimal colors. Based on our results, we suggest using \textbf{Welsh-Powell} for most graphs because the extra time needed from Greedy to Welsh-Powell to achieve better accuracy is not as significant compared to the extra time needed from Welsh-Powell to DSATUR.
     \end{block}
 
     \begin{block}{References}
       %footnotesize
-      \small{\rmfamily{\begin{thebibliography}{99}
+      \footnotesize{\rmfamily{\begin{thebibliography}{99}
       \setlength\parskip{0em}
       \setlength\itemsep{0em}
-
+        \vspace{-0.3cm}
         \bibitem{bondymurty}
-        Bondy, J.A. and U.S.R. Murty [1976],
-        \emph{Graph theory with applications},
-        American Elsevier Publishing, New York, NY.
+        Bondy, J.A. and Murty, U.S.R. [1976], \emph{Graph theory with applications}, American Elsevier Publishing, New York, NY.
         \bibitem{brelaz}
         Brélaz, D. [1979]. \emph{New methods to color the vertices of a graph}. Communications of the ACM, 22(4), pp.251-256.
+        \bibitem{erdos}
+        Erdös, P. and A. Rényi [1959], \emph{On random graphs, I}, Publicationes Mathematicae (Debrecen) 6: 290-297.
         \bibitem{sharma}
         Sharma, P. C. and Chaudhari, N.S. [2012], \emph{A new reduction from 3-SAT to graph k-colorability for frequency assignment problem}, Int. J. Comp. Applic, 23-27.
         \bibitem{welsh}
