@@ -26,7 +26,8 @@
 \newenvironment{heuristic}[1]%
 {
 \refstepcounter{heuristic}
-\subsection*{Heuristic \theheuristic}
+\subsection*{Heuristic \theheuristic: #1}
+\vspace{-0.2cm}
 }%
 {}
 
@@ -68,7 +69,7 @@ A \emph{vertex coloring} of a graph $G$ is an assignment of colors to each verte
 
 The \emph{chromatic number}, denoted $\chi(G)$, is the minimum number of colors needed to have a proper vertex coloring of a graph $G$. The \emph{vertex coloring problem} (VCP), when given a graph $G$, is to find $\chi(G)$. By applying the vertex coloring problem to our map example, we can determine how many colors one would need to color it with regards to our constraint. An example coloring of our map is shown in Figure \ref{fig:map}. The \emph{k-Colorability problem} asks if a graph can be colored with $k$ colors. If a graph can be colored with $k$ colors, it is said to be \emph{k-colorable}.
 
-\section{Computational Complexity}
+\section{Computational Complexity}\label{sec:complexity}
 Finding an optimal solution to the vertex coloring problem is not easy. As the VCP is an optimization problem with regards to a constraint, we know it will require heavy computation to find an optimal solution. In mathematics and computer science, we classify computationally complex problems based on type of problem they are and based on how many steps it takes to solve the problem with respect to its input size.
 
 \subsection{Classifying the Vertex Coloring Problem}
@@ -124,13 +125,129 @@ To create the graph of this 3-SAT problem, we:
 \item Connect each vertex of a clause triangle to the corresponding literal vertex.
 \end{enumerate}
 
-Following the above steps, we generate the following graph $G$ from our 3-SAT expression $E$:
+Following the above steps, we generate graph $G$, shown in Figure \ref{fig:3sat1}, from our 3-SAT expression $E$.
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.6]{images/3sat-1.png}
-\caption{\(E\) represented as a graph \(G\)}
+\caption{\(E\) represented as a graph \(G\)}\label{fig:3sat1}
 \end{figure}
+
+If we can properly color graph \(G\) with 3 colors, then the original 3-SAT is satisfiable and the truth values of the variables are denoted by the color they received. This graph is \emph{3-colorable} and the coloring is shown in Figure \ref{fig:3sat2}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.6]{images/3sat-2.png}
+\caption{A possible 3-coloring of \(G\)}\label{fig:3sat2}
+\end{figure}
+
+As we see above, \emph{blue} is used for the base vertex and as part of some of the clause triangles. If we let \emph{yellow} denote \emph{true} and \emph{red} denote \emph{false}, we can see that our original 3-SAT is satisfied:
+%
+\begin{align*}
+E &= \left( T \vee \neg T \vee \neg F \right) \wedge \left( \neg T \vee T \vee F \right) \wedge \left(T \vee T \vee F \right) \\
+&= \left( T \vee F \vee T \right) \wedge \left( F \vee T \vee F \right) \wedge \left(T \vee T \vee F \right) \\
+&= T \wedge T \wedge T \\
+&= True
+\end{align*}
+%
+This shows an example of the reduction from 3-SAT to 3-Colorability. If \(G\) was unable to be colored with 3 colors, then we would know that \(E\) is unable to be satisfied. From here, we can reduce 3-Colorability to 4-Colorability, and then generalize that reduction and reduce 4-Colorability to k-Colorability. The proof and illustration of this can be found in \cite{sharma}.
+
+\section{Heuristics}
+As we have seen in section \ref{sec:complexity}, solving the vertex coloring problem requires heavy computation. This gives us incentive to use approximation algorithms, called heuristics, to find good, but not necessarily optimal, vertex colorings. We decided to analyze and compare a few of the popular heuristics for solving the VCP. The input for all heuristics we define is a simple graph, $G = (V, E)$.
+
+\heuristic{Greedy}\label{heuristic-greedy}
+
+Heuristic \ref{heuristic-greedy} is a simple greedy algorithm. It is defined in Algorithm \ref{alg:greedy}.
+
+\begin{algorithm}
+\caption{Greedy algorithm}\label{alg:greedy}
+\begin{algorithmic}[1]
+\State Label each vertex in $V$, i.e. $v_1, v_2, \dots, v_n$
+\For{each $v \in V$}
+\State Assign a color $p_i$ to $v_i$ using the smallest available $p_i$
+\EndFor
+\end{algorithmic}
+\end{algorithm}
+
+\heuristic{Welsh-Powell}\label{heuristic-welsh}
+
+Heuristic \ref{heuristic-welsh} is the greedy algorithm with degree sequencing. Before applying the greedy algorithm, it orders the vertices according to the decreasing value of their degree. This is also known as the Welsh-Powell algorithm, which is given in \cite{welsh}. It is defined in Algorithm \ref{alg:welsh}.
+
+\begin{algorithm}
+\caption{Welsh-Powell algorithm}\label{alg:welsh}
+\begin{algorithmic}[1]
+\State Label each vertex in $V$, i.e. $v_1, v_2, \dots, v_n$, such that $d_G(v_1) \geq d_G(v_2) \geq \dots \geq d_G(v_n)$
+\ForAll{$v \in V$}
+\State Assign a color $p_i$ to $v_i$ using the smallest available $p_i$
+\EndFor
+\end{algorithmic}
+\end{algorithm}
+
+\heuristic{DSATUR}\label{heuristic-dsatur}
+
+Heuristic \ref{heuristic-dsatur} is very similar to heuristic \ref{heuristic-welsh}, but colors a graoh based on the \emph{saturation} degree of vertices, which is defined in Definition \ref{def:sat} \cite{spinrad}. The original DSATUR algorithm was proposed by \cite{brelaz}. It is defined in Algorithm \ref{alg:dsatur}.
+
+\begin{definition}[Saturation degree]\label{def:sat}
+The saturation degree of a vertex is the number of different colors used for vertices adjacency to it.
+\end{definition}
+
+\begin{algorithm}
+\caption{DSATUR algorithm}\label{alg:dsatur}
+\begin{algorithmic}[1]
+\State Find the vertex $\in V$ with maximum degree and color it with color $p_1$
+\While{There are uncolored vertices}
+\State Choose an uncolored vertex with maximum saturation degree
+\State If there is a tie, choose the vertex with maximum degree
+\State Color the vertex with the least possible number
+\EndWhile
+\end{algorithmic}
+\end{algorithm}
+
+\heuristic{Maximal Independent Set}\label{heuristic-mis}
+
+Heuristic \ref{heuristic-mis} colors a graph by finding maximal independent sets of \(G\). A maximal independent set (MIS) is defined in Definition \ref{def:mis}. This is quite different than our other heuristics as it does not depend on degree. Ideally, we would want to find a maximum independent set, not just a maximal independent set.
+
+Finding a maximum independent set is NP-hard \cite{karp1972reducibility}, however, meaning we're including a different NP-hard in an already NP-hard problem. We chose to forgo this in favor of just finding a maximal independent set. We define the heuristic in Algorithm \ref{alg:mis}.
+
+\begin{definition}[Maximal independent set]\label{def:mis}
+An independent set is a subset $S$ of vertices in a graph such that no two vertices in the set are adjacent. $S$ is said to be maximal if no vertex outside the set can be added while still being an independent set.
+\end{definition}
+
+\begin{algorithm}
+\caption{Maximal independent set algorithm}\label{alg:mis}
+\begin{algorithmic}[1]
+\State $p \leftarrow 1$
+\While{$G$ is non-empty}
+\State Find a maximal independent set of $G$, i.e. $S_i$
+\State Color all vertices in $S_i$ with color $p$
+\State Let $G \leftarrow G[V \setminus S_i ] $
+\State $p \leftarrow p + 1$
+\EndWhile
+\end{algorithmic}
+\end{algorithm}
+
+\section{Initial Findings}
+Before comparing the heuristics, we first wanted to analyze the heuristics individually and look at the solutions they produce.
+
+\begin{prop}
+Heuristic \ref{heuristic-greedy} and Heuristic \ref{heuristic-welsh} produce a feasible, proper coloring of input graph \(G = (V, E)\).
+\end{prop}
+
+Let \(G = (V, E)\) be a simple graph. Assume that two vertices, say \(v_1, v_2 \in V\), are connected by an edge \(e_1 \in E\). Assume that \(v_1, v_2\) are colored the same color, say \(p_1\). We know that in both heuristics, we assign the smallest color \(p_i\) that is not being used by any of the neighboring vertices connected by an edge \(e_i\). WLOG, the heuristic would color \(v_1\) color \(p_1\). The next iteration, while vertex \(v_2\) is selected, the heuristic would see color \(p_1\) is assigned to a neighboring vertex \((v_1)\), and assign the next available color \(p_2\). Thus, we've reached a contradiction.
+
+\begin{prop}
+Heuristic \ref{heuristic-dsatur} produces a feasible, proper coloring of input graph \(G = (V, E)\).
+\end{prop}
+
+Let \(G = (V, E)\) be a simple graph. We color the vertex with the maximum degree color 1. If there are no uncolored vertices, we have properly colored $G$. If there are, then we find an uncolored vertex $v$ with maximum saturation degree. We then color $v$ with the smallest available color. This means we look at the set of all adjacent vertices to $v$ and find the smallest unused color in this set. This means we will never color an adjacent vertex with the same color, and thus, will always result in a proper coloring.
+
+\begin{prop}
+Heuristic \ref{heuristic-mis} produces a feasible, proper coloring of input graph \(G = (V, E)\).
+\end{prop}
+
+Let \(G = (V, E)\) be a simple graph. Let $p$, the current color, be 1. By definition \ref{def:mis}, we know that no two vertices in a maximal independent set are adjacent. Thus, when we color the vertices in the MIS with the smallest color \(p_1\) for the first iteration, we know that it is properly colored. We then remove the found maximal independent set and increment $p$ to 2. If $G$ is now empty, then $G$ is properly colored. If $G$ is not empty, then we repeat the process except we use color 2. Because we are always incrementing the color for each iteration, we know the MIS found will always be properly colored with a different color than the past MIS.
+
+Now that we know our heuristics produce feasible, proper colorings of a graph, how do we know they do not produce optimal solutions? We show they do not using counterexamples. 
 
 
 \newpage
