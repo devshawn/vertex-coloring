@@ -9,10 +9,16 @@
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}
 \usepackage[numbib,nottoc]{tocbibind}
-\usepackage{indentfirst}
-
-
+\usepackage{enumitem}
+\setlist[itemize]{topsep=0pt}
+\setlist[enumerate]{topsep=0pt}
+\setlength\parindent{0pt}
 \setlength{\droptitle}{-1.5cm}
+
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
 
 \newcounter{heuristic} \setcounter{heuristic}{0}
 \renewcommand{\theheuristic}{\Alph{heuristic}}
@@ -32,6 +38,11 @@
 \date{May 5, 2017}
 \author{Shawn Seymour\\ University of Minnesota Morris}
 
+\makeatletter
+\def\thm@space@setup{\thm@preskip=8pt
+\thm@postskip=0pt}
+\makeatother
+
 \newtheorem{prop}{Proposition}
 \newtheorem{theorem}{Theorem}
 
@@ -49,13 +60,77 @@ Consider the map of the 48 contiguous states in the USA. Suppose we would like t
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.5\linewidth]{figures/map-colors.pdf}
+\includegraphics[width=0.7\linewidth]{figures/map-colors.pdf}
 \caption{A proper coloring of the USA}\label{fig:map}
 \end{figure}
 
-A \emph{vertex coloring} of a graph $G$ is an assignment of colors to each vertex of a graph. A \emph{proper vertex coloring} assigns colors to a graph $G$ such that no two adjacent vertices share the same color. This can be described as a function $f : V \rightarrow S = \{1, 2, \ldots, k\}$ such that $\forall u,w \in V$, if $(u,w) \in E$, then $f(u) \neq f(w)$. Note that this constraint is the same constraint we applied to our map example. This means we could color our map according to our constraint with a proper vertex coloring.
+A \emph{vertex coloring} of a graph $G$ is an assignment of colors to each vertex of a graph. A \emph{proper vertex coloring} assigns colors to a graph $G$ such that no two adjacent vertices share the same color. This can be described as a function $f : V \rightarrow S = \{1, 2, \ldots, k\}$ such that $\forall u,w \in V$, if $(u,w) \in E$, then $f(u) \neq f(w)$. Note that this constraint is the same constraint we applied to our map example. This means we could color our map according to our constraint with a proper vertex coloring. For our purpose, assume we mean proper vertex coloring when referring coloring a graph.
 
-The \emph{chromatic number}, denoted $\chi(G)$, is the minimum number of colors needed to have a proper vertex coloring of a graph $G$. The \emph{vertex coloring problem} (VCP), when given a graph $G$, is to find $\chi(G)$. By applying the vertex coloring problem to our map example, we can determine how many colors one would need to color it with regards to our constraint. As it turns out, it only takes \emph{four} colors to properly color the map of the USA. This is shown in Figure \ref{fig:map}.
+The \emph{chromatic number}, denoted $\chi(G)$, is the minimum number of colors needed to have a proper vertex coloring of a graph $G$. The \emph{vertex coloring problem} (VCP), when given a graph $G$, is to find $\chi(G)$. By applying the vertex coloring problem to our map example, we can determine how many colors one would need to color it with regards to our constraint. An example coloring of our map is shown in Figure \ref{fig:map}. The \emph{k-Colorability problem} asks if a graph can be colored with $k$ colors. If a graph can be colored with $k$ colors, it is said to be \emph{k-colorable}.
+
+\section{Computational Complexity}
+Finding an optimal solution to the vertex coloring problem is not easy. As the VCP is an optimization problem with regards to a constraint, we know it will require heavy computation to find an optimal solution. In mathematics and computer science, we classify computationally complex problems based on type of problem they are and based on how many steps it takes to solve the problem with respect to its input size.
+
+\subsection{Classifying the Vertex Coloring Problem}
+We call any problem that can be answered with ``yes'' or ``no'' a \emph{decision problem}. To classify the vertex coloring problem, we must first introduce some classes, defined in \cite{moret}:
+
+\begin{itemize}
+  \item \textbf{P}: Given a decision problem, we can solve the problem in polynomial time.
+  \item \textbf{NP}: Given a decision problem, we can verify if a given solution is correct in polynomial time but cannot solve the problem in polynomial time.
+  \item \textbf{NP-hard}: Given any problem, it is at least as hard as NP problems. They do not have to be in NP, however, as they do not need to have solutions verifiable in polynomial time.
+  \item \textbf{NP-complete}: Given a decision problem, we can transform it to any other NP problem in polynomial time and still verify a given solution in polynomial time.
+\end{itemize}
+
+Take note that these classes are not exclusive: any member of P is also a member of NP. NP-complete problems can be thought of as the problems that are both in NP and NP-hard. Although it may seem like all problems that are NP are also NP-complete, this is not the case. There are a select few problems in NP that are not NP-complete or in P \cite{ladner1975structure}.
+
+\begin{prop}
+The vertex coloring problem is an NP-hard problem.
+\end{prop}
+
+It is NP-hard to compute the chromatic number of a graph. This can be proven by showing it is at least as hard as a problem in NP. This is typically done by a reduction (a transformation) to or from 3-SAT, which we'll examine later. This is proven in \cite{garey}.
+
+\begin{prop}\label{prop:k-color-np-complete}
+The k-Colorability problem, i.e. can a given graph be colored in k-colors, is NP-complete.
+\end{prop}
+
+To prove this, we need to reduce a known NP-complete problem to the vertex coloring problem in polynomial time. By reducing a known NP-complete problem to k-Colorability, we can conclude that k-Colorability is NP-complete as all NP-complete problems are reducible to all other NP-complete problems \cite{gareynp}. We will reduce the well-known 3-SAT problem first to the 3-Colorability problem. The 3-Colorability problem asks if a graph can be colored with 3 (or fewer) colors. Obviously, if a graph can be colored with 2 colors it can also be colored with 3.  From here, the reduction from 3-Colorability to k-Colorability follows.
+
+\subsection{Reduction from 3-SAT to 3-Colorability}
+Before we prove Proposition \ref{prop:k-color-np-complete}, we must first introduce 3-SAT.  The 3-SAT problem is an NP-complete problem that is a variation of the original NP-complete problem, boolean satisfiability (SAT). The 3-SAT problem is defined and proven to be NP-complete in \cite{gareynp}. 3-SAT consists of a conjunction of a number of clauses. A clause is a disjunction of a given number of propositions or their negations. We will assume all of our satisfiability problems are in conjunctive normal form (CNF). 3-SAT asks whether the variables can be assigned \emph{true} or \emph{false} in such a way that the whole expression evaluates to \emph{true}. We define SAT and 3-SAT in Definition \ref{def:sat}.
+
+\begin{definition}\label{def:sat}
+SAT is a conjunction of $m$ clauses, i.e. $C_1 \wedge C_2 \wedge \dots \wedge C_m$. Each clause is a disjunction of at most $n$ literals, i.e. $L_1 \vee L_2 \vee \dots \vee L_n$. Each literal can be a variable or negative of a variable, i.e. $x_1, \neg x_1, x_2, \neg x_2, \dots , x_k, \neg x_k$ where $k$ is the number of distinct literals. Each literal has a value of $true$ or $false$. 3-SAT is where each clause has exactly 3 literals \((n = 3)\).
+\end{definition}
+
+To show a reduction from 3-SAT to 3-Colorability, we need to:
+
+\begin{enumerate}
+\item Given an instance of 3-SAT, construct an instance of 3-Colorability
+\item Show that if the resulting graph is 3-colorable, then the given 3-SAT problem is satisfied
+\end{enumerate}
+
+To show this reduction, we'll create an example 3-SAT problem and reduce it to 3-Colorability. This reduction will create a graph \(G = (V, E)\) having \((2n + 3m + 1)\) vertices and \((3n+6m)\) edges \cite{moret}. The process for creating the graph, described below, was taken from the proof given in \cite{sharma}.
+
+Let's introduce the following 3-SAT expression $E$:
+%
+\begin{align*}
+E = \left( x_1 \vee \neg x_2 \vee \neg x_3 \right) \wedge \left( \neg x_1 \vee x_2 \vee x_3 \right) \wedge \left( x_1 \vee x_2 \vee x_3 \right)
+\end{align*}
+%
+To create the graph of this 3-SAT problem, we:
+\begin{enumerate}
+\item Create a \emph{triangle} for each variable, i.e. \(x_i\). Each has a common vertex \(B\), called the base vertex. This base vertex will be colored a color, say \(p_1\), so that the other two vertices correspond to the variable and it's negation.
+\item Create a \emph{triangle} for each clause in the formula.
+\item Connect each vertex of a clause triangle to the corresponding literal vertex.
+\end{enumerate}
+
+Following the above steps, we generate the following graph $G$ from our 3-SAT expression $E$:
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.6]{images/3sat-1.png}
+\caption{\(E\) represented as a graph \(G\)}
+\end{figure}
 
 
 \newpage
